@@ -1,6 +1,4 @@
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/widgets.dart';
 import 'package:table_calendar/table_calendar.dart';
 
 void main() => runApp(MyApp());
@@ -75,11 +73,17 @@ class _MyHomePageState extends State<MyHomePage> {
         },
         items: <BottomNavigationBarItem>[
           BottomNavigationBarItem(
-              icon: Icon(Icons.home), title: Text("홈")),
+            icon: Icon(Icons.home),
+            title: Text("홈"),
+          ),
           BottomNavigationBarItem(
-              icon: Icon(Icons.calendar_today), title: Text("캘린더")),
+            icon: Icon(Icons.calendar_today),
+            title: Text("캘린더"),
+          ),
           BottomNavigationBarItem(
-              icon: Icon(Icons.settings), title: Text("설정")),
+            icon: Icon(Icons.settings),
+            title: Text("설정"),
+          ),
         ],
       ),
       body: PageView(
@@ -93,27 +97,99 @@ class _MyHomePageState extends State<MyHomePage> {
         children: <Widget>[
           Center(
             // 홈
-            child: Column(
-              children: <Widget>[
-                TableCalendar(calendarController: _calendar),
-              ],
+            child: ListView.builder(
+              itemCount: 3,
+              itemBuilder: (context, index) => CardItem(),
             ),
           ),
           Center(
             // 캘린더
-            child: Column(
-              mainAxisAlignment: MainAxisAlignment.center,
-              children: <Widget>[Icon(Icons.calendar_today), Text("캘린더")],
-            ),
+            child: Column(children: <Widget>[
+              TableCalendar(calendarController: _calendar),
+            ]),
           ),
           Center(
             // 설정
             child: Column(
               mainAxisAlignment: MainAxisAlignment.center,
-              children: <Widget>[Icon(Icons.settings), Text("설정")],
+              children: <Widget>[
+                Icon(Icons.settings),
+                Text("설정"),
+              ],
             ),
           ),
         ],
+      ),
+    );
+  }
+}
+
+class CardItem extends StatelessWidget {
+  @override
+  Widget build(BuildContext context) {
+    return Card(
+      child: Container(
+        height: 350,
+        color: Colors.white,
+        child: Column(
+          children: <Widget>[
+            ListTile(
+              leading: CircleAvatar(),
+              title: Text('제목이랑께'),
+              subtitle: Text('2020.04.14'),
+            ),
+            Expanded(
+              child: Container(
+                decoration: BoxDecoration(
+                  image: DecorationImage(
+                    image: NetworkImage(
+                        'https://pds.joins.com/news/component/htmlphoto_mmdata/201906/27/htm_20190627161112785240.jpg'),
+                    fit: BoxFit.cover,
+                  ),
+                ),
+              ),
+            ),
+            SizedBox(height: 14),
+            Row(
+              mainAxisAlignment: MainAxisAlignment.spaceAround,
+              children: <Widget>[
+                Row(
+                  children: <Widget>[
+                    Icon(Icons.thumb_up, color: Colors.grey),
+                    SizedBox(width: 8),
+                    Text(
+                      "쪼아요",
+                      style: TextStyle(color: Colors.grey),
+                    ),
+                  ],
+                ),
+                Row(
+                  children: <Widget>[
+                    Icon(Icons.comment, color: Colors.grey),
+                    SizedBox(width: 8),
+                    Text(
+                      "댓글",
+                      style: TextStyle(color: Colors.grey),
+                    ),
+                  ],
+                ),
+                Row(
+                  children: <Widget>[
+                    Icon(Icons.share, color: Colors.grey),
+                    SizedBox(width: 8),
+                    Text(
+                      "공유",
+                      style: TextStyle(color: Colors.grey),
+                    ),
+                  ],
+                ),
+              ],
+            ),
+            SizedBox(
+              height: 12,
+            )
+          ],
+        ),
       ),
     );
   }
