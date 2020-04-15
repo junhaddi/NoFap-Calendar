@@ -1,0 +1,48 @@
+{
+  "project_info": {
+    "project_number": "794253325534",
+    "firebase_url": "https://nofab-calendar.firebaseio.com",
+    "project_id": "nofab-calendar",
+    "storage_bucket": "nofab-calendar.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:794253325534:android:f0954024c5a87b1436fe4f",
+        "android_client_info": {
+          "package_name": "com.example.nofapcalendar"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "794253325534-65t9l95kekbipb2npro95c53m83af0e7.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.example.nofapcalendar",
+            "certificate_hash": "bc9c72e375b8fb9da418adc2d010661084ad45bc"
+          }
+        },
+        {
+          "client_id": "794253325534-5l3m7hm15qkgunho16nm36meub2bevst.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyDxGbaN9VRkdKQcLdXFg2ohRaLyMCdzmWE"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "794253325534-5l3m7hm15qkgunho16nm36meub2bevst.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
