@@ -1,4 +1,6 @@
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/widgets.dart';
 import 'package:table_calendar/table_calendar.dart';
 
 void main() => runApp(MyApp());
@@ -12,6 +14,7 @@ class MyApp extends StatelessWidget {
         primarySwatch: Colors.blue,
       ),
       home: MyHomePage(),
+      debugShowCheckedModeBanner: false,
     );
   }
 }
@@ -38,56 +41,34 @@ class _MyHomePageState extends State<MyHomePage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(
-        title: Text('금딸캘린더'),
-      ),
-      drawer: Drawer(
-        child: ListView(
-          padding: EdgeInsets.zero,
-          children: <Widget>[
-            DrawerHeader(
-              child: Text('Drawer Header'),
-              decoration: BoxDecoration(color: Colors.blue),
-            ),
-            ListTile(
-              title: Text('Item 1'),
-              onTap: () {
-                Navigator.pop(context);
-              },
-            ),
-            ListTile(
-              title: Text('Item 2'),
-              onTap: () {
-                Navigator.pop(context);
-              },
-            ),
-          ],
-        ),
-      ),
       bottomNavigationBar: BottomNavigationBar(
+        type: BottomNavigationBarType.fixed,
         currentIndex: _page,
         onTap: (index) {
           this._c.animateToPage(index,
-              duration: const Duration(milliseconds: 500),
+              duration: const Duration(milliseconds: 300),
               curve: Curves.easeInOut);
         },
         items: <BottomNavigationBarItem>[
           BottomNavigationBarItem(
             icon: Icon(Icons.home),
-            title: Text("홈"),
+            title: Text('홈'),
           ),
           BottomNavigationBarItem(
             icon: Icon(Icons.calendar_today),
-            title: Text("캘린더"),
+            title: Text('캘린더'),
+          ),
+          BottomNavigationBarItem(
+            icon: Icon(Icons.cake),
+            title: Text('업적'),
           ),
           BottomNavigationBarItem(
             icon: Icon(Icons.settings),
-            title: Text("설정"),
+            title: Text('설정'),
           ),
         ],
       ),
       body: PageView(
-        physics: NeverScrollableScrollPhysics(),
         controller: _c,
         onPageChanged: (newPage) {
           setState(() {
@@ -104,18 +85,122 @@ class _MyHomePageState extends State<MyHomePage> {
           ),
           Center(
             // 캘린더
-            child: Column(children: <Widget>[
-              TableCalendar(calendarController: _calendar),
-            ]),
+            child: Column(
+              children: <Widget>[
+                TableCalendar(
+                  headerStyle: HeaderStyle(
+                    centerHeaderTitle: true,
+                    formatButtonVisible: false,
+                  ),
+                  builders: CalendarBuilders(
+                    selectedDayBuilder: (context, date, events) => Container(
+                      margin: EdgeInsets.all(4),
+                      alignment: Alignment.center,
+                      decoration: BoxDecoration(
+                        image: DecorationImage(
+                          image: NetworkImage(
+                              'https://upload.wikimedia.org/wikipedia/commons/thumb/4/48/Dark_Red_x.svg/600px-Dark_Red_x.svg.png'),
+                        ),
+                      ),
+                      child: Text(
+                        date.day.toString(),
+                        style: TextStyle(color: Colors.white),
+                      ),
+                    ),
+                    todayDayBuilder: (context, date, events) => Container(
+                      margin: EdgeInsets.all(4),
+                      alignment: Alignment.center,
+                      decoration: BoxDecoration(
+                        color: Theme.of(context).primaryColor,
+                        borderRadius: BorderRadius.circular(10),
+                      ),
+                      child: Text(
+                        date.day.toString(),
+                        style: TextStyle(color: Colors.white),
+                      ),
+                    ),
+                  ),
+                  calendarController: _calendar,
+                ),
+              ],
+            ),
           ),
           Center(
-            // 설정
+            // 업적
             child: Column(
               mainAxisAlignment: MainAxisAlignment.center,
               children: <Widget>[
-                Icon(Icons.settings),
-                Text("설정"),
+                Icon(Icons.cake),
+                Text('업적'),
               ],
+            ),
+          ),
+          Center(
+            // 설정
+            child: SingleChildScrollView(
+              child: Column(
+                children: <Widget>[
+                  AppBar(
+                    title: Text('설정'),
+                  ),
+                  CheckboxListTile(
+                    value: true,
+                    title: Text('체크박스'),
+                    onChanged: (value) {},
+                  ),
+                  SwitchListTile(
+                    value: false,
+                    title: Text('스위치박스'),
+                    onChanged: (value) {},
+                  ),
+                  ListTile(
+                    title: Text('리스트'),
+                    subtitle: Text('부제목'),
+                  ),
+                  CheckboxListTile(
+                    value: true,
+                    title: Text('체크박스'),
+                    onChanged: (value) {},
+                  ),
+                  SwitchListTile(
+                    value: false,
+                    title: Text('스위치박스'),
+                    onChanged: (value) {},
+                  ),
+                  ListTile(
+                    title: Text('리스트'),
+                    subtitle: Text('부제목'),
+                  ),
+                  CheckboxListTile(
+                    value: true,
+                    title: Text('체크박스'),
+                    onChanged: (value) {},
+                  ),
+                  SwitchListTile(
+                    value: false,
+                    title: Text('스위치박스'),
+                    onChanged: (value) {},
+                  ),
+                  ListTile(
+                    title: Text('리스트'),
+                    subtitle: Text('부제목'),
+                  ),
+                  CheckboxListTile(
+                    value: true,
+                    title: Text('체크박스'),
+                    onChanged: (value) {},
+                  ),
+                  SwitchListTile(
+                    value: false,
+                    title: Text('스위치박스'),
+                    onChanged: (value) {},
+                  ),
+                  ListTile(
+                    title: Text('리스트'),
+                    subtitle: Text('부제목'),
+                  ),
+                ],
+              ),
             ),
           ),
         ],
@@ -158,7 +243,7 @@ class CardItem extends StatelessWidget {
                     Icon(Icons.thumb_up, color: Colors.grey),
                     SizedBox(width: 8),
                     Text(
-                      "쪼아요",
+                      '쪼아요',
                       style: TextStyle(color: Colors.grey),
                     ),
                   ],
@@ -168,7 +253,7 @@ class CardItem extends StatelessWidget {
                     Icon(Icons.comment, color: Colors.grey),
                     SizedBox(width: 8),
                     Text(
-                      "댓글",
+                      '댓글',
                       style: TextStyle(color: Colors.grey),
                     ),
                   ],
@@ -178,7 +263,7 @@ class CardItem extends StatelessWidget {
                     Icon(Icons.share, color: Colors.grey),
                     SizedBox(width: 8),
                     Text(
-                      "공유",
+                      '공유',
                       style: TextStyle(color: Colors.grey),
                     ),
                   ],
