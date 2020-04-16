@@ -1,10 +1,14 @@
 import 'package:flutter/material.dart';
 import 'package:nofapcalendar/ui/screens/walkthrough_screen.dart';
 import 'package:nofapcalendar/ui/screens/index_screen.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
 void main() => runApp(MyApp());
 
 class MyApp extends StatelessWidget {
+  SharedPreferences prefs;
+  bool isSeen = false;
+
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
@@ -17,17 +21,25 @@ class MyApp extends StatelessWidget {
       theme: ThemeData(
         primarySwatch: Colors.blue,
       ),
-      home: _handleCurrentScreen(),
+      home: _toHome(),
     );
   }
 
-  Widget _handleCurrentScreen() {
-//    bool seen = (prefs.getBool('seen') ?? false);
-//    if (seen) {
-//      return new RootScreen();
-//    } else {
-//      return new WalkthroughScreen(prefs: prefs);
-//    }
-    return new WalkthroughScreen();
+  _handleCurrentScreen() async {
+    prefs = await SharedPreferences.getInstance();
+    isSeen = (prefs.getBool('seen') ?? false);
+    print(isSeen);
+    if (isSeen) {
+      print('메인');
+      return new IndexScreen();
+    } else {
+      print('웰컴');
+      return new WalkthroughScreen(prefs: prefs);
+    }
+  }
+
+  Widget _toHome() {
+    _handleCurrentScreen();
+    return Scaffold();
   }
 }

@@ -4,7 +4,7 @@ import "package:nofapcalendar/models/walkthrough.dart";
 import 'package:shared_preferences/shared_preferences.dart';
 
 class WalkthroughScreen extends StatefulWidget {
-//  final SharedPreferences prefs;
+  final SharedPreferences prefs;
   final List<Walkthrough> pages = [
     Walkthrough(
       icon: Icons.developer_mode,
@@ -23,7 +23,7 @@ class WalkthroughScreen extends StatefulWidget {
     ),
   ];
 
-//  WalkthroughScreen({this.prefs});
+  WalkthroughScreen({this.prefs});
 
   @override
   _WalkthroughScreenState createState() => _WalkthroughScreenState();
@@ -146,7 +146,7 @@ class _WalkthroughScreenState extends State<WalkthroughScreen> {
                 child: RaisedButton(
                   child: Text('시작하기'),
                   onPressed: () {
-//                    widget.prefs.setBool('seen', true);
+                    widget.prefs.setBool('seen', true);
                     Navigator.of(context).pushNamed("/index");
                   },
                 ),
