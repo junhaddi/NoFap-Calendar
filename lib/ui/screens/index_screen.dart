@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
-import '../pages/home_page.dart';
-import '../pages/calendar_page.dart';
-import '../pages/achievement_page.dart';
-import '../pages/setting_page.dart';
+import 'package:nofapcalendar/ui/pages/home_page.dart';
+import 'package:nofapcalendar/ui/pages/calendar_page.dart';
+import 'package:nofapcalendar/ui/pages/achievement_page.dart';
+import 'package:nofapcalendar/ui/pages/setting_page.dart';
 
 class IndexScreen extends StatefulWidget {
   @override
