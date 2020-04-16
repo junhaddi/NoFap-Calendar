@@ -20,7 +20,6 @@ class _IndexScreenState extends State<IndexScreen> {
     SettingPage()
   ];
 
-  // _bottomNavigatorItem
   var _bottomItem = <BottomNavigationBarItem>[
     BottomNavigationBarItem(
       icon: Icon(Icons.home),

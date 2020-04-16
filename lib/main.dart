@@ -7,7 +7,7 @@ void main() => runApp(MyApp());
 
 class MyApp extends StatelessWidget {
   SharedPreferences prefs;
-  bool isSeen = false;
+  bool isSeen = true;
 
   @override
   Widget build(BuildContext context) {
@@ -29,6 +29,10 @@ class MyApp extends StatelessWidget {
     prefs = await SharedPreferences.getInstance();
     isSeen = (prefs.getBool('seen') ?? false);
     print(isSeen);
+  }
+
+  Widget _toHome() {
+    _handleCurrentScreen();
     if (isSeen) {
       print('메인');
       return new IndexScreen();
@@ -36,10 +40,5 @@ class MyApp extends StatelessWidget {
       print('웰컴');
       return new WalkthroughScreen(prefs: prefs);
     }
-  }
-
-  Widget _toHome() {
-    _handleCurrentScreen();
-    return Scaffold();
   }
 }
