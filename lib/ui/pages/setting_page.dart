@@ -13,7 +13,11 @@ class _SettingPageState extends State<SettingPage> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text('설정'),
+        leading: Center(
+          child: Text('설정', style: TextStyle(
+            fontSize: 17
+          )),
+        ),
       ),
       body: ListView(
         children: <Widget>[
