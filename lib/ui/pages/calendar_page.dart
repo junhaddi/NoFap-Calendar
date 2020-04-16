@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-
 import 'package:table_calendar/table_calendar.dart';
 
 // 캘린더 페이지 화면
@@ -14,9 +13,8 @@ class _CalendarPageState extends State<CalendarPage> {
   CalendarController _calendar;
 
   @override
-  void initState() { 
+  void initState() {
     super.initState();
-    
     _calendar = CalendarController();
   }
 
@@ -27,6 +25,7 @@ class _CalendarPageState extends State<CalendarPage> {
       child: Column(
         children: <Widget>[
           TableCalendar(
+            calendarController: _calendar,
             headerStyle: HeaderStyle(
               centerHeaderTitle: true,
               formatButtonVisible: false,
@@ -59,7 +58,6 @@ class _CalendarPageState extends State<CalendarPage> {
                 ),
               ),
             ),
-            calendarController: _calendar,
           ),
         ],
       ),

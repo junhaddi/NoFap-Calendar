@@ -1,14 +1,14 @@
 import 'package:flutter/material.dart';
 
 // 업적 페이지 화면
-class AchevementPage extends StatefulWidget {
-  AchevementPage({Key key}) : super(key: key);
+class AchievementPage extends StatefulWidget {
+  AchievementPage({Key key}) : super(key: key);
 
   @override
-  _AchevementPageState createState() => _AchevementPageState();
+  _AchievementPageState createState() => _AchievementPageState();
 }
 
-class _AchevementPageState extends State<AchevementPage> {
+class _AchievementPageState extends State<AchievementPage> {
   @override
   Widget build(BuildContext context) {
     return Center(

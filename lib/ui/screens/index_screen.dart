@@ -1,24 +1,22 @@
 import 'package:flutter/material.dart';
+import '../pages/home_page.dart';
+import '../pages/calendar_page.dart';
+import '../pages/achievement_page.dart';
+import '../pages/setting_page.dart';
 
-import 'Page/cardItem.dart';
-import 'Page/calendar.dart';
-import 'Page/achievement.dart';
-import 'Page/setting.dart';
-
-class MyHomePage extends StatefulWidget {
+class IndexScreen extends StatefulWidget {
   @override
-  _MyHomePageState createState() => _MyHomePageState();
+  _IndexScreenState createState() => _IndexScreenState();
 }
 
-class _MyHomePageState extends State<MyHomePage> {
+class _IndexScreenState extends State<IndexScreen> {
   int _page = 0;
   PageController _c;
 
-  // 페이지들
   var _everyPage = <Widget>[
-    CardItem(),
+    HomePage(),
     CalendarPage(),
-    AchevementPage(),
+    AchievementPage(),
     SettingPage()
   ];
 
@@ -45,7 +43,6 @@ class _MyHomePageState extends State<MyHomePage> {
   @override
   void initState() {
     super.initState();
-
     _c = PageController(
       initialPage: _page,
     );
@@ -61,7 +58,7 @@ class _MyHomePageState extends State<MyHomePage> {
             this._page = newPage;
           });
         },
-        children: _everyPage
+        children: _everyPage,
       ),
       bottomNavigationBar: BottomNavigationBar(
         type: BottomNavigationBarType.fixed,
@@ -71,9 +68,8 @@ class _MyHomePageState extends State<MyHomePage> {
               duration: const Duration(milliseconds: 300),
               curve: Curves.easeInOut);
         },
-        items: _bottomItem
+        items: _bottomItem,
       ),
     );
   }
 }
-

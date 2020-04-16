@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 
 // 홈 페이지 화면
-class CardItem extends StatelessWidget {
+class HomePage extends StatelessWidget {
   // 카드 아래 있는 "조아요, 댓글, 공유" 바
   _cardBottom() {
     return Row(
