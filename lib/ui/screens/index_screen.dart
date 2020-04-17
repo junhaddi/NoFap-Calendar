@@ -1,8 +1,14 @@
 import 'package:flutter/material.dart';
+
+import 'dart:io';
+import 'package:firebase_messaging/firebase_messaging.dart';
+
 import 'package:nofapcalendar/ui/pages/home_page.dart';
 import 'package:nofapcalendar/ui/pages/calendar_page.dart';
 import 'package:nofapcalendar/ui/pages/achievement_page.dart';
 import 'package:nofapcalendar/ui/pages/setting_page.dart';
+
+final FirebaseMessaging _firebaseMessaging = FirebaseMessaging();
 
 class IndexScreen extends StatefulWidget {
   @override
@@ -42,6 +48,7 @@ class _IndexScreenState extends State<IndexScreen> {
   @override
   void initState() {
     super.initState();
+    fcmListeners();
     Future.delayed(Duration.zero, () => _showDailyDialog(context));
     _c = PageController(
       initialPage: _page,
@@ -70,6 +77,33 @@ class _IndexScreenState extends State<IndexScreen> {
         },
         items: _bottomItem,
       ),
+    );
+  }
+
+  void fcmListeners() {
+    if (Platform.isIOS) {
+      _firebaseMessaging.requestNotificationPermissions(
+          IosNotificationSettings(sound: true, badge: true, alert: true));
+      _firebaseMessaging.onIosSettingsRegistered
+          .listen((IosNotificationSettings settings) {
+        print('Settings registered: $settings');
+      });
+    }
+
+    _firebaseMessaging.getToken().then((token) {
+      print('token: $token');
+    });
+
+    _firebaseMessaging.configure(
+      onMessage: (Map<String, dynamic> message) async {
+        print('on message: $message');
+      },
+      onResume: (Map<String, dynamic> message) async {
+        print('on resume: $message');
+      },
+      onLaunch: (Map<String, dynamic> message) async {
+        print('on launch: $message');
+      },
     );
   }
 

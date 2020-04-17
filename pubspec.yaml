@@ -28,6 +28,7 @@ dependencies:
   table_calendar: ^2.2.3
   flutter_native_admob: ^2.1.0
   flutter_native_splash: ^0.1.9
+  firebase_messaging: ^6.0.13
 
 dev_dependencies:
   flutter_test:
