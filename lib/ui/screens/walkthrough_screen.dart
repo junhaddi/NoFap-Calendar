@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
-import "package:flutter_swiper/flutter_swiper.dart";
-import "package:nofapcalendar/models/walkthrough.dart";
+import 'package:flutter_swiper/flutter_swiper.dart';
+import 'package:nofapcalendar/models/walkthrough.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 class WalkthroughScreen extends StatefulWidget {
@@ -8,18 +8,18 @@ class WalkthroughScreen extends StatefulWidget {
   final List<Walkthrough> pages = [
     Walkthrough(
       icon: Icons.developer_mode,
-      title: "Flutter Onboarding",
-      description: "Build your onboarding flow in seconds.",
+      title: 'Flutter Onboarding',
+      description: 'Build your onboarding flow in seconds.',
     ),
     Walkthrough(
       icon: Icons.layers,
-      title: "Firebase Auth",
-      description: "Use Firebase for user management.",
+      title: 'Firebase Auth',
+      description: 'Use Firebase for user management.',
     ),
     Walkthrough(
       icon: Icons.account_circle,
-      title: "Facebook Login",
-      description: "Leverage Facebook to log in user easily.",
+      title: 'Facebook Login',
+      description: 'Leverage Facebook to log in user easily.',
     ),
   ];
 
@@ -37,13 +37,14 @@ class _WalkthroughScreenState extends State<WalkthroughScreen> {
         autoplay: false,
         index: 0,
         loop: false,
-        pagination: new SwiperPagination(
-          margin: new EdgeInsets.fromLTRB(0.0, 0.0, 0.0, 40.0),
-          builder: new DotSwiperPaginationBuilder(
-              color: Colors.white30,
-              activeColor: Colors.white,
-              size: 6.5,
-              activeSize: 8.0),
+        pagination: SwiperPagination(
+          margin: EdgeInsets.fromLTRB(0.0, 0.0, 0.0, 40.0),
+          builder: DotSwiperPaginationBuilder(
+            color: Colors.white30,
+            activeColor: Colors.white,
+            size: 6.5,
+            activeSize: 8.0,
+          ),
         ),
         control: SwiperControl(
           iconPrevious: null,
@@ -59,7 +60,7 @@ class _WalkthroughScreenState extends State<WalkthroughScreen> {
     for (int i = 0; i < widget.pages.length; i++) {
       Walkthrough page = widget.pages[i];
       widgets.add(
-        new Container(
+        Container(
           color: Colors.red,
           child: ListView(
             children: <Widget>[
@@ -83,7 +84,7 @@ class _WalkthroughScreenState extends State<WalkthroughScreen> {
                     decoration: TextDecoration.none,
                     fontSize: 24.0,
                     fontWeight: FontWeight.w700,
-                    fontFamily: "OpenSans",
+                    fontFamily: 'OpenSans',
                   ),
                 ),
               ),
@@ -98,7 +99,7 @@ class _WalkthroughScreenState extends State<WalkthroughScreen> {
                     decoration: TextDecoration.none,
                     fontSize: 15.0,
                     fontWeight: FontWeight.w300,
-                    fontFamily: "OpenSans",
+                    fontFamily: 'OpenSans',
                   ),
                 ),
               ),
@@ -112,7 +113,7 @@ class _WalkthroughScreenState extends State<WalkthroughScreen> {
       );
     }
     widgets.add(
-      new Container(
+      Container(
         color: Colors.red,
         child: Center(
           child: Column(
@@ -128,7 +129,7 @@ class _WalkthroughScreenState extends State<WalkthroughScreen> {
                 padding:
                     const EdgeInsets.only(top: 50.0, right: 15.0, left: 15.0),
                 child: Text(
-                  "Jump straight into the action.",
+                  'Jump straight into the action.',
                   softWrap: true,
                   textAlign: TextAlign.center,
                   style: TextStyle(
@@ -136,7 +137,7 @@ class _WalkthroughScreenState extends State<WalkthroughScreen> {
                     decoration: TextDecoration.none,
                     fontSize: 24.0,
                     fontWeight: FontWeight.w700,
-                    fontFamily: "OpenSans",
+                    fontFamily: 'OpenSans',
                   ),
                 ),
               ),
@@ -147,7 +148,7 @@ class _WalkthroughScreenState extends State<WalkthroughScreen> {
                   child: Text('시작하기'),
                   onPressed: () {
                     widget.prefs.setBool('seen', true);
-                    Navigator.of(context).pushNamed("/index");
+                    Navigator.of(context).pushNamed('/index');
                   },
                 ),
               ),

@@ -79,19 +79,20 @@ class _IndexScreenState extends State<IndexScreen> {
       barrierDismissible: false,
       builder: (BuildContext context) {
         return AlertDialog(
-          shape:
-              RoundedRectangleBorder(borderRadius: BorderRadius.circular(8.0)),
+          shape: RoundedRectangleBorder(
+            borderRadius: BorderRadius.circular(8.0),
+          ),
           title: Text('금딸 성공'),
-          content: Text("하였습니까???????"),
+          content: Text('하셨습니까???????'),
           actions: <Widget>[
             FlatButton(
-              child: Text("오늘은 잘 참았다"),
+              child: Text('오늘은 잘 참았다'),
               onPressed: () {
                 Navigator.pop(context);
               },
             ),
             FlatButton(
-              child: Text("실패하였습니다.."),
+              child: Text('실패하였습니다..'),
               onPressed: () {
                 Navigator.pop(context);
               },

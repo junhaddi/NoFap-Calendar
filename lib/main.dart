@@ -21,8 +21,8 @@ class MyApp extends StatelessWidget {
       title: '금딸캘린더',
       debugShowCheckedModeBanner: false,
       routes: <String, WidgetBuilder>{
-        '/walkthrough': (BuildContext context) => new WalkthroughScreen(),
-        '/index': (BuildContext context) => new IndexScreen(),
+        '/walkthrough': (BuildContext context) => WalkthroughScreen(),
+        '/index': (BuildContext context) => IndexScreen(),
       },
       theme: ThemeData(
         primarySwatch: Colors.blue,

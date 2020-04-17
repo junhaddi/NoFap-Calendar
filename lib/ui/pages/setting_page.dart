@@ -14,9 +14,10 @@ class _SettingPageState extends State<SettingPage> {
     return Scaffold(
       appBar: AppBar(
         leading: Center(
-          child: Text('설정', style: TextStyle(
-            fontSize: 17
-          )),
+          child: Text(
+            '설정',
+            style: TextStyle(fontSize: 17),
+          ),
         ),
       ),
       body: ListView(
