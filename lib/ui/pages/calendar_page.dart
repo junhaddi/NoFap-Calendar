@@ -35,14 +35,16 @@ class _CalendarPageState extends State<CalendarPage> {
                 margin: EdgeInsets.all(4),
                 alignment: Alignment.center,
                 decoration: BoxDecoration(
-                  image: DecorationImage(
-                    image: NetworkImage(
-                        'https://upload.wikimedia.org/wikipedia/commons/thumb/4/48/Dark_Red_x.svg/600px-Dark_Red_x.svg.png'),
-                  ),
-                ),
-                child: Text(
-                  date.day.toString(),
-                  style: TextStyle(color: Colors.white),
+//                  image: DecorationImage(
+//                    image: NetworkImage(
+//                        'https://upload.wikimedia.org/wikipedia/commons/thumb/4/48/Dark_Red_x.svg/600px-Dark_Red_x.svg.png'),
+//                  ),
+                    ),
+                child: Icon(
+                  Icons.block,
+                  size: 50,
+//                  date.day.toString(),
+//                  style: TextStyle(color: Colors.amber),
                 ),
               ),
               todayDayBuilder: (context, date, events) => Container(
