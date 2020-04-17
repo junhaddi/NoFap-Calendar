@@ -34,10 +34,8 @@ class MyApp extends StatelessWidget {
   Widget _handleCurrentScreen() {
     bool seen = (prefs.getBool('seen') ?? false);
     if (seen) {
-      print('메인');
       return IndexScreen();
     } else {
-      print('웰컴');
       return WalkthroughScreen(prefs: prefs);
     }
   }

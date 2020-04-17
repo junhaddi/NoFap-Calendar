@@ -42,6 +42,7 @@ class _IndexScreenState extends State<IndexScreen> {
   @override
   void initState() {
     super.initState();
+    Future.delayed(Duration.zero, () => _showDailyDialog(context));
     _c = PageController(
       initialPage: _page,
     );
@@ -69,6 +70,35 @@ class _IndexScreenState extends State<IndexScreen> {
         },
         items: _bottomItem,
       ),
+    );
+  }
+
+  void _showDailyDialog(BuildContext context) {
+    showDialog(
+      context: context,
+      barrierDismissible: false,
+      builder: (BuildContext context) {
+        return AlertDialog(
+          shape:
+              RoundedRectangleBorder(borderRadius: BorderRadius.circular(8.0)),
+          title: Text('금딸 성공'),
+          content: Text("하였습니까???????"),
+          actions: <Widget>[
+            FlatButton(
+              child: Text("오늘은 잘 참았다"),
+              onPressed: () {
+                Navigator.pop(context);
+              },
+            ),
+            FlatButton(
+              child: Text("실패하였습니다.."),
+              onPressed: () {
+                Navigator.pop(context);
+              },
+            ),
+          ],
+        );
+      },
     );
   }
 }
