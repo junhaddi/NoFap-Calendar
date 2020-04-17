@@ -27,6 +27,7 @@ dependencies:
   shared_preferences: ^0.5.6+3
   table_calendar: ^2.2.3
   flutter_native_admob: ^2.1.0
+  flutter_native_splash: ^0.1.9
 
 dev_dependencies:
   flutter_test:
@@ -45,12 +46,8 @@ flutter:
   uses-material-design: true
 
   # To add assets to your application, add an assets section, like this:
-#  assets:
-#    - assets/images/1.png
-#    - assets/images/2.png
-#    - assets/images/3.png
-#    - assets/images/4.png
-#    - assets/images/5.png
+  assets:
+    - assets/ic_launcher.png
 
   # An image asset can refer to one or more resolution-specific "variants", see
   # https://flutter.dev/assets-and-images/#resolution-aware.
@@ -77,3 +74,7 @@ flutter:
   #
   # For details regarding fonts from package dependencies,
   # see https://flutter.dev/custom-fonts/#from-packages
+
+flutter_native_splash:
+  image: assets/ic_launcher.png
+  color: "42a5f5"
