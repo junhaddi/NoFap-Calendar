@@ -7,6 +7,7 @@ import 'package:nofapcalendar/ui/pages/achievement_page.dart';
 import 'package:nofapcalendar/ui/pages/setting_page.dart';
 
 final FirebaseMessaging _firebaseMessaging = FirebaseMessaging();
+DateTime currentBackPressTime;
 
 class IndexScreen extends StatefulWidget {
   @override
@@ -56,14 +57,17 @@ class _IndexScreenState extends State<IndexScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      body: PageView(
-        controller: _c,
-        onPageChanged: (newPage) {
-          setState(() {
-            this._page = newPage;
-          });
-        },
-        children: _everyPage,
+      body: WillPopScope(
+        onWillPop: onWillPop,
+        child: PageView(
+          controller: _c,
+          onPageChanged: (newPage) {
+            setState(() {
+              this._page = newPage;
+            });
+          },
+          children: _everyPage,
+        ),
       ),
       bottomNavigationBar: Container(
         decoration: BoxDecoration(boxShadow: <BoxShadow>[
@@ -141,5 +145,16 @@ class _IndexScreenState extends State<IndexScreen> {
         );
       },
     );
+  }
+
+  Future<bool> onWillPop() async {
+    DateTime now = DateTime.now();
+    if (currentBackPressTime == null ||
+        now.difference(currentBackPressTime) > Duration(seconds: 2)) {
+      currentBackPressTime = now;
+      _showDailyDialog(context);
+      return false;
+    }
+    return true;
   }
 }
