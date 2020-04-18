@@ -1,9 +1,7 @@
 import 'package:flutter/material.dart';
+import 'package:nofapcalendar/ui/widgets/custom_app_bar.dart';
 
-// 설정 페이지 화면
 class SettingPage extends StatefulWidget {
-  SettingPage({Key key}) : super(key: key);
-
   @override
   _SettingPageState createState() => _SettingPageState();
 }
@@ -12,13 +10,8 @@ class _SettingPageState extends State<SettingPage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(
-        leading: Center(
-          child: Text(
-            '설정',
-            style: TextStyle(fontSize: 17),
-          ),
-        ),
+      appBar: CustomAppBar(
+        title: '설정',
       ),
       body: ListView(
         children: <Widget>[

@@ -148,7 +148,7 @@ class _WalkthroughScreenState extends State<WalkthroughScreen> {
                   child: Text('시작하기'),
                   onPressed: () {
                     widget.prefs.setBool('seen', true);
-                    Navigator.of(context).pushNamed('/index');
+                    Navigator.of(context).pushReplacementNamed('/index');
                   },
                 ),
               ),

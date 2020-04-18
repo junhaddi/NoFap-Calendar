@@ -1,8 +1,6 @@
 import 'package:flutter/material.dart';
-
 import 'dart:io';
 import 'package:firebase_messaging/firebase_messaging.dart';
-
 import 'package:nofapcalendar/ui/pages/home_page.dart';
 import 'package:nofapcalendar/ui/pages/calendar_page.dart';
 import 'package:nofapcalendar/ui/pages/achievement_page.dart';
@@ -67,15 +65,23 @@ class _IndexScreenState extends State<IndexScreen> {
         },
         children: _everyPage,
       ),
-      bottomNavigationBar: BottomNavigationBar(
-        type: BottomNavigationBarType.fixed,
-        currentIndex: _page,
-        onTap: (index) {
-          this._c.animateToPage(index,
-              duration: const Duration(milliseconds: 300),
-              curve: Curves.easeInOut);
-        },
-        items: _bottomItem,
+      bottomNavigationBar: Container(
+        decoration: BoxDecoration(boxShadow: <BoxShadow>[
+          BoxShadow(
+            color: Color.fromRGBO(211, 211, 211, 1.0),
+            blurRadius: 10.0,
+          )
+        ]),
+        child: BottomNavigationBar(
+          type: BottomNavigationBarType.fixed,
+          currentIndex: _page,
+          onTap: (index) {
+            this._c.animateToPage(index,
+                duration: const Duration(milliseconds: 300),
+                curve: Curves.easeInOut);
+          },
+          items: _bottomItem,
+        ),
       ),
     );
   }
