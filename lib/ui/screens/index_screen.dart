@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'dart:io';
 import 'package:firebase_messaging/firebase_messaging.dart';
 import 'package:nofapcalendar/ui/pages/home_page.dart';
-import 'package:nofapcalendar/ui/pages/calendar_page.dart';
+import 'package:nofapcalendar/ui/pages/status_page.dart';
 import 'package:nofapcalendar/ui/pages/achievement_page.dart';
 import 'package:nofapcalendar/ui/pages/setting_page.dart';
 
@@ -20,7 +20,7 @@ class _IndexScreenState extends State<IndexScreen> {
 
   var _everyPage = <Widget>[
     HomePage(),
-    CalendarPage(),
+    StatusPage(),
     AchievementPage(),
     SettingPage()
   ];
@@ -32,7 +32,7 @@ class _IndexScreenState extends State<IndexScreen> {
     ),
     BottomNavigationBarItem(
       icon: Icon(Icons.calendar_today),
-      title: Text('캘린더'),
+      title: Text('현황'),
     ),
     BottomNavigationBarItem(
       icon: Icon(Icons.cake),
@@ -73,7 +73,6 @@ class _IndexScreenState extends State<IndexScreen> {
         decoration: BoxDecoration(boxShadow: <BoxShadow>[
           BoxShadow(
             color: Color.fromRGBO(211, 211, 211, 1.0),
-            blurRadius: 10.0,
           )
         ]),
         child: BottomNavigationBar(

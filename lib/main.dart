@@ -25,7 +25,7 @@ class MyApp extends StatelessWidget {
         '/index': (BuildContext context) => IndexScreen(),
       },
       theme: ThemeData(
-        primarySwatch: Colors.blue,
+        primarySwatch: Colors.red,
       ),
       home: _handleCurrentScreen(),
     );
