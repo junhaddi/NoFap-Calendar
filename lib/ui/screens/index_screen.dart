@@ -1,3 +1,5 @@
+import 'dart:async';
+
 import 'package:flutter/material.dart';
 import 'dart:io';
 import 'package:firebase_messaging/firebase_messaging.dart';
@@ -5,9 +7,28 @@ import 'package:nofapcalendar/ui/pages/home_page.dart';
 import 'package:nofapcalendar/ui/pages/status_page.dart';
 import 'package:nofapcalendar/ui/pages/achievement_page.dart';
 import 'package:nofapcalendar/ui/pages/setting_page.dart';
+import 'package:http/http.dart' as http;
 
 final FirebaseMessaging _firebaseMessaging = FirebaseMessaging();
 DateTime currentBackPressTime;
+
+// VPN 사용유무 감지
+Future<bool> checkVPN() async {
+  try {
+    final response = await http.get('https://pornhub.com');
+    if (response.statusCode == 200) {
+      print('USE VPN');
+      return true;
+    } else {
+      print('NON VPN');
+      return false;
+    }
+  } catch (e) {
+    // ISP 차단
+    print('NON VPN');
+    return false;
+  }
+}
 
 class IndexScreen extends StatefulWidget {
   @override
@@ -47,6 +68,7 @@ class _IndexScreenState extends State<IndexScreen> {
   @override
   void initState() {
     super.initState();
+    checkVPN();
     fcmListeners();
     Future.delayed(Duration.zero, () => _showDailyDialog(context));
     _c = PageController(
