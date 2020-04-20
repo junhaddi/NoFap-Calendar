@@ -1,16 +1,15 @@
-import 'dart:async';
-
 import 'package:flutter/material.dart';
-import 'dart:io';
+import 'package:shared_preferences/shared_preferences.dart';
 import 'package:firebase_messaging/firebase_messaging.dart';
-import 'package:nofapcalendar/ui/pages/home_page.dart';
-import 'package:nofapcalendar/ui/pages/status_page.dart';
-import 'package:nofapcalendar/ui/pages/achievement_page.dart';
-import 'package:nofapcalendar/ui/pages/setting_page.dart';
+import 'package:nofapcalendar/pages/home_page.dart';
+import 'package:nofapcalendar/pages/status_page.dart';
+import 'package:nofapcalendar/pages/achievement_page.dart';
+import 'package:nofapcalendar/pages/setting_page.dart';
 import 'package:http/http.dart' as http;
+import 'dart:async';
+import 'dart:io';
 
 final FirebaseMessaging _firebaseMessaging = FirebaseMessaging();
-DateTime currentBackPressTime;
 
 // VPN 사용유무 감지
 Future<bool> checkVPN() async {
@@ -31,6 +30,10 @@ Future<bool> checkVPN() async {
 }
 
 class IndexScreen extends StatefulWidget {
+  final SharedPreferences prefs;
+
+  IndexScreen({this.prefs});
+
   @override
   _IndexScreenState createState() => _IndexScreenState();
 }
@@ -38,6 +41,7 @@ class IndexScreen extends StatefulWidget {
 class _IndexScreenState extends State<IndexScreen> {
   int _page = 0;
   PageController _c;
+  DateTime currentBackPressTime;
 
   var _everyPage = <Widget>[
     HomePage(),
@@ -69,8 +73,7 @@ class _IndexScreenState extends State<IndexScreen> {
   void initState() {
     super.initState();
     checkVPN();
-    fcmListeners();
-    Future.delayed(Duration.zero, () => _showDailyDialog(context));
+    _fcmListener();
     _c = PageController(
       initialPage: _page,
     );
@@ -95,7 +98,7 @@ class _IndexScreenState extends State<IndexScreen> {
         decoration: BoxDecoration(boxShadow: <BoxShadow>[
           BoxShadow(
             color: Color.fromRGBO(211, 211, 211, 1.0),
-          )
+          ),
         ]),
         child: BottomNavigationBar(
           type: BottomNavigationBarType.fixed,
@@ -111,7 +114,7 @@ class _IndexScreenState extends State<IndexScreen> {
     );
   }
 
-  void fcmListeners() {
+  void _fcmListener() {
     if (Platform.isIOS) {
       _firebaseMessaging.requestNotificationPermissions(
           IosNotificationSettings(sound: true, badge: true, alert: true));
@@ -120,7 +123,6 @@ class _IndexScreenState extends State<IndexScreen> {
         print('Settings registered: $settings');
       });
     }
-
     _firebaseMessaging.getToken().then((token) {
       print('token: $token');
     });
@@ -138,26 +140,30 @@ class _IndexScreenState extends State<IndexScreen> {
     );
   }
 
-  void _showDailyDialog(BuildContext context) {
+  void _showExitDialog(BuildContext context) {
     showDialog(
       context: context,
-      barrierDismissible: false,
       builder: (BuildContext context) {
         return AlertDialog(
           shape: RoundedRectangleBorder(
             borderRadius: BorderRadius.circular(8.0),
           ),
-          title: Text('금딸 성공'),
-          content: Text('하셨습니까???????'),
+          content: Column(
+            children: <Widget>[
+              Image.network(
+                  'https://pds.joins.com/news/component/htmlphoto_mmdata/201904/30/26fe5ce4-bbb6-4085-a7b6-ae85caf0f177.jpg'),
+              Text('금딸캠프를 종료할까요?'),
+            ],
+          ),
           actions: <Widget>[
-            FlatButton(
-              child: Text('오늘은 잘 참았다'),
+            RaisedButton(
+              child: Text('취소'),
               onPressed: () {
                 Navigator.pop(context);
               },
             ),
-            FlatButton(
-              child: Text('실패하였습니다..'),
+            RaisedButton(
+              child: Text('종료'),
               onPressed: () {
                 Navigator.pop(context);
               },
@@ -169,11 +175,11 @@ class _IndexScreenState extends State<IndexScreen> {
   }
 
   Future<bool> onWillPop() async {
-    DateTime now = DateTime.now();
+    DateTime currentTime = DateTime.now();
     if (currentBackPressTime == null ||
-        now.difference(currentBackPressTime) > Duration(seconds: 2)) {
-      currentBackPressTime = now;
-      _showDailyDialog(context);
+        currentTime.difference(currentBackPressTime) > Duration(seconds: 2)) {
+      currentBackPressTime = currentTime;
+      _showExitDialog(context);
       return false;
     }
     return true;

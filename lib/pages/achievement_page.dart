@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:nofapcalendar/ui/widgets/custom_app_bar.dart';
+import 'package:nofapcalendar/widgets/custom_app_bar.dart';
 
 class _ArticleDescription extends StatelessWidget {
   _ArticleDescription({

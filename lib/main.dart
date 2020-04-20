@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
-import 'package:nofapcalendar/ui/screens/walkthrough_screen.dart';
-import 'package:nofapcalendar/ui/screens/index_screen.dart';
 import 'package:shared_preferences/shared_preferences.dart';
+import 'package:nofapcalendar/screens/walkthrough_screen.dart';
+import 'package:nofapcalendar/screens/index_screen.dart';
 
 void main() {
   WidgetsFlutterBinding.ensureInitialized();
@@ -21,8 +21,9 @@ class MyApp extends StatelessWidget {
       title: '금딸캘린더',
       debugShowCheckedModeBanner: false,
       routes: <String, WidgetBuilder>{
-        '/walkthrough': (BuildContext context) => WalkthroughScreen(),
-        '/index': (BuildContext context) => IndexScreen(),
+        '/walkthrough': (BuildContext context) =>
+            WalkthroughScreen(prefs: prefs),
+        '/index': (BuildContext context) => IndexScreen(prefs: prefs),
       },
       theme: ThemeData(
         primarySwatch: Colors.red,
@@ -31,10 +32,11 @@ class MyApp extends StatelessWidget {
     );
   }
 
+  // 앱 실행 시 스크린 라우팅
   Widget _handleCurrentScreen() {
-    bool seen = (prefs.getBool('seen') ?? false);
-    if (seen) {
-      return IndexScreen();
+    bool isWalkthroughSeen = (prefs.getBool('walkthroughSeen') ?? false);
+    if (isWalkthroughSeen) {
+      return IndexScreen(prefs: prefs);
     } else {
       return WalkthroughScreen(prefs: prefs);
     }

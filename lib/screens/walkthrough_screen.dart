@@ -1,25 +1,25 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_swiper/flutter_swiper.dart';
-import 'package:nofapcalendar/models/walkthrough.dart';
 import 'package:shared_preferences/shared_preferences.dart';
+import 'package:flutter_swiper/flutter_swiper.dart';
+import 'package:nofapcalendar/widgets/walkthrough.dart';
 
 class WalkthroughScreen extends StatefulWidget {
   final SharedPreferences prefs;
   final List<Walkthrough> pages = [
     Walkthrough(
-      icon: Icons.developer_mode,
-      title: 'Flutter Onboarding',
-      description: 'Build your onboarding flow in seconds.',
+      icon: Icons.warning,
+      title: '딸치면 때립니다!',
+      description: '조심하십쇼.',
     ),
     Walkthrough(
-      icon: Icons.layers,
-      title: 'Firebase Auth',
-      description: 'Use Firebase for user management.',
+      icon: Icons.warning,
+      title: '이제부터 딸치면 때립니다!!',
+      description: '진심입니다.',
     ),
     Walkthrough(
-      icon: Icons.account_circle,
-      title: 'Facebook Login',
-      description: 'Leverage Facebook to log in user easily.',
+      icon: Icons.warning,
+      title: '정말로 떄립니다!!!',
+      description: '각오는 되셨겠죠.',
     ),
   ];
 
@@ -62,92 +62,82 @@ class _WalkthroughScreenState extends State<WalkthroughScreen> {
       widgets.add(
         Container(
           color: Colors.red,
-          child: ListView(
-            children: <Widget>[
-              Padding(
-                padding: const EdgeInsets.only(top: 70.0),
-                child: Icon(
+          child: Center(
+            child: Column(
+              mainAxisAlignment: MainAxisAlignment.center,
+              children: [
+                Icon(
                   page.icon,
-                  size: 125.0,
+                  size: 120.0,
                   color: Colors.white,
                 ),
-              ),
-              Padding(
-                padding:
-                    const EdgeInsets.only(top: 50.0, right: 15.0, left: 15.0),
-                child: Text(
-                  page.title,
-                  softWrap: true,
-                  textAlign: TextAlign.center,
-                  style: TextStyle(
-                    color: Colors.white,
-                    decoration: TextDecoration.none,
-                    fontSize: 24.0,
-                    fontWeight: FontWeight.w700,
-                    fontFamily: 'OpenSans',
+                Padding(
+                  padding: const EdgeInsets.only(top: 50.0),
+                  child: Text(
+                    page.title,
+                    softWrap: true,
+                    textAlign: TextAlign.center,
+                    style: TextStyle(
+                      color: Colors.white,
+                      decoration: TextDecoration.none,
+                      fontSize: 24.0,
+                      fontWeight: FontWeight.w700,
+                    ),
                   ),
                 ),
-              ),
-              Padding(
-                padding: const EdgeInsets.all(20.0),
-                child: Text(
-                  page.description,
-                  softWrap: true,
-                  textAlign: TextAlign.center,
-                  style: TextStyle(
-                    color: Colors.white,
-                    decoration: TextDecoration.none,
-                    fontSize: 15.0,
-                    fontWeight: FontWeight.w300,
-                    fontFamily: 'OpenSans',
+                Padding(
+                  padding: const EdgeInsets.all(20.0),
+                  child: Text(
+                    page.description,
+                    softWrap: true,
+                    textAlign: TextAlign.center,
+                    style: TextStyle(
+                      color: Colors.white,
+                      fontSize: 15.0,
+                      fontWeight: FontWeight.w300,
+                    ),
                   ),
                 ),
-              ),
-              Padding(
-                padding: const EdgeInsets.all(10.0),
-                child: page.extraWidget,
-              )
-            ],
+                Container(
+                  child: page.extraWidget,
+                ),
+              ],
+            ),
           ),
         ),
       );
     }
     widgets.add(
       Container(
-        color: Colors.red,
+        color: Colors.amber,
         child: Center(
           child: Column(
             mainAxisAlignment: MainAxisAlignment.center,
-            crossAxisAlignment: CrossAxisAlignment.center,
             children: <Widget>[
               Icon(
                 Icons.code,
-                size: 125.0,
+                size: 120.0,
                 color: Colors.white,
               ),
               Padding(
-                padding:
-                    const EdgeInsets.only(top: 50.0, right: 15.0, left: 15.0),
+                padding: const EdgeInsets.only(top: 50.0),
                 child: Text(
-                  'Jump straight into the action.',
+                  '금딸캠프에 오신것을 환영합니다.',
                   softWrap: true,
                   textAlign: TextAlign.center,
                   style: TextStyle(
                     color: Colors.white,
-                    decoration: TextDecoration.none,
                     fontSize: 24.0,
                     fontWeight: FontWeight.w700,
-                    fontFamily: 'OpenSans',
                   ),
                 ),
               ),
               Padding(
-                padding:
-                    const EdgeInsets.only(top: 20.0, right: 15.0, left: 15.0),
+                padding: const EdgeInsets.only(top: 20.0),
                 child: RaisedButton(
                   child: Text('시작하기'),
                   onPressed: () {
-                    widget.prefs.setBool('seen', true);
+                    widget.prefs.setBool('walkthroughSeen', true);
                     Navigator.of(context).pushReplacementNamed('/index');
                   },
                 ),
