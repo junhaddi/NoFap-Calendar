@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:shared_preferences/shared_preferences.dart';
-import 'package:nofapcalendar/screens/walkthrough_screen.dart';
-import 'package:nofapcalendar/screens/index_screen.dart';
+import 'package:nofapcamp/screens/walkthrough_screen.dart';
+import 'package:nofapcamp/screens/index_screen.dart';
 
 void main() {
   WidgetsFlutterBinding.ensureInitialized();

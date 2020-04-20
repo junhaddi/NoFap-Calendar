@@ -1,4 +1,4 @@
-package com.example.nofapcalendar
+package com.example.nofapcamp
 
 import androidx.annotation.NonNull;
 import io.flutter.embedding.android.FlutterActivity

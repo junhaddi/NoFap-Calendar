@@ -3,7 +3,7 @@ import 'package:flutter_native_admob/flutter_native_admob.dart';
 import 'package:flutter_native_admob/native_admob_controller.dart';
 
 class HomePage extends StatelessWidget {
-  static const _adUnitID = 'ca-app-pub-8336339515298040/5864052966';
+  static const _adUnitID = 'ca-app-pub-8336339515298040/6724604841';
   final _nativeAdController = NativeAdmobController();
 
   @override

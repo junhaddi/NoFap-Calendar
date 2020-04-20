@@ -1,6 +1,6 @@
-# nofapcalendar
+# nofapcamp
 
-For men for women
+금딸캠프 - 자위중독 끊기
 
 ## Getting Started
 

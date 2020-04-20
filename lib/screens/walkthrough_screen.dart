@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:flutter_swiper/flutter_swiper.dart';
-import 'package:nofapcalendar/widgets/walkthrough.dart';
+import 'package:nofapcamp/widgets/walkthrough.dart';
 
 class WalkthroughScreen extends StatefulWidget {
   final SharedPreferences prefs;

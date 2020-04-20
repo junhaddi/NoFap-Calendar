@@ -1,10 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:firebase_messaging/firebase_messaging.dart';
-import 'package:nofapcalendar/pages/home_page.dart';
-import 'package:nofapcalendar/pages/status_page.dart';
-import 'package:nofapcalendar/pages/achievement_page.dart';
-import 'package:nofapcalendar/pages/setting_page.dart';
+import 'package:nofapcamp/pages/home_page.dart';
+import 'package:nofapcamp/pages/status_page.dart';
+import 'package:nofapcamp/pages/achievement_page.dart';
+import 'package:nofapcamp/pages/setting_page.dart';
 import 'package:http/http.dart' as http;
 import 'dart:async';
 import 'dart:io';
