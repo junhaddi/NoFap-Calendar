@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:numberpicker/numberpicker.dart';
 import 'package:percent_indicator/circular_percent_indicator.dart';
 
 class StatusPage extends StatefulWidget {
@@ -7,6 +8,25 @@ class StatusPage extends StatefulWidget {
 }
 
 class _StatusPageState extends State<StatusPage> {
+  int _dday = 1;
+
+  void _showDialog() {
+    showDialog<int>(
+        context: context,
+        builder: (BuildContext context) {
+          return NumberPickerDialog.integer(
+            minValue: 1,
+            maxValue: 100,
+            title: Text('ang'),
+            initialIntegerValue: _dday,
+          );
+        }).then((int value) {
+      if (value != null) {
+        setState(() => _dday = value);
+      }
+    });
+  }
+
   Widget build(BuildContext context) {
     return Container(
       child: Center(
@@ -25,6 +45,11 @@ class _StatusPageState extends State<StatusPage> {
               circularStrokeCap: CircularStrokeCap.round,
               progressColor: Colors.red,
             ),
+            RaisedButton(
+              color: Colors.blue,
+              child: Icon(Icons.arrow_forward),
+              onPressed: _showDialog,
+            )
           ],
         ),
       ),
