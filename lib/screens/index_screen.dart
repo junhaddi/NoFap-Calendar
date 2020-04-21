@@ -72,6 +72,7 @@ class _IndexScreenState extends State<IndexScreen> {
   @override
   void initState() {
     super.initState();
+    
     checkVPN();
     _fcmListener();
     _c = PageController(
