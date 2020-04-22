@@ -33,6 +33,7 @@ dependencies:
   background_fetch: ^0.5.1
   flutter_local_notifications: ^1.4.1
   numberpicker: ^1.2.0
+  youtube_player_flutter: ^6.1.0+7
 
 dev_dependencies:
   flutter_test:

@@ -85,8 +85,6 @@ class _IndexScreenState extends State<IndexScreen> {
   @override
   void initState() {
     super.initState();
-    
-    checkVPN();
     _fcmListener();
     _c = PageController(
       initialPage: _page,
@@ -170,8 +168,10 @@ class _IndexScreenState extends State<IndexScreen> {
       setState(() {
         _events.insert(0, new DateTime.now());
       });
-      _showNotifications();
 
+      if (checkVPN() == true) {
+        _showNotifications();
+      }
       // IMPORTANT:  You must signal completion of your task or the OS can punish your app
       // for taking too long in the background.
       BackgroundFetch.finish(taskId);
