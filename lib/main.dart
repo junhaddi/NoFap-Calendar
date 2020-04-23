@@ -2,19 +2,13 @@ import 'package:flutter/material.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:nofapcamp/screens/walkthrough_screen.dart';
 import 'package:nofapcamp/screens/index_screen.dart';
-import 'package:background_fetch/background_fetch.dart';
-
-void backgroundFetchHeadlessTask(String taskId) async {
-  print('[BackgroundFetch] Headless event received.');
-  BackgroundFetch.finish(taskId);
-}
+import 'package:nofapcamp/screens/history_screen.dart';
 
 void main() {
   WidgetsFlutterBinding.ensureInitialized();
   SharedPreferences.getInstance().then((prefs) {
     runApp(MyApp(prefs: prefs));
   });
-  BackgroundFetch.registerHeadlessTask(backgroundFetchHeadlessTask);
 }
 
 class MyApp extends StatelessWidget {
@@ -31,6 +25,7 @@ class MyApp extends StatelessWidget {
         '/walkthrough': (BuildContext context) =>
             WalkthroughScreen(prefs: prefs),
         '/index': (BuildContext context) => IndexScreen(prefs: prefs),
+        '/history': (BuildContext context) => HistoryScreen(),
       },
       theme: ThemeData(
         primarySwatch: Colors.red,

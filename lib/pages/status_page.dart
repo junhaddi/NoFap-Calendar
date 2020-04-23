@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:nofapcamp/widgets/custom_app_bar.dart';
 import 'package:numberpicker/numberpicker.dart';
 import 'package:percent_indicator/circular_percent_indicator.dart';
+import 'package:share/share.dart';
 
 class StatusPage extends StatefulWidget {
   @override
@@ -36,12 +37,21 @@ class _StatusPageState extends State<StatusPage> {
           IconButton(
             color: Colors.black,
             icon: Icon(Icons.history),
-            onPressed: () {},
+            onPressed: () {
+              Navigator.of(context).pushNamed('/history');
+            },
           ),
           IconButton(
             color: Colors.black,
             icon: Icon(Icons.share),
-            onPressed: () {},
+            onPressed: () {
+              RenderBox box = context.findRenderObject();
+              String text = "anggimoddi";
+              Share.share(text,
+                  subject: text,
+                  sharePositionOrigin:
+                      box.localToGlobal(Offset.zero) & box.size);
+            },
           ),
         ],
       ),
@@ -64,7 +74,10 @@ class _StatusPageState extends State<StatusPage> {
               ),
               RaisedButton(
                 color: Colors.blue,
-                child: Icon(Icons.arrow_forward),
+                child: Icon(Icons.warning),
+                shape: RoundedRectangleBorder(
+                  borderRadius: BorderRadius.circular(20),
+                ),
                 onPressed: _showDialog,
               )
             ],
