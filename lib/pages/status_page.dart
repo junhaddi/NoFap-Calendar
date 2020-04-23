@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:nofapcamp/widgets/custom_app_bar.dart';
 import 'package:numberpicker/numberpicker.dart';
 import 'package:percent_indicator/circular_percent_indicator.dart';
 
@@ -28,29 +29,46 @@ class _StatusPageState extends State<StatusPage> {
   }
 
   Widget build(BuildContext context) {
-    return Container(
-      child: Center(
-        child: Column(
-          mainAxisAlignment: MainAxisAlignment.center,
-          children: <Widget>[
-            CircularPercentIndicator(
-              radius: 240.0,
-              lineWidth: 26.0,
-              animation: true,
-              percent: 0.7,
-              center: Text(
-                "D-4",
-                style: TextStyle(fontWeight: FontWeight.bold, fontSize: 40.0),
+    return Scaffold(
+      appBar: CustomAppBar(
+        title: '현황',
+        actions: [
+          IconButton(
+            color: Colors.black,
+            icon: Icon(Icons.history),
+            onPressed: () {},
+          ),
+          IconButton(
+            color: Colors.black,
+            icon: Icon(Icons.share),
+            onPressed: () {},
+          ),
+        ],
+      ),
+      body: Container(
+        child: Center(
+          child: Column(
+            mainAxisAlignment: MainAxisAlignment.center,
+            children: <Widget>[
+              CircularPercentIndicator(
+                radius: 240.0,
+                lineWidth: 26.0,
+                animation: true,
+                percent: 0.7,
+                center: Text(
+                  "D-4",
+                  style: TextStyle(fontWeight: FontWeight.bold, fontSize: 40.0),
+                ),
+                circularStrokeCap: CircularStrokeCap.round,
+                progressColor: Colors.red,
               ),
-              circularStrokeCap: CircularStrokeCap.round,
-              progressColor: Colors.red,
-            ),
-            RaisedButton(
-              color: Colors.blue,
-              child: Icon(Icons.arrow_forward),
-              onPressed: _showDialog,
-            )
-          ],
+              RaisedButton(
+                color: Colors.blue,
+                child: Icon(Icons.arrow_forward),
+                onPressed: _showDialog,
+              )
+            ],
+          ),
         ),
       ),
     );

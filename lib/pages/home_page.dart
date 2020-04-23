@@ -8,8 +8,14 @@ class HomePageItem {
   String description;
   String imageURL;
   String youtubeURL;
+  String wiseSaying;
 
-  HomePageItem({this.title, this.description, this.imageURL, this.youtubeURL});
+  HomePageItem(
+      {this.title,
+      this.description,
+      this.imageURL,
+      this.youtubeURL,
+      this.wiseSaying});
 }
 
 class HomePage extends StatelessWidget {
@@ -33,13 +39,29 @@ class HomePage extends StatelessWidget {
     );
   }
 
-  // 광고창
-  _googleAd() {
-    return Column(
-      children: <Widget>[
+  // 페이지 아이템
+  final List<HomePageItem> pages = [
+    HomePageItem(
+      title: '이미지는 없다 개샠키야',
+      description: '유튜브도 없다 이자식아',
+    ),
+    HomePageItem(
+      title: '이미지는 없다 개샠키야',
+      description: '유튜브도 없다 이자식아',
+    ),
+    HomePageItem(
+      title: '이미지는 없다 개샠키야',
+      description: '유튜브도 없다 이자식아',
+    ),
+  ];
+
+  Column listItem() {
+    List<Widget> widgets = [];
+    for (int i = 0; i < pages.length; i++) {
+      HomePageItem page = pages[i];
+      widgets.add(
         Container(
-          height: 230,
-          // height: 300,
+          height: 300,
           child: Card(
             margin: EdgeInsets.all(5),
             elevation: 5,
@@ -50,14 +72,34 @@ class HomePage extends StatelessWidget {
             ),
           ),
         ),
+      );
+      widgets.add(
         Container(
-          width: double.infinity,
           height: 230,
+          width: double.infinity,
           // height: 300,
           child: Card(
+            margin: EdgeInsets.all(5),
+            elevation: 5,
             child: Column(
               children: <Widget>[
-                Image.network('https://ojsfile.ohmynews.com/STD_IMG_FILE/2012/0604/IE001447169_STD.jpg'),
+                Text(page.title),
+                Text(page.description),
+              ],
+            ),
+          ),
+        ),
+      );
+      widgets.add(
+        Container(
+          width: double.infinity,
+          child: Card(
+            margin: EdgeInsets.all(5),
+            elevation: 5,
+            child: Column(
+              children: <Widget>[
+                Text(page.title),
+                Text(page.description),
                 YoutubePlayer(
                   controller: YoutubePlayerController(
                       initialVideoId: 'xdvYOkE8r3A',
@@ -76,7 +118,10 @@ class HomePage extends StatelessWidget {
             ),
           ),
         ),
-      ],
+      );
+    }
+    return Column(
+      children: widgets,
     );
   }
 
@@ -98,11 +143,13 @@ class HomePage extends StatelessWidget {
             ),
           ),
         ),
-        SliverList(delegate: SliverChildBuilderDelegate(
-          (context, index) {
-            return _googleAd();
-          },
-        ))
+        SliverList(
+          delegate: SliverChildBuilderDelegate(
+            (context, index) {
+              return listItem();
+            },
+          ),
+        ),
       ],
     ));
   }

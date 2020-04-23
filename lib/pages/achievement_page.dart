@@ -135,7 +135,7 @@ class AchievementPage extends StatelessWidget {
     return Card(
       elevation: 5,
       child: Padding(
-        padding: EdgeInsets.only(left: 10),
+        padding: EdgeInsets.only(left: 10.0),
         child: CustomListItemTwo(
           thumbnail: Container(
             decoration: BoxDecoration(

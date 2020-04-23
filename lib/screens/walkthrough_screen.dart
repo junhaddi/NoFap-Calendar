@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:flutter_swiper/flutter_swiper.dart';
-import 'package:nofapcamp/widgets/walkthrough.dart';
+import 'package:nofapcamp/models/walkthrough.dart';
 
 class WalkthroughScreen extends StatefulWidget {
   final SharedPreferences prefs;
@@ -97,9 +97,6 @@ class _WalkthroughScreenState extends State<WalkthroughScreen> {
                       fontWeight: FontWeight.w300,
                     ),
                   ),
-                ),
-                Container(
-                  child: page.extraWidget,
                 ),
               ],
             ),
