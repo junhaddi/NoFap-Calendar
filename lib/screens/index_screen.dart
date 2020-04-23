@@ -74,24 +74,17 @@ class _IndexScreenState extends State<IndexScreen> {
           children: _everyPage,
         ),
       ),
-      bottomNavigationBar: Container(
-        decoration: BoxDecoration(boxShadow: <BoxShadow>[
-          BoxShadow(
-            color: Color.fromRGBO(211, 211, 211, 1.0),
-          ),
-        ]),
-        child: BottomNavigationBar(
-          showSelectedLabels: false,
-          showUnselectedLabels: false,
-          type: BottomNavigationBarType.fixed,
-          currentIndex: _page,
-          onTap: (index) {
-            this._c.animateToPage(index,
-                duration: const Duration(milliseconds: 300),
-                curve: Curves.easeInOut);
-          },
-          items: _bottomItem,
-        ),
+      bottomNavigationBar: BottomNavigationBar(
+        showSelectedLabels: false,
+        showUnselectedLabels: false,
+        type: BottomNavigationBarType.fixed,
+        currentIndex: _page,
+        onTap: (index) {
+          this._c.animateToPage(index,
+              duration: const Duration(milliseconds: 300),
+              curve: Curves.easeInOut);
+        },
+        items: _bottomItem,
       ),
     );
   }

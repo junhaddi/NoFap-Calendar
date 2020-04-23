@@ -29,11 +29,18 @@ class MyApp extends StatelessWidget {
       defaultBrightness: Brightness.light,
       data: (brightness) => ThemeData(
         brightness: brightness,
-        primarySwatch: Colors.red
+        primarySwatch: Colors.red,
+        buttonTheme: ButtonThemeData(
+          buttonColor: Colors.red,
+          textTheme: ButtonTextTheme.primary
+        ),
       ),
       themedWidgetBuilder: (context, theme) => MaterialApp(
         title: '금딸캘린더',
         theme: theme,
+        darkTheme: ThemeData(
+          
+        ),
         debugShowCheckedModeBanner: false,
         routes: <String, WidgetBuilder>{
           '/walkthrough': (BuildContext context) =>

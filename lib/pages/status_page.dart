@@ -63,7 +63,6 @@ class _StatusPageState extends State<StatusPage> {
                 progressColor: Colors.red,
               ),
               RaisedButton(
-                color: Colors.blue,
                 child: Icon(Icons.arrow_forward),
                 onPressed: _showDialog,
               )

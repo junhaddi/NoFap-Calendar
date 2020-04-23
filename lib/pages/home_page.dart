@@ -20,7 +20,14 @@ class HomePageItem {
 
 // 1) 업적 정렬 버튼 누르면 업적들 정렬 시키기(움직이는 애니메이션 까지 추가)
 // 2) 다크모드 추가(외부 모듈 그 때 그거 사용해서 구현하기)
-class HomePage extends StatelessWidget {
+class HomePage extends StatefulWidget {
+  HomePage({Key key}) : super(key: key);
+
+  @override
+  _HomePageState createState() => _HomePageState();
+}
+
+class _HomePageState extends State<HomePage> {
   static const _adUnitID = 'ca-app-pub-8336339515298040/6724604841';
   final _nativeAdController = NativeAdmobController();
 
@@ -33,7 +40,7 @@ class HomePage extends StatelessWidget {
           borderRadius: BorderRadius.circular(50),
           border: Border.all(
               // 테두리 색갈 생각
-              color: Colors.blue,
+              color: Theme.of(context).primaryColor,
               width: 3)),
       child: CircleAvatar(
         backgroundImage: AssetImage('assets/ic_launcher.png'),
@@ -135,10 +142,11 @@ class HomePage extends StatelessWidget {
         SliverAppBar(
           floating: false,
           pinned: true,
-          leading: _appBarLogo(),
-          title: Text('금딸캘린더'),
           expandedHeight: 400.0,
+          leading: _appBarLogo(),
           flexibleSpace: FlexibleSpaceBar(
+            title: Text('금딸캘린더'),
+            centerTitle: true,
             background: Image.network(
               'https://encrypted-tbn0.gstatic.com/images?q=tbn%3AANd9GcTfHFexcrsT2rKcRuJuQkrkjJXKy-bZcRMg2BbY_CX6opF3nswi&usqp=CAU',
               fit: BoxFit.cover,
