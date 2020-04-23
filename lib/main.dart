@@ -1,3 +1,4 @@
+import 'package:dynamic_theme/dynamic_theme.dart';
 import 'package:flutter/material.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:nofapcamp/screens/walkthrough_screen.dart';
@@ -18,19 +19,22 @@ class MyApp extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return MaterialApp(
-      title: '금딸캘린더',
-      debugShowCheckedModeBanner: false,
-      routes: <String, WidgetBuilder>{
-        '/walkthrough': (BuildContext context) =>
-            WalkthroughScreen(prefs: prefs),
-        '/index': (BuildContext context) => IndexScreen(prefs: prefs),
-        '/history': (BuildContext context) => HistoryScreen(),
-      },
-      theme: ThemeData(
-        primarySwatch: Colors.red,
+    return DynamicTheme(
+      defaultBrightness: Brightness.light,
+      data: (brightness) =>
+          ThemeData(brightness: brightness, primarySwatch: Colors.blue),
+      themedWidgetBuilder: (context, theme) => MaterialApp(
+        title: '금딸캘린더',
+        theme: theme,
+        debugShowCheckedModeBanner: false,
+        routes: <String, WidgetBuilder>{
+          '/walkthrough': (BuildContext context) =>
+              WalkthroughScreen(prefs: prefs),
+          '/index': (BuildContext context) => IndexScreen(prefs: prefs),
+          '/history': (BuildContext context) => HistoryScreen(),
+        },
+        home: _handleCurrentScreen(),
       ),
-      home: _handleCurrentScreen(),
     );
   }
 

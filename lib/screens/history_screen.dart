@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:nofapcamp/widgets/custom_app_bar.dart';
 
 class History {
   final String title;

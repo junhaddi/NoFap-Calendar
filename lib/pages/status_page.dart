@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:nofapcamp/widgets/custom_app_bar.dart';
 import 'package:numberpicker/numberpicker.dart';
 import 'package:percent_indicator/circular_percent_indicator.dart';
 import 'package:share/share.dart';
@@ -31,8 +30,8 @@ class _StatusPageState extends State<StatusPage> {
 
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: CustomAppBar(
-        title: '현황',
+      appBar: AppBar(
+        title: Text('현황'),
         actions: [
           IconButton(
             color: Colors.black,

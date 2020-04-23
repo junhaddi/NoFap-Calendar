@@ -32,6 +32,7 @@ dependencies:
   numberpicker: ^1.2.0
   youtube_player_flutter: ^6.1.0+7
   share: ^0.6.4
+  dynamic_theme: ^1.0.1
 
 dev_dependencies:
   flutter_test:

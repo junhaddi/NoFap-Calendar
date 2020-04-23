@@ -19,6 +19,8 @@ class HomePageItem {
   });
 }
 
+// 1) 업적 정렬 버튼 누르면 업적들 정렬 시키기(움직이는 애니메이션 까지 추가)
+// 2) 다크모드 추가(외부 모듈 그 때 그거 사용해서 구현하기)
 class HomePage extends StatelessWidget {
   static const _adUnitID = 'ca-app-pub-8336339515298040/6724604841';
   final _nativeAdController = NativeAdmobController();
