@@ -15,7 +15,7 @@ import 'package:flutter_local_notifications/flutter_local_notifications.dart';
 final FirebaseMessaging _firebaseMessaging = FirebaseMessaging();
 
 // VPN 사용유무 감지
-Future<bool> checkVPN() async {
+Future<bool> _checkVPN() async {
   try {
     final response = await http.get('https://pornhub.com');
     if (response.statusCode == 200) {
@@ -31,6 +31,8 @@ Future<bool> checkVPN() async {
     return false;
   }
 }
+
+
 
 class IndexScreen extends StatefulWidget {
   final SharedPreferences prefs;
@@ -86,7 +88,7 @@ class _IndexScreenState extends State<IndexScreen> {
   void initState() {
     super.initState();
     
-    checkVPN();
+    _checkVPN();
     _fcmListener();
     _c = PageController(
       initialPage: _page,
