@@ -78,6 +78,7 @@ class _IndexScreenState extends State<IndexScreen> {
         showSelectedLabels: false,
         showUnselectedLabels: false,
         type: BottomNavigationBarType.fixed,
+        selectedItemColor: Theme.of(context).brightness == Brightness.light ? Colors.black : Colors.white,
         currentIndex: _page,
         onTap: (index) {
           this._c.animateToPage(index,

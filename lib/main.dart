@@ -32,9 +32,6 @@ class MyApp extends StatelessWidget {
       themedWidgetBuilder: (context, theme) => MaterialApp(
         title: '금딸캘린더',
         theme: theme,
-        darkTheme: ThemeData(
-          
-        ),
         debugShowCheckedModeBanner: false,
         routes: <String, WidgetBuilder>{
           '/walkthrough': (BuildContext context) =>

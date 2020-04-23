@@ -15,10 +15,7 @@ class _SettingPageState extends State<SettingPage>
   bool get wantKeepAlive => true;
 
   _changeBrightness() {
-    DynamicTheme.of(context).setBrightness(
-        Theme.of(context).brightness == Brightness.dark
-            ? Brightness.light
-            : Brightness.dark);
+    DynamicTheme.of(context).setBrightness(Theme.of(context).brightness == Brightness.dark ? Brightness.light : Brightness.dark);
   }
 
   @override
@@ -34,8 +31,7 @@ class _SettingPageState extends State<SettingPage>
             value: _darkMode,
             onChanged: (value) {
               _changeBrightness();
-              setState(
-                () {
+                setState(() {
                   _darkMode = value;
                 },
               );
