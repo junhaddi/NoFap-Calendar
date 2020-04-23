@@ -10,12 +10,13 @@ class HomePageItem {
   String youtubeURL;
   String wiseSaying;
 
-  HomePageItem(
-      {this.title,
-      this.description,
-      this.imageURL,
-      this.youtubeURL,
-      this.wiseSaying});
+  HomePageItem({
+    this.title,
+    this.description,
+    this.imageURL,
+    this.youtubeURL,
+    this.wiseSaying,
+  });
 }
 
 // 1) 업적 정렬 버튼 누르면 업적들 정렬 시키기(움직이는 애니메이션 까지 추가)
@@ -51,16 +52,17 @@ class _HomePageState extends State<HomePage> {
   // 페이지 아이템
   final List<HomePageItem> pages = [
     HomePageItem(
-      title: '이미지는 없다 개샠키야',
-      description: '유튜브도 없다 이자식아',
+      title: '아앙기모띠',
+      description: '요고슨 설명입니다요 레후',
     ),
     HomePageItem(
-      title: '이미지는 없다 개샠키야',
-      description: '유튜브도 없다 이자식아',
+      title: '섹시 준하',
+      description:
+          '설명설명 하하하 쓸말이 없구나 이런..... 설명설명 하하하 쓸말이 없구나 이런..... 설명설명 하하하 쓸말이 없구나 이런..... 설명설명 하하하 쓸말이 없구나 이런.....',
     ),
     HomePageItem(
-      title: '이미지는 없다 개샠키야',
-      description: '유튜브도 없다 이자식아',
+      title: '요거스은 더미 데이터 입니다요 하하하',
+      description: '데이터베이스에서 읽어오는 기능도 만들어볼까??',
     ),
   ];
 
@@ -137,30 +139,31 @@ class _HomePageState extends State<HomePage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-        body: CustomScrollView(
-      slivers: <Widget>[
-        SliverAppBar(
-          floating: false,
-          pinned: true,
-          expandedHeight: 400.0,
-          leading: _appBarLogo(),
-          flexibleSpace: FlexibleSpaceBar(
-            title: Text('금딸캘린더'),
-            centerTitle: true,
-            background: Image.network(
-              'https://encrypted-tbn0.gstatic.com/images?q=tbn%3AANd9GcTfHFexcrsT2rKcRuJuQkrkjJXKy-bZcRMg2BbY_CX6opF3nswi&usqp=CAU',
-              fit: BoxFit.cover,
+      body: CustomScrollView(
+        slivers: <Widget>[
+          SliverAppBar(
+            floating: false,
+            pinned: true,
+            expandedHeight: 400.0,
+            leading: _appBarLogo(),
+            flexibleSpace: FlexibleSpaceBar(
+              title: Text('금딸캘린더'),
+              centerTitle: true,
+              background: Image.network(
+                'https://encrypted-tbn0.gstatic.com/images?q=tbn%3AANd9GcTfHFexcrsT2rKcRuJuQkrkjJXKy-bZcRMg2BbY_CX6opF3nswi&usqp=CAU',
+                fit: BoxFit.cover,
+              ),
             ),
           ),
-        ),
-        SliverList(
-          delegate: SliverChildBuilderDelegate(
-            (context, index) {
-              return listItem();
-            },
+          SliverList(
+            delegate: SliverChildBuilderDelegate(
+              (context, index) {
+                return listItem();
+              },
+            ),
           ),
-        ),
-      ],
-    ));
+        ],
+      ),
+    );
   }
 }

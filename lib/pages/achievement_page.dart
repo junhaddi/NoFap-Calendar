@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:nofapcamp/widgets/custom_app_bar.dart';
 
 class _ArticleDescription extends StatelessWidget {
   _ArticleDescription({
@@ -133,61 +132,59 @@ class AchievementPage extends StatelessWidget {
   // 임시 이미지가 있는 카드
   _hasImageCard() {
     return Card(
-      elevation: 5,
-      child: Padding(
-        padding: EdgeInsets.only(left: 10.0),
-        child: CustomListItemTwo(
-          thumbnail: Container(
-            decoration: BoxDecoration(
-              image: DecorationImage(
-                image: NetworkImage(
-                    'https://img.hankyung.com/photo/201905/01.19755570.1.jpg'),
-                fit: BoxFit.cover,
+        elevation: 5,
+        child: Padding(
+          padding: EdgeInsets.only(left: 10.0),
+          child: CustomListItemTwo(
+            thumbnail: Container(
+              decoration: BoxDecoration(
+                image: DecorationImage(
+                  image: NetworkImage(
+                      'https://img.hankyung.com/photo/201905/01.19755570.1.jpg'),
+                  fit: BoxFit.cover,
+                ),
+              ),
+              alignment: Alignment.center,
+              child: Text(
+                '100%',
+                style: TextStyle(fontSize: 32.0, color: Colors.red),
               ),
             ),
-            alignment: Alignment.center,
-            child: Text(
-              '100%',
-              style: TextStyle(fontSize: 32.0, color: Colors.red),
-            ),
+            title: 'Flutter 1.0 Launch',
+            subtitle: 'Flutter continues to improve and expand its horizons.'
+                'This text should max out at two lines and clip',
+            author: 'Dash',
+            publishDate: 'Dec 28',
+            readDuration: '5 mins',
           ),
-          title: 'Flutter 1.0 Launch',
-          subtitle: 'Flutter continues to improve and expand its horizons.'
-              'This text should max out at two lines and clip',
-          author: 'Dash',
-          publishDate: 'Dec 28',
-          readDuration: '5 mins',
-        ),
-      )
-    );
+        ));
   }
 
   // 임시 이미지가 없는 카드
   _nonImageCard() {
     return Card(
-      elevation: 5,
-      child: Padding(
-        padding: EdgeInsets.only(left: 10),
-        child: CustomListItemTwo(
-          // thumbnail: Container(
-          //   decoration: const BoxDecoration(color: Colors.blue),
-          // ),
-          thumbnail: Placeholder(),
-          title: 'Flutter 1.2 Release - Continual updates to the framework',
-          subtitle: 'Flutter once again improves and makes updates.',
-          author: 'Flutter',
-          publishDate: 'Feb 26',
-          readDuration: '12 mins',
-        ),
-      )
-    );
+        elevation: 5,
+        child: Padding(
+          padding: EdgeInsets.only(left: 10),
+          child: CustomListItemTwo(
+            // thumbnail: Container(
+            //   decoration: const BoxDecoration(color: Colors.blue),
+            // ),
+            thumbnail: Placeholder(),
+            title: 'Flutter 1.2 Release - Continual updates to the framework',
+            subtitle: 'Flutter once again improves and makes updates.',
+            author: 'Flutter',
+            publishDate: 'Feb 26',
+            readDuration: '12 mins',
+          ),
+        ));
   }
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: CustomAppBar(
-        title: '업적',
+      appBar: AppBar(
+        title: Text('업적'),
         actions: [
           IconButton(
             color: Colors.black,
