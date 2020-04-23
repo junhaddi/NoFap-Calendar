@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:numberpicker/numberpicker.dart';
 import 'package:percent_indicator/circular_percent_indicator.dart';
 import 'package:share/share.dart';
+import 'package:cloud_firestore/cloud_firestore.dart';
 
 class StatusPage extends StatefulWidget {
   @override
@@ -9,6 +10,7 @@ class StatusPage extends StatefulWidget {
 }
 
 class _StatusPageState extends State<StatusPage> {
+  Firestore firestore = Firestore.instance;
   int _dday = 1;
 
   void _showDialog() {
@@ -78,7 +80,61 @@ class _StatusPageState extends State<StatusPage> {
                   borderRadius: BorderRadius.circular(20),
                 ),
                 onPressed: _showDialog,
-              )
+              ),
+              RaisedButton(
+                color: Colors.blue,
+                child: Text('DB 내용 추가'),
+                shape: RoundedRectangleBorder(
+                  borderRadius: BorderRadius.circular(20),
+                ),
+                onPressed: () {
+                  String book = "준하의 일대기";
+                  firestore.collection('books').document(book).setData(
+                    {'page': 6969, 'purchase?': false, 'title': '천년의_사랑'},
+                  );
+                },
+              ),
+              RaisedButton(
+                color: Colors.blue,
+                child: Text('DB 값 읽기'),
+                shape: RoundedRectangleBorder(
+                  borderRadius: BorderRadius.circular(20),
+                ),
+                onPressed: () {
+                  firestore.collection('books').document('준하의 일대기').get().then(
+                    (DocumentSnapshot ds) {
+                      print(ds.data["title"]);
+                    },
+                  );
+                },
+              ),
+              RaisedButton(
+                color: Colors.blue,
+                child: Text('DB 데이터 갱신'),
+                shape: RoundedRectangleBorder(
+                  borderRadius: BorderRadius.circular(20),
+                ),
+                onPressed: () {
+                  firestore.collection('books').document('준하의 일대기').updateData(
+                    {'title': '앙 값 바꼈띠!'},
+                  );
+                },
+              ),
+              RaisedButton(
+                color: Colors.blue,
+                child: Text('DB document/필드 삭제'),
+                shape: RoundedRectangleBorder(
+                  borderRadius: BorderRadius.circular(20),
+                ),
+                onPressed: () {
+                  // 특정 document 통째로 날리기
+                  firestore.collection('books').document('junhaddi').delete();
+                  // 특정 document 필드 하나를 삭제
+                  firestore.collection('books').document('준하의 일대기').updateData(
+                    {'title': FieldValue.delete()},
+                  );
+                },
+              ),
             ],
           ),
         ),

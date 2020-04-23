@@ -33,6 +33,7 @@ dependencies:
   youtube_player_flutter: ^6.1.0+7
   share: ^0.6.4
   dynamic_theme: ^1.0.1
+  cloud_firestore: ^0.13.5
 
 dev_dependencies:
   flutter_test:

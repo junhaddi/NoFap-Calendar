@@ -144,7 +144,7 @@ class _HomePageState extends State<HomePage> {
           SliverAppBar(
             floating: false,
             pinned: true,
-            expandedHeight: 400.0,
+            expandedHeight: 300.0,
             leading: _appBarLogo(),
             flexibleSpace: FlexibleSpaceBar(
               title: Text('금딸캘린더'),
