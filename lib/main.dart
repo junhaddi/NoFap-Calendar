@@ -33,7 +33,7 @@ class MyApp extends StatelessWidget {
           routes: <String, WidgetBuilder>{
             '/walkthrough': (BuildContext context) =>
                 WalkthroughScreen(prefs: prefs),
-            '/index': (BuildContext context) => IndexScreen(prefs: prefs),
+            '/index': (BuildContext context) => IndexScreen(),
             '/history': (BuildContext context) => HistoryScreen(),
           },
           home: _handleCurrentScreen(),
@@ -46,7 +46,7 @@ class MyApp extends StatelessWidget {
   Widget _handleCurrentScreen() {
     bool isWalkthroughSeen = (prefs.getBool('walkthroughSeen') ?? false);
     if (isWalkthroughSeen) {
-      return IndexScreen(prefs: prefs);
+      return IndexScreen();
     } else {
       return WalkthroughScreen(prefs: prefs);
     }

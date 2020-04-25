@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:shared_preferences/shared_preferences.dart';
 import 'package:firebase_messaging/firebase_messaging.dart';
 import 'package:nofapcamp/pages/home_page.dart';
 import 'package:nofapcamp/pages/status_page.dart';
@@ -11,10 +10,6 @@ import 'dart:io';
 final FirebaseMessaging _firebaseMessaging = FirebaseMessaging();
 
 class IndexScreen extends StatefulWidget {
-  final SharedPreferences prefs;
-
-  IndexScreen({this.prefs});
-
   @override
   _IndexScreenState createState() => _IndexScreenState();
 }

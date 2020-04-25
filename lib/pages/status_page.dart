@@ -1,8 +1,10 @@
+import 'dart:math';
 import 'package:flutter/material.dart';
 import 'package:numberpicker/numberpicker.dart';
 import 'package:percent_indicator/circular_percent_indicator.dart';
 import 'package:share/share.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
 class StatusPage extends StatefulWidget {
   @override
@@ -10,22 +12,60 @@ class StatusPage extends StatefulWidget {
 }
 
 class _StatusPageState extends State<StatusPage> {
+  SharedPreferences _prefs;
   Firestore firestore = Firestore.instance;
-  int _dday = 1;
+  DateTime _srcDate;
+  DateTime _dstDate;
+  int _progressDay;
+  int _dday;
 
-  void _showDialog() {
+  @override
+  void initState() {
+    super.initState();
+    _getDays();
+  }
+
+  _getDays() async {
+    _prefs = await SharedPreferences.getInstance();
+    setState(() {
+      _srcDate = DateTime.fromMillisecondsSinceEpoch(
+          _prefs.getInt('srcDate') ?? DateTime.now());
+      _dstDate = DateTime.fromMillisecondsSinceEpoch(
+          _prefs.getInt('dstDate') ?? DateTime.now());
+      _progressDay = (_prefs.getInt('progressDay') ?? 0);
+      _dday = ((_dstDate.millisecondsSinceEpoch -
+                  DateTime.now().millisecondsSinceEpoch) /
+              (1000 * 60 * 60 * 24))
+          .floor();
+    });
+  }
+
+  _showDialog() async {
     showDialog<int>(
         context: context,
         builder: (BuildContext context) {
           return NumberPickerDialog.integer(
             minValue: 1,
             maxValue: 100,
-            title: Text('ang'),
-            initialIntegerValue: _dday,
+            title: Text('목표 일수'),
+            initialIntegerValue: 1,
           );
         }).then((int value) {
       if (value != null) {
-        setState(() => _dday = value);
+        setState(() {
+          _srcDate = DateTime.now();
+          _dstDate = _srcDate.add(Duration(days: value));
+          _progressDay = 1;
+          _dday = ((_dstDate.millisecondsSinceEpoch -
+                      DateTime.now().millisecondsSinceEpoch) /
+                  (1000 * 60 * 60 * 24))
+              .floor();
+
+          // 저장
+          _prefs.setInt('progressDay', _progressDay);
+          _prefs.setInt('srcDate', _srcDate.millisecondsSinceEpoch);
+          _prefs.setInt('dstDate', _dstDate.millisecondsSinceEpoch);
+        });
       }
     });
   }
@@ -65,10 +105,31 @@ class _StatusPageState extends State<StatusPage> {
                 radius: 240.0,
                 lineWidth: 26.0,
                 animation: true,
-                percent: 0.7,
-                center: Text(
-                  "D-4",
-                  style: TextStyle(fontWeight: FontWeight.bold, fontSize: 40.0),
+                percent: min(
+                    (DateTime.now().millisecondsSinceEpoch -
+                            _srcDate.millisecondsSinceEpoch) /
+                        (_dstDate.millisecondsSinceEpoch -
+                            _srcDate.millisecondsSinceEpoch),
+                    1.0),
+                center: Column(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  children: <Widget>[
+                    Text(
+                      "$_progressDay일차",
+                      style: TextStyle(
+                        fontWeight: FontWeight.bold,
+                        fontSize: 42.0,
+                      ),
+                    ),
+                    Text("${_srcDate.year}/${_srcDate.month}/${_srcDate.day}~"),
+                    SizedBox(height: 10),
+                    Text(
+                      'D${_dday < 0.0 ? "+" : "-"}${_dday == 0 ? "DAY" : _dday}',
+                      style: TextStyle(
+                        fontSize: 24.0,
+                      ),
+                    )
+                  ],
                 ),
                 circularStrokeCap: CircularStrokeCap.round,
                 progressColor: Colors.red,
