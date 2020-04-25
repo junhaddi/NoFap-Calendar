@@ -1,3 +1,4 @@
+import 'package:dynamic_theme/dynamic_theme.dart';
 import 'package:flutter/material.dart';
 import 'package:firebase_messaging/firebase_messaging.dart';
 import 'package:nofapcamp/pages/home_page.dart';
@@ -73,7 +74,9 @@ class _IndexScreenState extends State<IndexScreen> {
         showSelectedLabels: false,
         showUnselectedLabels: false,
         type: BottomNavigationBarType.fixed,
-        selectedItemColor: Theme.of(context).brightness == Brightness.light ? Colors.black : Colors.white,
+        selectedItemColor: DynamicTheme.of(context).brightness == Brightness.light
+            ? Colors.black
+            : Colors.white,
         currentIndex: _page,
         onTap: (index) {
           this._c.animateToPage(index,

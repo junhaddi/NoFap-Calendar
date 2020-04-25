@@ -6,16 +6,18 @@ class SettingPage extends StatefulWidget {
   _SettingPageState createState() => _SettingPageState();
 }
 
-class _SettingPageState extends State<SettingPage>
-    with AutomaticKeepAliveClientMixin {
-  @override
-  bool get wantKeepAlive => true;
-
-  bool _isDarkMode = false;
+class _SettingPageState extends State<SettingPage> {
+  bool _isDarkMode;
 
   void _changeBrightness() {
-    DynamicTheme.of(context).setBrightness(
-        _isDarkMode ? Brightness.light : Brightness.dark);
+    DynamicTheme.of(context)
+        .setBrightness(_isDarkMode ? Brightness.light : Brightness.dark);
+  }
+
+  @override
+  void initState() {
+    super.initState();
+    _isDarkMode = DynamicTheme.of(context).brightness == Brightness.dark;
   }
 
   @override

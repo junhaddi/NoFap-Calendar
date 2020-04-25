@@ -20,14 +20,35 @@ class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return DynamicTheme(
-      defaultBrightness: Brightness.light,
-      data: (brightness) => ThemeData(
-        primarySwatch: Colors.red,
-        brightness: brightness,
-      ),
+      defaultBrightness: (prefs.getBool('isDark') ?? false
+          ? Brightness.dark
+          : Brightness.light),
+      data: (brightness) {
+        return brightness == Brightness.light
+            ? ThemeData(
+                // 기본모드 테마
+                primarySwatch: Colors.grey,
+                primaryColor: Colors.white,
+                brightness: Brightness.light,
+                backgroundColor: const Color(0xFFE5E5E5),
+                accentColor: Colors.black,
+                accentIconTheme: IconThemeData(color: Colors.white),
+                dividerColor: Colors.white54,
+              )
+            : ThemeData(
+                // 다크모드 테마
+                primarySwatch: Colors.grey,
+                primaryColor: Colors.black,
+                brightness: Brightness.dark,
+                backgroundColor: const Color(0xFF212121),
+                accentColor: Colors.white,
+                accentIconTheme: IconThemeData(color: Colors.black),
+                dividerColor: Colors.black12,
+              );
+      },
       themedWidgetBuilder: (context, theme) {
         return MaterialApp(
-          title: '금딸캘린더',
+          title: '금딸캠프',
           theme: theme,
           debugShowCheckedModeBanner: false,
           routes: <String, WidgetBuilder>{

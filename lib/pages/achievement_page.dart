@@ -53,9 +53,6 @@ class AchievementPage extends StatelessWidget {
       ),
       elevation: 5,
       child: CustomListItemTwo(
-        // thumbnail: Container(
-        //   decoration: const BoxDecoration(color: Colors.blue),
-        // ), 
         thumbnail: Placeholder(),         // 이미지를 넣을 때 다른 느낌이 난다.
         title: 'Flutter 1.2 Release - Continual updates to the framework',
         subtitle: 'Flutter once again improves and makes updates.',
@@ -73,7 +70,6 @@ class AchievementPage extends StatelessWidget {
         title: Text('업적'),
         actions: [
           IconButton(
-            color: Colors.black,
             icon: Icon(Icons.sort),
             onPressed: () {},
           )

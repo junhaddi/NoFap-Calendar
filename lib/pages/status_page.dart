@@ -76,14 +76,12 @@ class _StatusPageState extends State<StatusPage> {
         title: Text('현황'),
         actions: [
           IconButton(
-            color: Colors.black,
             icon: Icon(Icons.history),
             onPressed: () {
               Navigator.of(context).pushNamed('/history');
             },
           ),
           IconButton(
-            color: Colors.black,
             icon: Icon(Icons.share),
             onPressed: () {
               RenderBox box = context.findRenderObject();
@@ -135,7 +133,6 @@ class _StatusPageState extends State<StatusPage> {
                 progressColor: Colors.red,
               ),
               RaisedButton(
-                color: Colors.blue,
                 child: Icon(Icons.warning),
                 shape: RoundedRectangleBorder(
                   borderRadius: BorderRadius.circular(20),
@@ -143,7 +140,6 @@ class _StatusPageState extends State<StatusPage> {
                 onPressed: _showDialog,
               ),
               RaisedButton(
-                color: Colors.blue,
                 child: Text('DB 내용 추가'),
                 shape: RoundedRectangleBorder(
                   borderRadius: BorderRadius.circular(20),
@@ -156,7 +152,6 @@ class _StatusPageState extends State<StatusPage> {
                 },
               ),
               RaisedButton(
-                color: Colors.blue,
                 child: Text('DB 값 읽기'),
                 shape: RoundedRectangleBorder(
                   borderRadius: BorderRadius.circular(20),
@@ -170,7 +165,6 @@ class _StatusPageState extends State<StatusPage> {
                 },
               ),
               RaisedButton(
-                color: Colors.blue,
                 child: Text('DB 데이터 갱신'),
                 shape: RoundedRectangleBorder(
                   borderRadius: BorderRadius.circular(20),
@@ -182,7 +176,6 @@ class _StatusPageState extends State<StatusPage> {
                 },
               ),
               RaisedButton(
-                color: Colors.blue,
                 child: Text('DB document/필드 삭제'),
                 shape: RoundedRectangleBorder(
                   borderRadius: BorderRadius.circular(20),
