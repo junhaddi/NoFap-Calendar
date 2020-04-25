@@ -147,8 +147,7 @@ class _HomePageState extends State<HomePage> {
             expandedHeight: 300.0,
             leading: _appBarLogo(),
             flexibleSpace: FlexibleSpaceBar(
-              title: Text('금딸캘린더'),
-              centerTitle: true,
+              title: Text('금딸캠프'),
               background: Image.network(
                 'https://encrypted-tbn0.gstatic.com/images?q=tbn%3AANd9GcTfHFexcrsT2rKcRuJuQkrkjJXKy-bZcRMg2BbY_CX6opF3nswi&usqp=CAU',
                 fit: BoxFit.cover,

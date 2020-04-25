@@ -8,14 +8,14 @@ class SettingPage extends StatefulWidget {
 
 class _SettingPageState extends State<SettingPage>
     with AutomaticKeepAliveClientMixin {
-  bool _darkMode = false;
-
-  // 다른 페이지 이동 할 때에도 상태는 지속 유지
   @override
   bool get wantKeepAlive => true;
 
-  _changeBrightness() {
-    DynamicTheme.of(context).setBrightness(Theme.of(context).brightness == Brightness.dark ? Brightness.light : Brightness.dark);
+  bool _isDarkMode = false;
+
+  void _changeBrightness() {
+    DynamicTheme.of(context).setBrightness(
+        _isDarkMode ? Brightness.light : Brightness.dark);
   }
 
   @override
@@ -28,13 +28,12 @@ class _SettingPageState extends State<SettingPage>
         children: <Widget>[
           SwitchListTile(
             title: Text('다크모드'),
-            value: _darkMode,
+            value: _isDarkMode,
             onChanged: (value) {
-              _changeBrightness();
-                setState(() {
-                  _darkMode = value;
-                },
-              );
+              setState(() {
+                _changeBrightness();
+                _isDarkMode = value;
+              });
             },
           ),
         ],

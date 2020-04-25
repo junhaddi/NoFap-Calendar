@@ -22,25 +22,23 @@ class MyApp extends StatelessWidget {
     return DynamicTheme(
       defaultBrightness: Brightness.light,
       data: (brightness) => ThemeData(
-        brightness: brightness,
         primarySwatch: Colors.red,
-        buttonTheme: ButtonThemeData(
-          buttonColor: Colors.red,
-          textTheme: ButtonTextTheme.primary
-        ),
+        brightness: brightness,
       ),
-      themedWidgetBuilder: (context, theme) => MaterialApp(
-        title: '금딸캘린더',
-        theme: theme,
-        debugShowCheckedModeBanner: false,
-        routes: <String, WidgetBuilder>{
-          '/walkthrough': (BuildContext context) =>
-              WalkthroughScreen(prefs: prefs),
-          '/index': (BuildContext context) => IndexScreen(prefs: prefs),
-          '/history': (BuildContext context) => HistoryScreen(),
-        },
-        home: _handleCurrentScreen(),
-      ),
+      themedWidgetBuilder: (context, theme) {
+        return MaterialApp(
+          title: '금딸캘린더',
+          theme: theme,
+          debugShowCheckedModeBanner: false,
+          routes: <String, WidgetBuilder>{
+            '/walkthrough': (BuildContext context) =>
+                WalkthroughScreen(prefs: prefs),
+            '/index': (BuildContext context) => IndexScreen(prefs: prefs),
+            '/history': (BuildContext context) => HistoryScreen(),
+          },
+          home: _handleCurrentScreen(),
+        );
+      },
     );
   }
 
