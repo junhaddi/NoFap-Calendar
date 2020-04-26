@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+
 import 'package:flutter_native_admob/flutter_native_admob.dart';
 import 'package:flutter_native_admob/native_admob_controller.dart';
 import 'package:youtube_player_flutter/youtube_player_flutter.dart';
@@ -19,8 +20,7 @@ class HomePageItem {
   });
 }
 
-// 1) 업적 정렬 버튼 누르면 업적들 정렬 시키기(움직이는 애니메이션 까지 추가)
-// 2) 다크모드 추가(외부 모듈 그 때 그거 사용해서 구현하기)
+// 업적 정렬 버튼 누르면 업적들 정렬 시키기(움직이는 애니메이션 까지 추가)
 class HomePage extends StatefulWidget {
   HomePage({Key key}) : super(key: key);
 
@@ -28,10 +28,14 @@ class HomePage extends StatefulWidget {
   _HomePageState createState() => _HomePageState();
 }
 
-class _HomePageState extends State<HomePage> {
+class _HomePageState extends State<HomePage> with AutomaticKeepAliveClientMixin {
   static const _adUnitID = 'ca-app-pub-8336339515298040/6724604841';
   final _nativeAdController = NativeAdmobController();
 
+  @override
+  // TODO: implement wantKeepAlive
+  bool get wantKeepAlive => true;
+  
   // 로고 그냥 추가 해봤음
   // 맘에 안들면 삭제
   _appBarLogo() {
@@ -144,10 +148,11 @@ class _HomePageState extends State<HomePage> {
           SliverAppBar(
             floating: false,
             pinned: true,
-            expandedHeight: 300.0,
+            expandedHeight: 400.0,
             leading: _appBarLogo(),
             flexibleSpace: FlexibleSpaceBar(
-              title: Text('금딸캠프'),
+              title: Text('금딸캘린더'),
+              centerTitle: true,
               background: Image.network(
                 'https://encrypted-tbn0.gstatic.com/images?q=tbn%3AANd9GcTfHFexcrsT2rKcRuJuQkrkjJXKy-bZcRMg2BbY_CX6opF3nswi&usqp=CAU',
                 fit: BoxFit.cover,
@@ -165,4 +170,5 @@ class _HomePageState extends State<HomePage> {
       ),
     );
   }
+
 }

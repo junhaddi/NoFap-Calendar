@@ -12,14 +12,15 @@ class StatusPage extends StatefulWidget {
 
 class _StatusPageState extends State<StatusPage> {
   SharedPreferences _prefs;
-  DateTime _srcDate;
-  DateTime _dstDate;
+  DateTime _srcDate = DateTime.now();
+  DateTime _dstDate = DateTime.now();
   int _progressDay;
   int _dday;
 
   @override
   void initState() {
     super.initState();
+
     _getDate();
   }
 
