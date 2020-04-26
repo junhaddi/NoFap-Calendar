@@ -1,9 +1,11 @@
 import 'package:dynamic_theme/dynamic_theme.dart';
 import 'package:flutter/material.dart';
 import 'package:firebase_messaging/firebase_messaging.dart';
+import 'package:flutter_native_admob/flutter_native_admob.dart';
+import 'package:flutter_native_admob/native_admob_controller.dart';
 import 'package:nofapcamp/pages/home_page.dart';
 import 'package:nofapcamp/pages/status_page.dart';
-import 'package:nofapcamp/pages/achievement_page.dart';
+import 'package:nofapcamp/pages/ranking_page.dart';
 import 'package:nofapcamp/pages/setting_page.dart';
 import 'dart:async';
 import 'dart:io';
@@ -23,7 +25,7 @@ class _IndexScreenState extends State<IndexScreen> {
   var _everyPage = <Widget>[
     HomePage(),
     StatusPage(),
-    AchievementPage(),
+    RankingPage(),
     SettingPage()
   ];
 
@@ -37,8 +39,8 @@ class _IndexScreenState extends State<IndexScreen> {
       title: Text('현황'),
     ),
     BottomNavigationBarItem(
-      icon: Icon(Icons.cake),
-      title: Text('업적'),
+      icon: Icon(Icons.flag),
+      title: Text('순위'),
     ),
     BottomNavigationBarItem(
       icon: Icon(Icons.settings),
@@ -74,9 +76,10 @@ class _IndexScreenState extends State<IndexScreen> {
         showSelectedLabels: false,
         showUnselectedLabels: false,
         type: BottomNavigationBarType.fixed,
-        selectedItemColor: DynamicTheme.of(context).brightness == Brightness.light
-            ? Colors.black
-            : Colors.white,
+        selectedItemColor:
+            DynamicTheme.of(context).brightness == Brightness.light
+                ? Colors.black
+                : Colors.white,
         currentIndex: _page,
         onTap: (index) {
           this._c.animateToPage(index,
@@ -125,8 +128,11 @@ class _IndexScreenState extends State<IndexScreen> {
           ),
           content: Column(
             children: <Widget>[
-              Image.network(
-                  'https://pds.joins.com/news/component/htmlphoto_mmdata/201904/30/26fe5ce4-bbb6-4085-a7b6-ae85caf0f177.jpg'),
+              NativeAdmob(
+                adUnitID: 'ca-app-pub-8336339515298040/6724604841',
+                controller: NativeAdmobController(),
+                type: NativeAdmobType.full,
+              ),
               Text('금딸캠프를 종료할까요?'),
             ],
           ),

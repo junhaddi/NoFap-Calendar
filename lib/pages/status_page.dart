@@ -3,7 +3,6 @@ import 'package:flutter/material.dart';
 import 'package:numberpicker/numberpicker.dart';
 import 'package:percent_indicator/circular_percent_indicator.dart';
 import 'package:share/share.dart';
-import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 class StatusPage extends StatefulWidget {
@@ -13,7 +12,6 @@ class StatusPage extends StatefulWidget {
 
 class _StatusPageState extends State<StatusPage> {
   SharedPreferences _prefs;
-  Firestore firestore = Firestore.instance;
   DateTime _srcDate;
   DateTime _dstDate;
   int _progressDay;
@@ -22,21 +20,18 @@ class _StatusPageState extends State<StatusPage> {
   @override
   void initState() {
     super.initState();
-    _getDays();
+    _getDate();
   }
 
-  _getDays() async {
+  _getDate() async {
     _prefs = await SharedPreferences.getInstance();
     setState(() {
-      _srcDate = DateTime.fromMillisecondsSinceEpoch(
-          _prefs.getInt('srcDate') ?? DateTime.now());
-      _dstDate = DateTime.fromMillisecondsSinceEpoch(
-          _prefs.getInt('dstDate') ?? DateTime.now());
-      _progressDay = (_prefs.getInt('progressDay') ?? 0);
-      _dday = ((_dstDate.millisecondsSinceEpoch -
-                  DateTime.now().millisecondsSinceEpoch) /
-              (1000 * 60 * 60 * 24))
-          .floor();
+      _srcDate =
+          DateTime.fromMillisecondsSinceEpoch(_prefs.getInt('srcDate') ?? null);
+      _dstDate =
+          DateTime.fromMillisecondsSinceEpoch(_prefs.getInt('dstDate') ?? null);
+      _progressDay = DateTime.now().difference(_srcDate).inDays + 1;
+      _dday = _dstDate.difference(DateTime.now()).inDays;
     });
   }
 
@@ -56,13 +51,9 @@ class _StatusPageState extends State<StatusPage> {
           _srcDate = DateTime.now();
           _dstDate = _srcDate.add(Duration(days: value));
           _progressDay = 1;
-          _dday = ((_dstDate.millisecondsSinceEpoch -
-                      DateTime.now().millisecondsSinceEpoch) /
-                  (1000 * 60 * 60 * 24))
-              .floor();
+          _dday = _dstDate.difference(DateTime.now().add(Duration(milliseconds: -1))).inDays;
 
           // 저장
-          _prefs.setInt('progressDay', _progressDay);
           _prefs.setInt('srcDate', _srcDate.millisecondsSinceEpoch);
           _prefs.setInt('dstDate', _dstDate.millisecondsSinceEpoch);
         });
@@ -104,10 +95,8 @@ class _StatusPageState extends State<StatusPage> {
                 lineWidth: 26.0,
                 animation: true,
                 percent: min(
-                    (DateTime.now().millisecondsSinceEpoch -
-                            _srcDate.millisecondsSinceEpoch) /
-                        (_dstDate.millisecondsSinceEpoch -
-                            _srcDate.millisecondsSinceEpoch),
+                    (DateTime.now().difference(_srcDate).inMinutes) /
+                        (_dstDate.difference(_srcDate).inMinutes),
                     1.0),
                 center: Column(
                   mainAxisAlignment: MainAxisAlignment.center,
@@ -122,7 +111,7 @@ class _StatusPageState extends State<StatusPage> {
                     Text("${_srcDate.year}/${_srcDate.month}/${_srcDate.day}~"),
                     SizedBox(height: 10),
                     Text(
-                      'D${_dday < 0.0 ? "+" : "-"}${_dday == 0 ? "DAY" : _dday}',
+                      'D${_dday < 0 ? "+" : "-"}${_dday == 0 ? "DAY" : _dday}',
                       style: TextStyle(
                         fontSize: 24.0,
                       ),
@@ -138,56 +127,6 @@ class _StatusPageState extends State<StatusPage> {
                   borderRadius: BorderRadius.circular(20),
                 ),
                 onPressed: _showDialog,
-              ),
-              RaisedButton(
-                child: Text('DB 내용 추가'),
-                shape: RoundedRectangleBorder(
-                  borderRadius: BorderRadius.circular(20),
-                ),
-                onPressed: () {
-                  String book = "준하의 일대기";
-                  firestore.collection('books').document(book).setData(
-                    {'page': 6969, 'purchase?': false, 'title': '천년의_사랑'},
-                  );
-                },
-              ),
-              RaisedButton(
-                child: Text('DB 값 읽기'),
-                shape: RoundedRectangleBorder(
-                  borderRadius: BorderRadius.circular(20),
-                ),
-                onPressed: () {
-                  firestore.collection('books').document('준하의 일대기').get().then(
-                    (DocumentSnapshot ds) {
-                      print(ds.data["title"]);
-                    },
-                  );
-                },
-              ),
-              RaisedButton(
-                child: Text('DB 데이터 갱신'),
-                shape: RoundedRectangleBorder(
-                  borderRadius: BorderRadius.circular(20),
-                ),
-                onPressed: () {
-                  firestore.collection('books').document('준하의 일대기').updateData(
-                    {'title': '앙 값 바꼈띠!'},
-                  );
-                },
-              ),
-              RaisedButton(
-                child: Text('DB document/필드 삭제'),
-                shape: RoundedRectangleBorder(
-                  borderRadius: BorderRadius.circular(20),
-                ),
-                onPressed: () {
-                  // 특정 document 통째로 날리기
-                  firestore.collection('books').document('junhaddi').delete();
-                  // 특정 document 필드 하나를 삭제
-                  firestore.collection('books').document('준하의 일대기').updateData(
-                    {'title': FieldValue.delete()},
-                  );
-                },
               ),
             ],
           ),
