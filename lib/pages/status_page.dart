@@ -89,7 +89,7 @@ class _StatusPageState extends State<StatusPage> {
                                 height: 10,
                               ),
                               Text(
-                                'D${_dday < 0 ? '+' : '-'}${_dday == 0 ? 'DAY' : _dday}',
+                                'D${_dday < 0 ? '+' : '-'}${_dday == 0 ? 'DAY' : _dday.abs()}',
                                 style: TextStyle(
                                   fontSize: 24.0,
                                 ),
@@ -125,8 +125,15 @@ class _StatusPageState extends State<StatusPage> {
           DateTime.fromMillisecondsSinceEpoch(_prefs.getInt('srcDate') ?? null);
       _dstDate =
           DateTime.fromMillisecondsSinceEpoch(_prefs.getInt('dstDate') ?? null);
-      _progressDay = DateTime.now().difference(_srcDate).inDays + 1;
-      _dday = _dstDate.difference(DateTime.now()).inDays + 1;
+      _progressDay = DateTime(
+                  DateTime.now().year, DateTime.now().month, DateTime.now().day)
+              .difference(DateTime(_srcDate.year, _srcDate.month, _srcDate.day))
+              .inDays +
+          1;
+      _dday = DateTime(_dstDate.year, _dstDate.month, _dstDate.day)
+          .difference(DateTime(
+              DateTime.now().year, DateTime.now().month, DateTime.now().day))
+          .inDays;
       _isLoading = _srcDate == null && _dstDate == null;
     });
   }
@@ -192,7 +199,10 @@ class _StatusPageState extends State<StatusPage> {
           _srcDate = DateTime.now();
           _dstDate = _srcDate.add(Duration(days: value));
           _progressDay = 1;
-          _dday = _dstDate.difference(DateTime.now()).inDays + 1;
+          _dday = DateTime(_dstDate.year, _dstDate.month, _dstDate.day)
+              .difference(DateTime(DateTime.now().year, DateTime.now().month,
+                  DateTime.now().day))
+              .inDays;
           _isLoading = false;
 
           // 현황 저장
