@@ -1,3 +1,4 @@
+import 'dart:convert';
 import 'dart:math';
 import 'package:flutter/material.dart';
 import 'package:numberpicker/numberpicker.dart';
@@ -12,54 +13,16 @@ class StatusPage extends StatefulWidget {
 
 class _StatusPageState extends State<StatusPage> {
   SharedPreferences _prefs;
-  DateTime _srcDate = DateTime.now();
-  DateTime _dstDate = DateTime.now();
+  DateTime _srcDate;
+  DateTime _dstDate;
   int _progressDay;
   int _dday;
+  bool _isLoading = true;
 
   @override
   void initState() {
     super.initState();
-
     _getDate();
-  }
-
-  _getDate() async {
-    _prefs = await SharedPreferences.getInstance();
-    setState(() {
-      _srcDate =
-          DateTime.fromMillisecondsSinceEpoch(_prefs.getInt('srcDate') ?? null);
-      _dstDate =
-          DateTime.fromMillisecondsSinceEpoch(_prefs.getInt('dstDate') ?? null);
-      _progressDay = DateTime.now().difference(_srcDate).inDays + 1;
-      _dday = _dstDate.difference(DateTime.now()).inDays;
-    });
-  }
-
-  _showDialog() async {
-    showDialog<int>(
-        context: context,
-        builder: (BuildContext context) {
-          return NumberPickerDialog.integer(
-            minValue: 1,
-            maxValue: 100,
-            title: Text('목표 일수'),
-            initialIntegerValue: 1,
-          );
-        }).then((int value) {
-      if (value != null) {
-        setState(() {
-          _srcDate = DateTime.now();
-          _dstDate = _srcDate.add(Duration(days: value));
-          _progressDay = 1;
-          _dday = _dstDate.difference(DateTime.now().add(Duration(milliseconds: -1))).inDays;
-
-          // 저장
-          _prefs.setInt('srcDate', _srcDate.millisecondsSinceEpoch);
-          _prefs.setInt('dstDate', _dstDate.millisecondsSinceEpoch);
-        });
-      }
-    });
   }
 
   Widget build(BuildContext context) {
@@ -77,11 +40,12 @@ class _StatusPageState extends State<StatusPage> {
             icon: Icon(Icons.share),
             onPressed: () {
               RenderBox box = context.findRenderObject();
-              String text = "anggimoddi";
-              Share.share(text,
-                  subject: text,
-                  sharePositionOrigin:
-                      box.localToGlobal(Offset.zero) & box.size);
+              String text = '공유';
+              Share.share(
+                text,
+                subject: text,
+                sharePositionOrigin: box.localToGlobal(Offset.zero) & box.size,
+              );
             },
           ),
         ],
@@ -95,44 +59,147 @@ class _StatusPageState extends State<StatusPage> {
                 radius: 240.0,
                 lineWidth: 26.0,
                 animation: true,
-                percent: min(
-                    (DateTime.now().difference(_srcDate).inMinutes) /
-                        (_dstDate.difference(_srcDate).inMinutes),
-                    1.0),
+                percent: _isLoading
+                    ? 0.0
+                    : max(
+                        0.001,
+                        min(
+                            DateTime.now().difference(_srcDate).inMinutes /
+                                _dstDate.difference(_srcDate).inMinutes,
+                            1.0),
+                      ),
                 center: Column(
                   mainAxisAlignment: MainAxisAlignment.center,
                   children: <Widget>[
-                    Text(
-                      "$_progressDay일차",
-                      style: TextStyle(
-                        fontWeight: FontWeight.bold,
-                        fontSize: 42.0,
-                      ),
-                    ),
-                    Text("${_srcDate.year}/${_srcDate.month}/${_srcDate.day}~"),
-                    SizedBox(height: 10),
-                    Text(
-                      'D${_dday < 0 ? "+" : "-"}${_dday == 0 ? "DAY" : _dday}',
-                      style: TextStyle(
-                        fontSize: 24.0,
-                      ),
-                    )
+                    _isLoading
+                        ? CircularProgressIndicator()
+                        : Column(
+                            children: <Widget>[
+                              Text(
+                                '$_progressDay일차',
+                                style: TextStyle(
+                                  fontWeight: FontWeight.bold,
+                                  fontSize: 42.0,
+                                ),
+                              ),
+                              Text(
+                                '${_srcDate.year}/${_srcDate.month}/${_srcDate.day}~',
+                              ),
+                              SizedBox(
+                                height: 10,
+                              ),
+                              Text(
+                                'D${_dday < 0 ? '+' : '-'}${_dday == 0 ? 'DAY' : _dday}',
+                                style: TextStyle(
+                                  fontSize: 24.0,
+                                ),
+                              ),
+                            ],
+                          ),
                   ],
                 ),
                 circularStrokeCap: CircularStrokeCap.round,
+                // TODO 목표 현황에 따라 그래프 색상 변화
                 progressColor: Colors.red,
               ),
               RaisedButton(
+                // TODO 목표 현황에 따라 아이콘 변경(포기/달성)
+                // TODO 버튼 디자인 수정
                 child: Icon(Icons.warning),
                 shape: RoundedRectangleBorder(
-                  borderRadius: BorderRadius.circular(20),
+                  borderRadius: BorderRadius.circular(100.0),
                 ),
-                onPressed: _showDialog,
+                onPressed: _isLoading ? _showResetDialog : _showReconfirmDialog,
               ),
             ],
           ),
         ),
       ),
     );
+  }
+
+  Future<void> _getDate() async {
+    _prefs = await SharedPreferences.getInstance();
+    setState(() {
+      _srcDate =
+          DateTime.fromMillisecondsSinceEpoch(_prefs.getInt('srcDate') ?? null);
+      _dstDate =
+          DateTime.fromMillisecondsSinceEpoch(_prefs.getInt('dstDate') ?? null);
+      _progressDay = DateTime.now().difference(_srcDate).inDays + 1;
+      _dday = _dstDate.difference(DateTime.now()).inDays + 1;
+      _isLoading = _srcDate == null && _dstDate == null;
+    });
+  }
+
+  void _showReconfirmDialog() async {
+    showDialog(
+      context: context,
+      builder: (BuildContext context) {
+        return AlertDialog(
+          title: Text('싸버렸습니까?'),
+          content: Image.network(
+            'https://www.mediatoday.co.kr/news/photo/201201/99838_91766_5815.jpg',
+          ),
+          actions: <Widget>[
+            RaisedButton(
+              color: Colors.red,
+              child: Text('잘못누름'),
+              onPressed: () {
+                Navigator.of(context).pop();
+              },
+            ),
+            RaisedButton(
+              child: Text('쌌습니다'),
+              onPressed: () {
+                Navigator.of(context).pop();
+                _showResetDialog();
+              },
+            ),
+          ],
+        );
+      },
+    );
+  }
+
+  void _showResetDialog() async {
+    showDialog<int>(
+        context: context,
+        builder: (BuildContext context) {
+          return NumberPickerDialog.integer(
+            minValue: 1,
+            maxValue: 100,
+            title: Text('목표 일수'),
+            initialIntegerValue: 1,
+          );
+        }).then((int value) {
+      if (value != null) {
+        setState(() {
+          if (!_isLoading) {
+            // 기록 저장
+            List<String> dateHistorys =
+                (_prefs.getStringList('dateHistorys') ?? []);
+            dateHistorys.add(
+              jsonEncode({
+                'srcDate': _srcDate.millisecondsSinceEpoch,
+                'dstDate': _dstDate.millisecondsSinceEpoch,
+                'progressDay': _progressDay,
+                'dday': _dday,
+              }),
+            );
+            _prefs.setStringList('dateHistorys', dateHistorys);
+          }
+          // TODO 목표 달성시 처리
+          _srcDate = DateTime.now();
+          _dstDate = _srcDate.add(Duration(days: value));
+          _progressDay = 1;
+          _dday = _dstDate.difference(DateTime.now()).inDays + 1;
+          _isLoading = false;
+
+          // 현황 저장
+          _prefs.setInt('srcDate', _srcDate.millisecondsSinceEpoch);
+          _prefs.setInt('dstDate', _dstDate.millisecondsSinceEpoch);
+        });
+      }
+    });
   }
 }

@@ -1,6 +1,6 @@
-import 'package:dynamic_theme/dynamic_theme.dart';
 import 'package:flutter/material.dart';
 import 'package:firebase_messaging/firebase_messaging.dart';
+import 'package:flutter/services.dart';
 import 'package:flutter_native_admob/flutter_native_admob.dart';
 import 'package:flutter_native_admob/native_admob_controller.dart';
 import 'package:nofapcamp/pages/home_page.dart';
@@ -19,17 +19,17 @@ class IndexScreen extends StatefulWidget {
 
 class _IndexScreenState extends State<IndexScreen> {
   int _page = 0;
-  PageController _c;
-  DateTime currentBackPressTime;
+  PageController _pageController;
+  DateTime _currentBackPressTime;
 
-  var _everyPage = <Widget>[
+  List<Widget> _everyPage = <Widget>[
     HomePage(),
     StatusPage(),
     RankingPage(),
     SettingPage()
   ];
 
-  var _bottomItem = <BottomNavigationBarItem>[
+  List<BottomNavigationBarItem> _bottomItem = <BottomNavigationBarItem>[
     BottomNavigationBarItem(
       icon: Icon(Icons.home),
       title: Text('홈'),
@@ -52,7 +52,7 @@ class _IndexScreenState extends State<IndexScreen> {
   void initState() {
     super.initState();
     _fcmListener();
-    _c = PageController(
+    _pageController = PageController(
       initialPage: _page,
     );
   }
@@ -63,7 +63,7 @@ class _IndexScreenState extends State<IndexScreen> {
       body: WillPopScope(
         onWillPop: onWillPop,
         child: PageView(
-          controller: _c,
+          controller: _pageController,
           onPageChanged: (newPage) {
             setState(() {
               this._page = newPage;
@@ -76,13 +76,12 @@ class _IndexScreenState extends State<IndexScreen> {
         showSelectedLabels: false,
         showUnselectedLabels: false,
         type: BottomNavigationBarType.fixed,
-        selectedItemColor:
-            DynamicTheme.of(context).brightness == Brightness.light
-                ? Colors.black
-                : Colors.white,
+        selectedItemColor: Theme.of(context).brightness == Brightness.light
+            ? Colors.black
+            : Colors.white,
         currentIndex: _page,
         onTap: (index) {
-          this._c.animateToPage(index,
+          this._pageController.animateToPage(index,
               duration: const Duration(milliseconds: 300),
               curve: Curves.easeInOut);
         },
@@ -140,13 +139,13 @@ class _IndexScreenState extends State<IndexScreen> {
             RaisedButton(
               child: Text('취소'),
               onPressed: () {
-                Navigator.pop(context, false);
+                Navigator.of(context).pop();
               },
             ),
             RaisedButton(
               child: Text('종료'),
               onPressed: () {
-                Navigator.pop(context, true);
+                SystemChannels.platform.invokeMethod('SystemNavigator.pop');
               },
             ),
           ],
@@ -157,9 +156,9 @@ class _IndexScreenState extends State<IndexScreen> {
 
   Future<bool> onWillPop() async {
     DateTime currentTime = DateTime.now();
-    if (currentBackPressTime == null ||
-        currentTime.difference(currentBackPressTime) > Duration(seconds: 2)) {
-      currentBackPressTime = currentTime;
+    if (_currentBackPressTime == null ||
+        currentTime.difference(_currentBackPressTime) > Duration(seconds: 2)) {
+      _currentBackPressTime = currentTime;
       _showExitDialog(context);
       return false;
     }
