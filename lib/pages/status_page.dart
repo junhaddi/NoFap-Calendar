@@ -27,29 +27,6 @@ class _StatusPageState extends State<StatusPage> {
 
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(
-        title: Text('현황'),
-        actions: [
-          IconButton(
-            icon: Icon(Icons.history),
-            onPressed: () {
-              Navigator.of(context).pushNamed('/history');
-            },
-          ),
-          IconButton(
-            icon: Icon(Icons.share),
-            onPressed: () {
-              RenderBox box = context.findRenderObject();
-              String text = '공유';
-              Share.share(
-                text,
-                subject: text,
-                sharePositionOrigin: box.localToGlobal(Offset.zero) & box.size,
-              );
-            },
-          ),
-        ],
-      ),
       body: Container(
         child: Center(
           child: Column(

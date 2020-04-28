@@ -1,15 +1,16 @@
+import 'dart:async';
+import 'dart:io';
+
 import 'package:bottom_navy_bar/bottom_navy_bar.dart';
-import 'package:flutter/material.dart';
 import 'package:firebase_messaging/firebase_messaging.dart';
+import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_native_admob/flutter_native_admob.dart';
 import 'package:flutter_native_admob/native_admob_controller.dart';
 import 'package:nofapcamp/pages/home_page.dart';
-import 'package:nofapcamp/pages/status_page.dart';
 import 'package:nofapcamp/pages/ranking_page.dart';
 import 'package:nofapcamp/pages/setting_page.dart';
-import 'dart:async';
-import 'dart:io';
+import 'package:nofapcamp/pages/status_page.dart';
 
 final FirebaseMessaging _firebaseMessaging = FirebaseMessaging();
 
@@ -39,12 +40,33 @@ class _IndexScreenState extends State<IndexScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      appBar: AppBar(
+        title: Text('금딸캠프'),
+        actions: <Widget>[
+          Container(
+            margin: EdgeInsets.only(right: 10.0),
+            child: GestureDetector(
+              onTap: () {
+                // TODO 페이스북 로그인/로그아웃 창 띄우기
+              },
+              child: CircleAvatar(
+                radius: 20.0,
+                child: ClipOval(
+                  child: Image.network(
+                    'https://pbs.twimg.com/profile_images/885160602603110400/NDy2DF5c_400x400.jpg',
+                  ),
+                ),
+              ),
+            ),
+          ),
+        ],
+      ),
       body: WillPopScope(
         onWillPop: onWillPop,
         child: PageView(
           controller: _pageController,
           onPageChanged: (index) {
-            setState(() => this._currentIndex = index);
+            setState(() => _currentIndex = index);
           },
           children: <Widget>[
             HomePage(),

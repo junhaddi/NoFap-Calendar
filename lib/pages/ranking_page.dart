@@ -114,23 +114,6 @@ class _RankingPageState extends State<RankingPage> {
     return DefaultTabController(
       length: 2,
       child: Scaffold(
-        appBar: AppBar(
-          title: Text('순위'),
-          actions: [
-            IconButton(
-              icon: Icon(Icons.sort),
-              onPressed: () {},
-            )
-          ],
-          bottom: TabBar(
-            onTap: (i) {
-              setState(() {
-                _tabBarIndex = i;
-              });
-            },
-            tabs: _tabBar
-          )
-        ),
         // 현재 시즌, 시즌 최고 기록
         body: Column(
           children: <Widget>[

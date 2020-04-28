@@ -28,9 +28,6 @@ class _HistoryScreenState extends State<HistoryScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(
-        title: Text('기록'),
-      ),
       body: historys.isEmpty
           ? Center(
               child: Text('기록이 없습니다!'),
