@@ -42,6 +42,7 @@ class _IndexScreenState extends State<IndexScreen> {
     return Scaffold(
       appBar: AppBar(
         title: Text('금딸캠프'),
+        elevation: 0.0,
         actions: <Widget>[
           Container(
             margin: EdgeInsets.only(right: 10.0),
@@ -77,6 +78,7 @@ class _IndexScreenState extends State<IndexScreen> {
         ),
       ),
       bottomNavigationBar: BottomNavyBar(
+        showElevation: false,
         selectedIndex: _currentIndex,
         onItemSelected: (index) {
           setState(() => _currentIndex = index);

@@ -1,9 +1,10 @@
 import 'dart:convert';
 import 'dart:math';
+
 import 'package:flutter/material.dart';
-import 'package:numberpicker/numberpicker.dart';
+import 'package:nofapcamp/widgets/numberpicker.dart';
 import 'package:percent_indicator/circular_percent_indicator.dart';
-import 'package:share/share.dart';
+import 'package:pull_to_refresh/pull_to_refresh.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 class StatusPage extends StatefulWidget {
@@ -12,12 +13,14 @@ class StatusPage extends StatefulWidget {
 }
 
 class _StatusPageState extends State<StatusPage> {
+  RefreshController _refreshController = RefreshController();
   SharedPreferences _prefs;
   DateTime _srcDate;
   DateTime _dstDate;
   int _progressDay;
   int _dday;
-  bool _isLoading = true;
+  bool _isLoaded = false;
+  bool _isSuccess = false;
 
   @override
   void initState() {
@@ -27,72 +30,104 @@ class _StatusPageState extends State<StatusPage> {
 
   Widget build(BuildContext context) {
     return Scaffold(
-      body: Container(
-        child: Center(
-          child: Column(
-            mainAxisAlignment: MainAxisAlignment.center,
-            children: <Widget>[
-              CircularPercentIndicator(
-                radius: 240.0,
-                lineWidth: 26.0,
-                animation: true,
-                percent: _isLoading
-                    ? 0.0
-                    : max(
-                        0.001,
-                        min(
-                            DateTime.now().difference(_srcDate).inMinutes /
-                                _dstDate.difference(_srcDate).inMinutes,
-                            1.0),
-                      ),
-                center: Column(
-                  mainAxisAlignment: MainAxisAlignment.center,
-                  children: <Widget>[
-                    _isLoading
-                        ? CircularProgressIndicator()
-                        : Column(
-                            children: <Widget>[
-                              Text(
-                                '$_progressDay일차',
-                                style: TextStyle(
-                                  fontWeight: FontWeight.bold,
-                                  fontSize: 42.0,
-                                ),
+      body: SmartRefresher(
+        header: WaterDropMaterialHeader(
+          color: Theme.of(context).brightness == Brightness.light
+              ? Colors.black
+              : Colors.white,
+        ),
+        controller: _refreshController,
+        onRefresh: _onRefresh,
+        child: Column(
+          mainAxisAlignment: MainAxisAlignment.center,
+          children: <Widget>[
+            CircularPercentIndicator(
+              radius: 280.0,
+              lineWidth: 24.0,
+              animation: true,
+              percent: _isLoaded
+                  ? max(
+                      0.001,
+                      min(
+                          DateTime.now().difference(_srcDate).inMilliseconds /
+                              _dstDate.difference(_srcDate).inMilliseconds,
+                          1.0),
+                    )
+                  : 0.0,
+              center: Column(
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: <Widget>[
+                  _isLoaded
+                      ? Column(
+                          children: <Widget>[
+                            Text(
+                              '$_progressDay일차',
+                              style: TextStyle(
+                                fontWeight: FontWeight.bold,
+                                fontSize: 42.0,
                               ),
-                              Text(
-                                '${_srcDate.year}/${_srcDate.month}/${_srcDate.day}~',
+                            ),
+                            Text(
+                              '${_srcDate.year}/${_srcDate.month}/${_srcDate.day}~',
+                            ),
+                            SizedBox(
+                              height: 10.0,
+                            ),
+                            Text(
+                              'D${_dday < 0 ? '+' : '-'}${_dday == 0 ? 'DAY' : _dday.abs()}',
+                              style: TextStyle(
+                                fontSize: 24.0,
                               ),
-                              SizedBox(
-                                height: 10,
-                              ),
-                              Text(
-                                'D${_dday < 0 ? '+' : '-'}${_dday == 0 ? 'DAY' : _dday.abs()}',
-                                style: TextStyle(
-                                  fontSize: 24.0,
-                                ),
-                              ),
-                            ],
+                            ),
+                          ],
+                        )
+                      : Text(
+                          '시작하세요',
+                          style: TextStyle(
+                            fontWeight: FontWeight.bold,
+                            fontSize: 42.0,
                           ),
-                  ],
-                ),
-                circularStrokeCap: CircularStrokeCap.round,
-                // TODO 목표 현황에 따라 그래프 색상 변화
-                progressColor: Colors.red,
+                        ),
+                  SizedBox(
+                    height: 10.0,
+                  ),
+                  MaterialButton(
+                    onPressed: () {
+                      if (_isLoaded) {
+                        if (_isSuccess) {
+                          _showResetDialog();
+                        } else {
+                          _showReconfirmDialog();
+                        }
+                      } else {
+                        _showResetDialog();
+                      }
+                    },
+                    color: Colors.blueGrey,
+                    child: Icon(
+                      _isLoaded
+                          ? _isSuccess ? Icons.star : Icons.pause
+                          : Icons.play_arrow,
+                      size: 32.0,
+                    ),
+                    padding: EdgeInsets.all(8),
+                    shape: CircleBorder(),
+                  ),
+                ],
               ),
-              RaisedButton(
-                // TODO 목표 현황에 따라 아이콘 변경(포기/달성)
-                // TODO 버튼 디자인 수정
-                child: Icon(Icons.warning),
-                shape: RoundedRectangleBorder(
-                  borderRadius: BorderRadius.circular(100.0),
-                ),
-                onPressed: _isLoading ? _showResetDialog : _showReconfirmDialog,
-              ),
-            ],
-          ),
+              circularStrokeCap: CircularStrokeCap.round,
+              progressColor: Colors.red,
+            ),
+          ],
         ),
       ),
     );
+  }
+
+  void _onRefresh() async {
+    await Future.delayed(Duration(milliseconds: 1000));
+    _refreshController.refreshCompleted();
+    _getDate();
   }
 
   Future<void> _getDate() async {
@@ -111,7 +146,8 @@ class _StatusPageState extends State<StatusPage> {
           .difference(DateTime(
               DateTime.now().year, DateTime.now().month, DateTime.now().day))
           .inDays;
-      _isLoading = _srcDate == null && _dstDate == null;
+      _isLoaded = _srcDate != null && _dstDate != null;
+      _isSuccess = DateTime.now().difference(_dstDate).inMilliseconds >= 0;
     });
   }
 
@@ -152,35 +188,40 @@ class _StatusPageState extends State<StatusPage> {
           return NumberPickerDialog.integer(
             minValue: 1,
             maxValue: 100,
-            title: Text('목표 일수'),
+            title: Text('목표일수'),
             initialIntegerValue: 1,
           );
         }).then((int value) {
       if (value != null) {
         setState(() {
-          if (!_isLoading) {
-            // 기록 저장
-            List<String> dateHistorys =
-                (_prefs.getStringList('dateHistorys') ?? []);
-            dateHistorys.add(
-              jsonEncode({
-                'srcDate': _srcDate.millisecondsSinceEpoch,
-                'dstDate': _dstDate.millisecondsSinceEpoch,
-                'progressDay': _progressDay,
-                'dday': _dday,
-              }),
-            );
-            _prefs.setStringList('dateHistorys', dateHistorys);
+          if (_isSuccess) {
+            // 목표 달성 성공
+            _dstDate = DateTime.now().add(Duration(days: value));
+          } else {
+            // 목표 달성 실패
+            if (_isLoaded) {
+              // 기록 저장
+              List<String> dateHistorys =
+                  _prefs.getStringList('dateHistorys') ?? [];
+              dateHistorys.add(
+                jsonEncode({
+                  'srcDate': _srcDate.millisecondsSinceEpoch,
+                  'dstDate': _dstDate.millisecondsSinceEpoch,
+                  'progressDay': _progressDay,
+                  'dday': _dday,
+                }),
+              );
+              _prefs.setStringList('dateHistorys', dateHistorys);
+            }
+            _srcDate = DateTime.now();
+            _dstDate = _srcDate.add(Duration(days: value));
+            _progressDay = 1;
           }
-          // TODO 목표 달성시 처리
-          _srcDate = DateTime.now();
-          _dstDate = _srcDate.add(Duration(days: value));
-          _progressDay = 1;
           _dday = DateTime(_dstDate.year, _dstDate.month, _dstDate.day)
               .difference(DateTime(DateTime.now().year, DateTime.now().month,
                   DateTime.now().day))
               .inDays;
-          _isLoading = false;
+          _isLoaded = true;
 
           // 현황 저장
           _prefs.setInt('srcDate', _srcDate.millisecondsSinceEpoch);

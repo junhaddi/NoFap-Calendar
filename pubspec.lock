@@ -199,7 +199,7 @@ packages:
     source: hosted
     version: "2.1.4"
   infinite_listview:
-    dependency: transitive
+    dependency: "direct main"
     description:
       name: infinite_listview
       url: "https://pub.dartlang.org"
@@ -226,13 +226,6 @@ packages:
       url: "https://pub.dartlang.org"
     source: hosted
     version: "1.1.8"
-  numberpicker:
-    dependency: "direct main"
-    description:
-      name: numberpicker
-      url: "https://pub.dartlang.org"
-    source: hosted
-    version: "1.2.0"
   path:
     dependency: transitive
     description:
@@ -275,6 +268,13 @@ packages:
       url: "https://pub.dartlang.org"
     source: hosted
     version: "1.0.2"
+  pull_to_refresh:
+    dependency: "direct main"
+    description:
+      name: pull_to_refresh
+      url: "https://pub.dartlang.org"
+    source: hosted
+    version: "1.5.8"
   quiver:
     dependency: transitive
     description:
