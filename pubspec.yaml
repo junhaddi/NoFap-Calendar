@@ -14,7 +14,7 @@ description: 금딸캠프 - 자위중독 끊기
 version: 1.0.0+1
 
 environment:
-  sdk: ">=2.1.0 <3.0.0"
+  sdk: ">=2.2.2 <3.0.0"
 
 dependencies:
   flutter:
@@ -34,7 +34,6 @@ dependencies:
   share: ^0.6.4
   dynamic_theme: ^1.0.1
   cloud_firestore: ^0.13.5
-  bottom_navy_bar: ^5.4.0
 
 dev_dependencies:
   flutter_test:

@@ -1,7 +1,6 @@
 import 'dart:async';
 import 'dart:io';
 
-import 'package:bottom_navy_bar/bottom_navy_bar.dart';
 import 'package:firebase_messaging/firebase_messaging.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
@@ -11,6 +10,7 @@ import 'package:nofapcamp/pages/home_page.dart';
 import 'package:nofapcamp/pages/ranking_page.dart';
 import 'package:nofapcamp/pages/setting_page.dart';
 import 'package:nofapcamp/pages/status_page.dart';
+import 'package:nofapcamp/widgets/bottom_navy_bar.dart';
 
 final FirebaseMessaging _firebaseMessaging = FirebaseMessaging();
 
