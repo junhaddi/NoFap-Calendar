@@ -1,9 +1,9 @@
 import 'package:dynamic_theme/dynamic_theme.dart';
 import 'package:flutter/material.dart';
-import 'package:shared_preferences/shared_preferences.dart';
-import 'package:nofapcamp/screens/walkthrough_screen.dart';
-import 'package:nofapcamp/screens/index_screen.dart';
 import 'package:nofapcamp/screens/history_screen.dart';
+import 'package:nofapcamp/screens/index_screen.dart';
+import 'package:nofapcamp/screens/walkthrough_screen.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
 void main() {
   WidgetsFlutterBinding.ensureInitialized();
@@ -31,6 +31,7 @@ class MyApp extends StatelessWidget {
                 primaryColor: Colors.white,
                 brightness: Brightness.light,
                 accentColor: Colors.black,
+                fontFamily: 'NanumBarunGothic',
               )
             : ThemeData(
                 // 다크모드 테마
@@ -38,6 +39,7 @@ class MyApp extends StatelessWidget {
                 primaryColor: Colors.black,
                 brightness: Brightness.dark,
                 accentColor: Colors.white,
+                fontFamily: 'NanumBarunGothic',
               );
       },
       themedWidgetBuilder: (context, theme) {
