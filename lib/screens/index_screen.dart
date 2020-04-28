@@ -1,3 +1,4 @@
+import 'package:bottom_navy_bar/bottom_navy_bar.dart';
 import 'package:flutter/material.dart';
 import 'package:firebase_messaging/firebase_messaging.dart';
 import 'package:flutter/services.dart';
@@ -18,43 +19,21 @@ class IndexScreen extends StatefulWidget {
 }
 
 class _IndexScreenState extends State<IndexScreen> {
-  int _page = 0;
+  int _currentIndex = 0;
   PageController _pageController;
   DateTime _currentBackPressTime;
-
-  List<Widget> _everyPage = <Widget>[
-    HomePage(),
-    StatusPage(),
-    RankingPage(),
-    SettingPage()
-  ];
-
-  List<BottomNavigationBarItem> _bottomItem = <BottomNavigationBarItem>[
-    BottomNavigationBarItem(
-      icon: Icon(Icons.home),
-      title: Text('홈'),
-    ),
-    BottomNavigationBarItem(
-      icon: Icon(Icons.calendar_today),
-      title: Text('현황'),
-    ),
-    BottomNavigationBarItem(
-      icon: Icon(Icons.flag),
-      title: Text('순위'),
-    ),
-    BottomNavigationBarItem(
-      icon: Icon(Icons.settings),
-      title: Text('설정'),
-    ),
-  ];
 
   @override
   void initState() {
     super.initState();
     _fcmListener();
-    _pageController = PageController(
-      initialPage: _page,
-    );
+    _pageController = PageController();
+  }
+
+  @override
+  void dispose() {
+    _pageController.dispose();
+    super.dispose();
   }
 
   @override
@@ -64,28 +43,49 @@ class _IndexScreenState extends State<IndexScreen> {
         onWillPop: onWillPop,
         child: PageView(
           controller: _pageController,
-          onPageChanged: (newPage) {
-            setState(() {
-              this._page = newPage;
-            });
+          onPageChanged: (index) {
+            setState(() => this._currentIndex = index);
           },
-          children: _everyPage,
+          children: <Widget>[
+            HomePage(),
+            StatusPage(),
+            RankingPage(),
+            SettingPage()
+          ],
         ),
       ),
-      bottomNavigationBar: BottomNavigationBar(
-        showSelectedLabels: false,
-        showUnselectedLabels: false,
-        type: BottomNavigationBarType.fixed,
-        selectedItemColor: Theme.of(context).brightness == Brightness.light
-            ? Colors.black
-            : Colors.white,
-        currentIndex: _page,
-        onTap: (index) {
-          this._pageController.animateToPage(index,
-              duration: const Duration(milliseconds: 300),
-              curve: Curves.easeInOut);
+      bottomNavigationBar: BottomNavyBar(
+        selectedIndex: _currentIndex,
+        onItemSelected: (index) {
+          setState(() => _currentIndex = index);
+          _pageController.jumpToPage(index);
         },
-        items: _bottomItem,
+        items: <BottomNavyBarItem>[
+          BottomNavyBarItem(
+            icon: Icon(Icons.home),
+            title: Text('홈'),
+            activeColor: Colors.redAccent,
+            textAlign: TextAlign.center,
+          ),
+          BottomNavyBarItem(
+            icon: Icon(Icons.calendar_today),
+            title: Text('현황'),
+            activeColor: Colors.indigoAccent,
+            textAlign: TextAlign.center,
+          ),
+          BottomNavyBarItem(
+            icon: Icon(Icons.flag),
+            title: Text('순위'),
+            activeColor: Colors.blueAccent,
+            textAlign: TextAlign.center,
+          ),
+          BottomNavyBarItem(
+            icon: Icon(Icons.settings),
+            title: Text('설정'),
+            activeColor: Colors.orangeAccent,
+            textAlign: TextAlign.center,
+          ),
+        ],
       ),
     );
   }
