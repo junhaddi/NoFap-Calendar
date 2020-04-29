@@ -40,28 +40,6 @@ class _IndexScreenState extends State<IndexScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(
-        title: Text('금딸캠프'),
-        elevation: 0.0,
-        actions: <Widget>[
-          Container(
-            margin: EdgeInsets.only(right: 10.0),
-            child: GestureDetector(
-              onTap: () {
-                // TODO 페이스북 로그인/로그아웃 창 띄우기
-              },
-              child: CircleAvatar(
-                radius: 20.0,
-                child: ClipOval(
-                  child: Image.network(
-                    'https://pbs.twimg.com/profile_images/885160602603110400/NDy2DF5c_400x400.jpg',
-                  ),
-                ),
-              ),
-            ),
-          ),
-        ],
-      ),
       body: WillPopScope(
         onWillPop: onWillPop,
         child: PageView(

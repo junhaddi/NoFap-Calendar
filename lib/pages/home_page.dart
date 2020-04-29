@@ -10,78 +10,80 @@ class _HomePageState extends State<HomePage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      body: Column(
-        children: <Widget>[
-          Expanded(
-            child: Row(
-              children: <Widget>[
-                Expanded(
-                  child: CardItem(
-                      title: '칭호',
-                      icon: Icons.cake,
-                      event: () {
-                        Navigator.of(context).pushNamed('/nickname');
-                      }),
-                ),
-                Expanded(
-                  child: CardItem(
-                      title: '명언',
-                      icon: Icons.textsms,
-                      event: () {
-                        Navigator.of(context).pushNamed('/wisesaying');
-                      }),
-                ),
-              ],
+      body: SafeArea(
+        child: Column(
+          children: <Widget>[
+            Expanded(
+              child: Row(
+                children: <Widget>[
+                  Expanded(
+                    child: CardItem(
+                        title: '칭호',
+                        icon: Icons.cake,
+                        event: () {
+                          Navigator.of(context).pushNamed('/nickname');
+                        }),
+                  ),
+                  Expanded(
+                    child: CardItem(
+                        title: '명언',
+                        icon: Icons.textsms,
+                        event: () {
+                          Navigator.of(context).pushNamed('/wisesaying');
+                        }),
+                  ),
+                ],
+              ),
             ),
-          ),
-          Expanded(
-            child: CardItem(
-                title: '도전기록',
-                icon: Icons.history,
-                isSingle: true,
-                event: () {
-                  Navigator.of(context).pushNamed('/history');
-                }),
-          ),
-          Expanded(
-            child: CardItem(
-                title: '금딸효능',
-                icon: Icons.healing,
-                isSingle: true,
-                event: () {
-                  Navigator.of(context).pushNamed('/efficacy');
-                }),
-          ),
-          Expanded(
-            child: Row(
-              children: <Widget>[
-                Expanded(
-                  child: CardItem(
-                      title: '더보기',
-                      icon: Icons.favorite,
-                      event: () {
-                        Navigator.of(context).pushNamed('/viewmore');
-                      }),
-                ),
-                Expanded(
-                  child: CardItem(
-                      title: '공유',
-                      icon: Icons.share,
-                      event: () {
-                        final RenderBox box = context.findRenderObject();
-                        String text = "스토어링크";
-                        Share.share(text,
-                            sharePositionOrigin:
-                                box.localToGlobal(Offset.zero) & box.size);
-                      }),
-                ),
-              ],
+            Expanded(
+              child: CardItem(
+                  title: '도전기록',
+                  icon: Icons.history,
+                  isSingle: true,
+                  event: () {
+                    Navigator.of(context).pushNamed('/history');
+                  }),
             ),
-          ),
-          SizedBox(
-            height: 30.0,
-          ),
-        ],
+            Expanded(
+              child: CardItem(
+                  title: '금딸효능',
+                  icon: Icons.healing,
+                  isSingle: true,
+                  event: () {
+                    Navigator.of(context).pushNamed('/efficacy');
+                  }),
+            ),
+            Expanded(
+              child: Row(
+                children: <Widget>[
+                  Expanded(
+                    child: CardItem(
+                        title: '더보기',
+                        icon: Icons.favorite,
+                        event: () {
+                          Navigator.of(context).pushNamed('/viewmore');
+                        }),
+                  ),
+                  Expanded(
+                    child: CardItem(
+                        title: '공유',
+                        icon: Icons.share,
+                        event: () {
+                          final RenderBox box = context.findRenderObject();
+                          String text = "스토어링크";
+                          Share.share(text,
+                              sharePositionOrigin:
+                                  box.localToGlobal(Offset.zero) & box.size);
+                        }),
+                  ),
+                ],
+              ),
+            ),
+            SizedBox(
+              height: 30.0,
+            ),
+          ],
+        ),
       ),
     );
   }

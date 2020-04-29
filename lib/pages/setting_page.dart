@@ -23,11 +23,15 @@ class _SettingPageState extends State<SettingPage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      appBar: AppBar(
+        title: Text('설정'),
+      ),
       body: ListView(
         children: <Widget>[
           SwitchListTile(
             title: Text('다크모드'),
             value: _isDarkMode,
+            activeColor: Colors.orangeAccent,
             onChanged: (value) {
               setState(() {
                 _changeBrightness();
