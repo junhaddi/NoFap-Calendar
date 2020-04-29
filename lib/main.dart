@@ -36,6 +36,9 @@ class MyApp extends StatelessWidget {
                 brightness: Brightness.light,
                 accentColor: Colors.black,
                 fontFamily: 'NanumBarunGothic',
+                appBarTheme: AppBarTheme(
+                  elevation: 0.0,
+                ),
               )
             : ThemeData(
                 // 다크모드 테마
@@ -44,6 +47,9 @@ class MyApp extends StatelessWidget {
                 brightness: Brightness.dark,
                 accentColor: Colors.white,
                 fontFamily: 'NanumBarunGothic',
+                appBarTheme: AppBarTheme(
+                  elevation: 0.0,
+                ),
               );
       },
       themedWidgetBuilder: (context, theme) {

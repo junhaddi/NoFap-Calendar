@@ -4,7 +4,6 @@ import 'dart:math';
 import 'package:flutter/material.dart';
 import 'package:nofapcamp/widgets/numberpicker.dart';
 import 'package:percent_indicator/circular_percent_indicator.dart';
-import 'package:pull_to_refresh/pull_to_refresh.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 class StatusPage extends StatefulWidget {
@@ -13,7 +12,6 @@ class StatusPage extends StatefulWidget {
 }
 
 class _StatusPageState extends State<StatusPage> {
-  RefreshController _refreshController = RefreshController();
   SharedPreferences _prefs;
   DateTime _srcDate;
   DateTime _dstDate;
@@ -30,104 +28,87 @@ class _StatusPageState extends State<StatusPage> {
 
   Widget build(BuildContext context) {
     return Scaffold(
-      body: SmartRefresher(
-        header: WaterDropMaterialHeader(
-          color: Theme.of(context).brightness == Brightness.light
-              ? Colors.black
-              : Colors.white,
-        ),
-        controller: _refreshController,
-        onRefresh: _onRefresh,
-        child: Column(
-          mainAxisAlignment: MainAxisAlignment.center,
-          children: <Widget>[
-            CircularPercentIndicator(
-              radius: 280.0,
-              lineWidth: 24.0,
-              animation: true,
-              percent: _isLoaded
-                  ? max(
-                      0.001,
-                      min(
-                          DateTime.now().difference(_srcDate).inMilliseconds /
-                              _dstDate.difference(_srcDate).inMilliseconds,
-                          1.0),
-                    )
-                  : 0.0,
-              center: Column(
-                mainAxisAlignment: MainAxisAlignment.center,
-                children: <Widget>[
-                  _isLoaded
-                      ? Column(
-                          children: <Widget>[
-                            Text(
-                              '$_progressDay일차',
-                              style: TextStyle(
-                                fontWeight: FontWeight.bold,
-                                fontSize: 42.0,
-                              ),
-                            ),
-                            Text(
-                              '${_srcDate.year}/${_srcDate.month}/${_srcDate.day}~',
-                            ),
-                            SizedBox(
-                              height: 10.0,
-                            ),
-                            Text(
-                              'D${_dday < 0 ? '+' : '-'}${_dday == 0 ? 'DAY' : _dday.abs()}',
-                              style: TextStyle(
-                                fontSize: 24.0,
-                              ),
-                            ),
-                          ],
-                        )
-                      : Text(
-                          '시작하세요',
+      // TODO 상단 배너광고 추가
+      body: Center(
+        child: CircularPercentIndicator(
+          radius: 280.0,
+          lineWidth: 24.0,
+          animation: true,
+          percent: _isLoaded
+              ? max(
+                  0.001,
+                  min(
+                      DateTime.now().difference(_srcDate).inMilliseconds /
+                          _dstDate.difference(_srcDate).inMilliseconds,
+                      1.0),
+                )
+              : 0.0,
+          center: Column(
+            mainAxisAlignment: MainAxisAlignment.center,
+            children: <Widget>[
+              _isLoaded
+                  ? Column(
+                      children: <Widget>[
+                        Text(
+                          '$_progressDay일차',
                           style: TextStyle(
                             fontWeight: FontWeight.bold,
                             fontSize: 42.0,
                           ),
                         ),
-                  SizedBox(
-                    height: 10.0,
-                  ),
-                  MaterialButton(
-                    onPressed: () {
-                      if (_isLoaded) {
-                        if (_isSuccess) {
-                          _showResetDialog();
-                        } else {
-                          _showReconfirmDialog();
-                        }
-                      } else {
-                        _showResetDialog();
-                      }
-                    },
-                    color: Colors.blueGrey,
-                    child: Icon(
-                      _isLoaded
-                          ? _isSuccess ? Icons.star : Icons.pause
-                          : Icons.play_arrow,
-                      size: 32.0,
+                        Text(
+                          '${_srcDate.year}/${_srcDate.month}/${_srcDate.day}~',
+                        ),
+                        SizedBox(
+                          height: 10.0,
+                        ),
+                        Text(
+                          'D${_dday < 0 ? '+' : '-'}${_dday == 0 ? 'DAY' : _dday.abs()}',
+                          style: TextStyle(
+                            fontSize: 24.0,
+                          ),
+                        ),
+                      ],
+                    )
+                  : Text(
+                      '시작하세요',
+                      style: TextStyle(
+                        fontWeight: FontWeight.bold,
+                        fontSize: 42.0,
+                      ),
                     ),
-                    padding: EdgeInsets.all(8),
-                    shape: CircleBorder(),
-                  ),
-                ],
+              SizedBox(
+                height: 10.0,
               ),
-              circularStrokeCap: CircularStrokeCap.round,
-              progressColor: Colors.red,
-            ),
-          ],
+              MaterialButton(
+                onPressed: () {
+                  if (_isLoaded) {
+                    if (_isSuccess) {
+                      _showResetDialog();
+                    } else {
+                      _showReconfirmDialog();
+                    }
+                  } else {
+                    _showResetDialog();
+                  }
+                },
+                color: Colors.blueGrey,
+                child: Icon(
+                  _isLoaded
+                      ? _isSuccess ? Icons.star : Icons.pause
+                      : Icons.play_arrow,
+                  size: 32.0,
+                ),
+                padding: EdgeInsets.all(8),
+                shape: CircleBorder(),
+              ),
+            ],
+          ),
+          circularStrokeCap: CircularStrokeCap.round,
+          progressColor: Colors.deepPurpleAccent,
         ),
       ),
     );
-  }
-
-  void _onRefresh() async {
-    await Future.delayed(Duration(milliseconds: 1000));
-    _refreshController.refreshCompleted();
-    _getDate();
   }
 
   Future<void> _getDate() async {
