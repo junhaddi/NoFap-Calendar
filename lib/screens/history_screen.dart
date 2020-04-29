@@ -1,4 +1,5 @@
 import 'dart:convert';
+
 import 'package:flutter/material.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
@@ -17,7 +18,7 @@ class HistoryScreen extends StatefulWidget {
 class _HistoryScreenState extends State<HistoryScreen> {
   SharedPreferences _prefs;
 
-  List<History> historys = [];
+  List<History> _historys = [];
 
   @override
   void initState() {
@@ -28,12 +29,33 @@ class _HistoryScreenState extends State<HistoryScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      body: historys.isEmpty
+      appBar: AppBar(
+        title: Text('도전기록'),
+      ),
+      body: _historys.isEmpty
           ? Center(
-              child: Text('기록이 없습니다!'),
+              child: Column(
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: <Widget>[
+                  Icon(
+                    Icons.history,
+                    size: 42.0,
+                    color: Colors.grey,
+                  ),
+                  SizedBox(
+                    height: 10.0,
+                  ),
+                  Text(
+                    '기록이 없습니다',
+                    style: TextStyle(
+                      color: Colors.grey,
+                    ),
+                  ),
+                ],
+              ),
             )
           : ListView(
-              children: historys
+              children: _historys.reversed
                   .map(
                     (History history) => Card(
                       child: ListTile(
@@ -53,10 +75,12 @@ class _HistoryScreenState extends State<HistoryScreen> {
     setState(() {
       dateHistorys.forEach((element) {
         Map dateMap = jsonDecode(element);
-        historys.add(History(
-          title: dateMap["progressDay"].toString(),
-          description: dateMap["dday"].toString(),
-        ));
+        _historys.add(
+          History(
+            title: '${dateMap["progressDay"].toString()}일째',
+            description: dateMap["dday"].toString(),
+          ),
+        );
       });
     });
   }

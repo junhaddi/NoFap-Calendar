@@ -86,21 +86,21 @@ class _IndexScreenState extends State<IndexScreen> {
         },
         items: <BottomNavyBarItem>[
           BottomNavyBarItem(
-            icon: Icon(Icons.home),
+            icon: Icon(Icons.widgets),
             title: Text('홈'),
             activeColor: Colors.redAccent,
             textAlign: TextAlign.center,
           ),
           BottomNavyBarItem(
-            icon: Icon(Icons.calendar_today),
+            icon: Icon(Icons.today),
             title: Text('현황'),
-            activeColor: Colors.indigoAccent,
+            activeColor: Colors.deepPurpleAccent,
             textAlign: TextAlign.center,
           ),
           BottomNavyBarItem(
-            icon: Icon(Icons.flag),
+            icon: Icon(Icons.public),
             title: Text('순위'),
-            activeColor: Colors.blueAccent,
+            activeColor: Colors.indigoAccent,
             textAlign: TextAlign.center,
           ),
           BottomNavyBarItem(

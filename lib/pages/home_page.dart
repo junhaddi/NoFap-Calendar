@@ -1,116 +1,149 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_native_admob/native_admob_controller.dart';
+import 'package:share/share.dart';
 
 class HomePage extends StatefulWidget {
   @override
   _HomePageState createState() => _HomePageState();
 }
 
-// 1. (업적 칭호), 기록
-// 2. 효능    장단점
-// 3. 추천사이트, 공유
 class _HomePageState extends State<HomePage> {
-  static const _adUnitID = 'ca-app-pub-8336339515298040/6724604841';
-  final _nativeAdController = NativeAdmobController();
-
-  final double _elevation = 5;
-
-  final _widgetMargin = EdgeInsets.fromLTRB(10, 2.5, 9, 2.5);
-
-  _rowCard(IconData icon, String text) {
-    const double cardHeight = 120;     // 너비
-    const double cardWidht = 190;     // 높이
-
-    return InkWell(
-      onTap: () {
-        print('rowCard');
-      },
-      child: Container(
-        height: cardHeight,
-        width: cardWidht,
-        margin: EdgeInsets.only(right: 5.0),
-        child: Card(
-          elevation: _elevation,
-          child: Column(
-            mainAxisAlignment: MainAxisAlignment.center,
-            children: <Widget>[
-              Icon(icon, size: 33, color: Colors.red),
-              SizedBox(height: 15),
-              Text('$text', style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold))
-            ],
-          ),
-        ),
-      ),
-    );
-  }
-
-  _firstRow() {
-    return Container(
-      margin: _widgetMargin,
-      child: Row(
-        children: <Widget>[
-          _rowCard(Icons.contacts, 'E-card'),
-          _rowCard(Icons.graphic_eq, 'Results'),
-        ],
-      ),
-    );
-  }
-
-  _lastRow() {
-    return Container(
-      margin: _widgetMargin,
-      child: Row(
-        children: <Widget>[
-          _rowCard(Icons.book, 'E-Book'),
-          _rowCard(Icons.video_library, 'Video'),
-        ],
-      ),
-    );
-  }
-
-  _columnCard(IconData icon, String text) {
-    const double cardHeight = 110;     // 너비
-    const double cardWidth = 390;
-
-    return Container(
-      width: cardWidth,
-      height: cardHeight,
-      margin: EdgeInsets.fromLTRB(0, 3, 5, 3),
-      child: Card(
-        elevation: _elevation,
-        child: ListTile(
-          leading: Padding(
-            padding: EdgeInsets.fromLTRB(15, 20, 0, 0),
-            child: Icon(icon, color: Colors.red, size: 33),
-          ),
-          title: Center(
-            child: Text('$text', style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold)),
-          ),
-          trailing: Padding(
-            padding: EdgeInsets.fromLTRB(5, 12, 0, 0),
-            child: Icon(Icons.chevron_right, size: 50),
-          ),
-          onTap: () {
-            // 실행 함수
-            print('ColumnCard');
-          },
-        ),
-      ),
-    );
-  }
-
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       body: Column(
         children: <Widget>[
-          _firstRow(),
-          _columnCard(Icons.calendar_today, 'Announcements'),
-          _columnCard(Icons.work, 'Assignments'),
-          _columnCard(Icons.hotel, 'Holidays'),
-          // _lastRow()
+          Expanded(
+            child: Row(
+              children: <Widget>[
+                Expanded(
+                  child: CardItem(
+                      title: '칭호',
+                      icon: Icons.cake,
+                      event: () {
+                        Navigator.of(context).pushNamed('/nickname');
+                      }),
+                ),
+                Expanded(
+                  child: CardItem(
+                      title: '명언',
+                      icon: Icons.textsms,
+                      event: () {
+                        Navigator.of(context).pushNamed('/wisesaying');
+                      }),
+                ),
+              ],
+            ),
+          ),
+          Expanded(
+            child: CardItem(
+                title: '도전기록',
+                icon: Icons.history,
+                isSingle: true,
+                event: () {
+                  Navigator.of(context).pushNamed('/history');
+                }),
+          ),
+          Expanded(
+            child: CardItem(
+                title: '금딸효능',
+                icon: Icons.healing,
+                isSingle: true,
+                event: () {
+                  Navigator.of(context).pushNamed('/efficacy');
+                }),
+          ),
+          Expanded(
+            child: Row(
+              children: <Widget>[
+                Expanded(
+                  child: CardItem(
+                      title: '더보기',
+                      icon: Icons.favorite,
+                      event: () {
+                        Navigator.of(context).pushNamed('/viewmore');
+                      }),
+                ),
+                Expanded(
+                  child: CardItem(
+                      title: '공유',
+                      icon: Icons.share,
+                      event: () {
+                        final RenderBox box = context.findRenderObject();
+                        String text = "스토어링크";
+                        Share.share(text,
+                            sharePositionOrigin:
+                                box.localToGlobal(Offset.zero) & box.size);
+                      }),
+                ),
+              ],
+            ),
+          ),
+          SizedBox(
+            height: 30.0,
+          ),
         ],
-      )
+      ),
+    );
+  }
+}
+
+class CardItem extends StatelessWidget {
+  final String title;
+  final IconData icon;
+  final bool isSingle;
+  final event;
+
+  CardItem({
+    this.title = "hello",
+    this.icon = Icons.home,
+    this.isSingle = false,
+    this.event,
+  });
+
+  @override
+  Widget build(BuildContext context) {
+    return InkWell(
+      onTap: event,
+      child: Container(
+        margin: EdgeInsets.all(4.0),
+        width: MediaQuery.of(context).size.width,
+        child: Card(
+          elevation: 0.0,
+          child: isSingle
+              ? Stack(
+                  children: <Widget>[
+                    Positioned.fill(
+                      left: 16.0,
+                      child: Align(
+                        alignment: Alignment.centerLeft,
+                        child: Icon(icon, size: 36.0, color: Colors.redAccent),
+                      ),
+                    ),
+                    Positioned.fill(
+                      right: 16.0,
+                      child: Align(
+                        alignment: Alignment.centerRight,
+                        child: Icon(Icons.arrow_forward_ios, size: 36.0),
+                      ),
+                    ),
+                    Center(
+                      child: Text(title, style: TextStyle(fontSize: 24.0)),
+                    ),
+                  ],
+                )
+              : Column(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  children: <Widget>[
+                    Icon(icon, size: 36.0, color: Colors.redAccent),
+                    SizedBox(height: 8.0),
+                    Text(
+                      title,
+                      style: TextStyle(fontSize: 24.0),
+                    ),
+                  ],
+                ),
+        ),
+      ),
     );
   }
 }

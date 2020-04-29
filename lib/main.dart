@@ -1,8 +1,12 @@
 import 'package:dynamic_theme/dynamic_theme.dart';
 import 'package:flutter/material.dart';
+import 'package:nofapcamp/screens/efficacy_screen.dart';
 import 'package:nofapcamp/screens/history_screen.dart';
 import 'package:nofapcamp/screens/index_screen.dart';
+import 'package:nofapcamp/screens/nickname_screen.dart';
+import 'package:nofapcamp/screens/viewmore.dart';
 import 'package:nofapcamp/screens/walkthrough_screen.dart';
+import 'package:nofapcamp/screens/wisesaying_screen.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 void main() {
@@ -51,7 +55,11 @@ class MyApp extends StatelessWidget {
             '/walkthrough': (BuildContext context) =>
                 WalkthroughScreen(prefs: prefs),
             '/index': (BuildContext context) => IndexScreen(),
+            '/nickname': (BuildContext context) => NicknameScreen(),
+            '/wisesaying': (BuildContext context) => WisesayingScreen(),
             '/history': (BuildContext context) => HistoryScreen(),
+            '/efficacy': (BuildContext context) => EfficacyScreen(),
+            '/viewmore': (BuildContext context) => ViewmoreScreen(),
           },
           home: _handleCurrentScreen(),
         );
