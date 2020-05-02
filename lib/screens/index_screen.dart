@@ -6,8 +6,8 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_native_admob/flutter_native_admob.dart';
 import 'package:flutter_native_admob/native_admob_controller.dart';
+import 'package:nofapcamp/pages/efficacy_page.dart';
 import 'package:nofapcamp/pages/home_page.dart';
-import 'package:nofapcamp/pages/ranking_page.dart';
 import 'package:nofapcamp/pages/setting_page.dart';
 import 'package:nofapcamp/pages/status_page.dart';
 import 'package:nofapcamp/widgets/bottom_navy_bar.dart';
@@ -50,13 +50,12 @@ class _IndexScreenState extends State<IndexScreen> {
           children: <Widget>[
             HomePage(),
             StatusPage(),
-            RankingPage(),
+            EfficacyPage(),
             SettingPage()
           ],
         ),
       ),
       bottomNavigationBar: BottomNavyBar(
-        showElevation: false,
         selectedIndex: _currentIndex,
         onItemSelected: (index) {
           setState(() => _currentIndex = index);
@@ -76,8 +75,8 @@ class _IndexScreenState extends State<IndexScreen> {
             textAlign: TextAlign.center,
           ),
           BottomNavyBarItem(
-            icon: Icon(Icons.public),
-            title: Text('순위'),
+            icon: Icon(Icons.healing),
+            title: Text('금딸효능'),
             activeColor: Colors.indigoAccent,
             textAlign: TextAlign.center,
           ),

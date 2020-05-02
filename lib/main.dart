@@ -1,9 +1,9 @@
 import 'package:dynamic_theme/dynamic_theme.dart';
 import 'package:flutter/material.dart';
-import 'package:nofapcamp/screens/efficacy_screen.dart';
 import 'package:nofapcamp/screens/history_screen.dart';
 import 'package:nofapcamp/screens/index_screen.dart';
 import 'package:nofapcamp/screens/nickname_screen.dart';
+import 'package:nofapcamp/screens/ranking_screen.dart';
 import 'package:nofapcamp/screens/viewmore.dart';
 import 'package:nofapcamp/screens/walkthrough_screen.dart';
 import 'package:nofapcamp/screens/wisesaying_screen.dart';
@@ -36,9 +36,6 @@ class MyApp extends StatelessWidget {
                 brightness: Brightness.light,
                 accentColor: Colors.black,
                 fontFamily: 'NanumBarunGothic',
-                appBarTheme: AppBarTheme(
-                  elevation: 0.0,
-                ),
               )
             : ThemeData(
                 // 다크모드 테마
@@ -47,9 +44,6 @@ class MyApp extends StatelessWidget {
                 brightness: Brightness.dark,
                 accentColor: Colors.white,
                 fontFamily: 'NanumBarunGothic',
-                appBarTheme: AppBarTheme(
-                  elevation: 0.0,
-                ),
               );
       },
       themedWidgetBuilder: (context, theme) {
@@ -64,7 +58,7 @@ class MyApp extends StatelessWidget {
             '/nickname': (BuildContext context) => NicknameScreen(),
             '/wisesaying': (BuildContext context) => WisesayingScreen(),
             '/history': (BuildContext context) => HistoryScreen(),
-            '/efficacy': (BuildContext context) => EfficacyScreen(),
+            '/ranking': (BuildContext context) => RankingScreen(),
             '/viewmore': (BuildContext context) => ViewmoreScreen(),
           },
           home: _handleCurrentScreen(),

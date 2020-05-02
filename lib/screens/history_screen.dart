@@ -1,6 +1,7 @@
 import 'dart:convert';
 
 import 'package:flutter/material.dart';
+import 'package:nofapcamp/widgets/custom_app_bar.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 class History {
@@ -29,8 +30,8 @@ class _HistoryScreenState extends State<HistoryScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(
-        title: Text('도전기록'),
+      appBar: CustomAppBar(
+        title: '도전기록',
       ),
       body: _historys.isEmpty
           ? Center(

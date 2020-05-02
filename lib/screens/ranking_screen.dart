@@ -1,12 +1,12 @@
 import 'package:flutter/material.dart';
 import 'package:pull_to_refresh/pull_to_refresh.dart';
 
-class RankingPage extends StatefulWidget {
+class RankingScreen extends StatefulWidget {
   @override
-  _RankingPageState createState() => _RankingPageState();
+  _RankingScreenState createState() => _RankingScreenState();
 }
 
-class _RankingPageState extends State<RankingPage> {
+class _RankingScreenState extends State<RankingScreen> {
   RefreshController _refreshController = RefreshController();
 
   @override
@@ -25,7 +25,6 @@ class _RankingPageState extends State<RankingPage> {
               title: Text("SliverAppBar"),
               expandedHeight: 200.0,
               pinned: true,
-              elevation: 0.0,
               actions: <Widget>[
                 Container(
                   margin: EdgeInsets.only(right: 10.0),

@@ -13,6 +13,9 @@ class _HomePageState extends State<HomePage> {
       body: SafeArea(
         child: Column(
           children: <Widget>[
+            SizedBox(
+              height: 20.0,
+            ),
             Expanded(
               child: Row(
                 children: <Widget>[
@@ -46,11 +49,20 @@ class _HomePageState extends State<HomePage> {
             ),
             Expanded(
               child: CardItem(
-                  title: '금딸효능',
-                  icon: Icons.healing,
+                  title: '순위',
+                  icon: Icons.public,
                   isSingle: true,
                   event: () {
-                    Navigator.of(context).pushNamed('/efficacy');
+                    Navigator.of(context).pushNamed('/ranking');
+                  }),
+            ),
+            Expanded(
+              child: CardItem(
+                  title: '더보기',
+                  icon: Icons.favorite,
+                  isSingle: true,
+                  event: () {
+                    Navigator.of(context).pushNamed('/viewmore');
                   }),
             ),
             Expanded(
@@ -58,10 +70,10 @@ class _HomePageState extends State<HomePage> {
                 children: <Widget>[
                   Expanded(
                     child: CardItem(
-                        title: '더보기',
-                        icon: Icons.favorite,
+                        title: '후원',
+                        icon: Icons.attach_money,
                         event: () {
-                          Navigator.of(context).pushNamed('/viewmore');
+                          // TODO 인앱 구매
                         }),
                   ),
                   Expanded(
@@ -80,7 +92,7 @@ class _HomePageState extends State<HomePage> {
               ),
             ),
             SizedBox(
-              height: 30.0,
+              height: 60.0,
             ),
           ],
         ),
@@ -107,10 +119,10 @@ class CardItem extends StatelessWidget {
     return InkWell(
       onTap: event,
       child: Container(
-        margin: EdgeInsets.all(4.0),
+        margin: EdgeInsets.all(2.0),
         width: MediaQuery.of(context).size.width,
         child: Card(
-          elevation: 0.0,
+          elevation: 4.0,
           child: isSingle
               ? Stack(
                   children: <Widget>[
@@ -136,8 +148,8 @@ class CardItem extends StatelessWidget {
               : Column(
                   mainAxisAlignment: MainAxisAlignment.center,
                   children: <Widget>[
-                    Icon(icon, size: 36.0, color: Colors.redAccent),
-                    SizedBox(height: 8.0),
+                    Icon(icon, size: 32.0, color: Colors.redAccent),
+                    SizedBox(height: 12.0),
                     Text(
                       title,
                       style: TextStyle(fontSize: 24.0),

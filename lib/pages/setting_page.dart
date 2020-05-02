@@ -1,5 +1,6 @@
 import 'package:dynamic_theme/dynamic_theme.dart';
 import 'package:flutter/material.dart';
+import 'package:nofapcamp/widgets/custom_app_bar.dart';
 
 class SettingPage extends StatefulWidget {
   @override
@@ -23,8 +24,8 @@ class _SettingPageState extends State<SettingPage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(
-        title: Text('설정'),
+      appBar: CustomAppBar(
+        title: '설정',
       ),
       body: ListView(
         children: <Widget>[
@@ -32,6 +33,7 @@ class _SettingPageState extends State<SettingPage> {
             title: Text('다크모드'),
             value: _isDarkMode,
             activeColor: Colors.orangeAccent,
+            inactiveTrackColor: Colors.orangeAccent,
             onChanged: (value) {
               setState(() {
                 _changeBrightness();
