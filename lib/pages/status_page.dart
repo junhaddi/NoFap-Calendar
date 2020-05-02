@@ -133,29 +133,75 @@ class _StatusPageState extends State<StatusPage> {
   }
 
   void _showReconfirmDialog() async {
+    const double circular = 20;
+
     showDialog(
       context: context,
       builder: (BuildContext context) {
         return AlertDialog(
-          title: Text('싸버렸습니까?'),
-          content: Image.network(
-            'https://www.mediatoday.co.kr/news/photo/201201/99838_91766_5815.jpg',
+          shape: RoundedRectangleBorder(
+            borderRadius: BorderRadius.circular(circular)
+          ),
+          contentPadding: EdgeInsets.zero,
+          // content: ,
+          content: ClipRRect(
+            borderRadius: BorderRadius.circular(20),
+            // borderRadius: BorderRadius.only(
+            //   topRight: Radius.circular(circular),
+            //   topLeft: Radius.circular(circular)
+            // ),
+            child: Image.network('https://image.fmkorea.com/files/attach/new/20190723/2895716/51565484/2017469519/0700c9f95979a6383445ef1901a15fdc.jpg', fit: BoxFit.cover),
+            // child: Image.network('https://optimal.inven.co.kr/upload/2019/09/03/bbs/i13189999330.png', fit: BoxFit.cover),
           ),
           actions: <Widget>[
-            RaisedButton(
-              color: Colors.red,
-              child: Text('잘못누름'),
-              onPressed: () {
-                Navigator.of(context).pop();
-              },
-            ),
-            RaisedButton(
-              child: Text('쌌습니다'),
-              onPressed: () {
-                Navigator.of(context).pop();
-                _showResetDialog();
-              },
-            ),
+            Container(
+              height: 170,
+              child: Column(
+              mainAxisAlignment: MainAxisAlignment.center,
+                children: <Widget>[
+                  Text('asdfasdf', style: TextStyle(fontSize: 30)),
+                  SizedBox(
+                    height: 10,
+                  ),  
+                  Text(
+                    'asdfasdfasdfasdfajweklf;jawklefjalwkejfklawejeflk;awjelkfjawklefjaklwjefklaw;ejwfklaw;jefkllaw;ef',
+                    maxLines: 3,
+                    textAlign: TextAlign.center,
+                  ),
+                  SizedBox(
+                    height: 10,
+                  ),
+                  ButtonBar(
+                    alignment: MainAxisAlignment.center,
+                    children: <Widget>[
+                      SizedBox(
+                        child: RaisedButton(
+                          child: Text('취소'),
+                          onPressed: () {
+
+                          }
+                        ),
+                        width: 80,
+                      ),
+                      SizedBox(
+                        width: 30,
+                      ),
+                      SizedBox(
+                        child: RaisedButton(
+                          child: Text('확인'),
+                          color: Colors.green,
+                          textColor: Colors.white,
+                          onPressed: () {
+                            
+                          }
+                        ),
+                        width: 80,
+                      )
+                    ],
+                  )
+                ],
+              ),
+            )
           ],
         );
       },
