@@ -107,7 +107,7 @@ class CardItem extends StatelessWidget {
   final bool isSingle;
   final event;
 
-  CardItem({
+  const CardItem({
     this.title = "hello",
     this.icon = Icons.home,
     this.isSingle = false,

@@ -2,6 +2,7 @@ import 'dart:convert';
 import 'dart:math';
 
 import 'package:flutter/material.dart';
+import 'package:nofapcamp/widgets/custom_dialog.dart';
 import 'package:nofapcamp/widgets/numberpicker.dart';
 import 'package:percent_indicator/circular_percent_indicator.dart';
 import 'package:shared_preferences/shared_preferences.dart';
@@ -28,7 +29,6 @@ class _StatusPageState extends State<StatusPage> {
 
   Widget build(BuildContext context) {
     return Scaffold(
-      // TODO 상단 배너광고 추가
       body: Center(
         child: CircularPercentIndicator(
           radius: 280.0,
@@ -133,76 +133,16 @@ class _StatusPageState extends State<StatusPage> {
   }
 
   void _showReconfirmDialog() async {
-    const double circular = 20;
-
     showDialog(
       context: context,
       builder: (BuildContext context) {
-        return AlertDialog(
-          shape: RoundedRectangleBorder(
-            borderRadius: BorderRadius.circular(circular)
-          ),
-          contentPadding: EdgeInsets.zero,
-          // content: ,
-          content: ClipRRect(
-            borderRadius: BorderRadius.circular(20),
-            // borderRadius: BorderRadius.only(
-            //   topRight: Radius.circular(circular),
-            //   topLeft: Radius.circular(circular)
-            // ),
-            child: Image.network('https://image.fmkorea.com/files/attach/new/20190723/2895716/51565484/2017469519/0700c9f95979a6383445ef1901a15fdc.jpg', fit: BoxFit.cover),
-            // child: Image.network('https://optimal.inven.co.kr/upload/2019/09/03/bbs/i13189999330.png', fit: BoxFit.cover),
-          ),
-          actions: <Widget>[
-            Container(
-              height: 170,
-              child: Column(
-              mainAxisAlignment: MainAxisAlignment.center,
-                children: <Widget>[
-                  Text('asdfasdf', style: TextStyle(fontSize: 30)),
-                  SizedBox(
-                    height: 10,
-                  ),  
-                  Text(
-                    'asdfasdfasdfasdfajweklf;jawklefjalwkejfklawejeflk;awjelkfjawklefjaklwjefklaw;ejwfklaw;jefkllaw;ef',
-                    maxLines: 3,
-                    textAlign: TextAlign.center,
-                  ),
-                  SizedBox(
-                    height: 10,
-                  ),
-                  ButtonBar(
-                    alignment: MainAxisAlignment.center,
-                    children: <Widget>[
-                      SizedBox(
-                        child: RaisedButton(
-                          child: Text('취소'),
-                          onPressed: () {
-
-                          }
-                        ),
-                        width: 80,
-                      ),
-                      SizedBox(
-                        width: 30,
-                      ),
-                      SizedBox(
-                        child: RaisedButton(
-                          child: Text('확인'),
-                          color: Colors.green,
-                          textColor: Colors.white,
-                          onPressed: () {
-                            
-                          }
-                        ),
-                        width: 80,
-                      )
-                    ],
-                  )
-                ],
-              ),
-            )
-          ],
+        return CustomDialog(
+          title: '금딸실패',
+          content: '사실이라면 정말 실망입니다.',
+          event: () {
+            Navigator.of(context).pop();
+            _showResetDialog();
+          },
         );
       },
     );
