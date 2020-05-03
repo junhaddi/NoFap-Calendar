@@ -130,7 +130,7 @@ class _StatusPageState extends State<StatusPage> {
           .difference(DateTime(
               DateTime.now().year, DateTime.now().month, DateTime.now().day))
           .inDays;
-      _isLoaded = _srcDate != null && _dstDate != null;
+      _isLoaded = _initDate != null && _srcDate != null && _dstDate != null;
       _isSuccess = DateTime.now().difference(_dstDate).inMilliseconds >= 0;
     });
   }
@@ -195,6 +195,7 @@ class _StatusPageState extends State<StatusPage> {
           _isLoaded = true;
 
           // 현황 저장
+          _prefs.setInt('initDate', _initDate.millisecondsSinceEpoch);
           _prefs.setInt('srcDate', _srcDate.millisecondsSinceEpoch);
           _prefs.setInt('dstDate', _dstDate.millisecondsSinceEpoch);
         });
