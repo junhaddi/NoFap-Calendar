@@ -8,7 +8,7 @@ class History {
   final String title;
   final String description;
 
-  History({this.title, this.description});
+  const History({this.title, this.description});
 }
 
 class HistoryScreen extends StatefulWidget {
@@ -60,8 +60,17 @@ class _HistoryScreenState extends State<HistoryScreen> {
                   .map(
                     (History history) => Card(
                       child: ListTile(
-                        title: Text(history.title),
-                        subtitle: Text(history.description),
+                        leading: Container(
+                          width: 40.0,
+                          alignment: Alignment.center,
+                          child: Icon(Icons.info),
+                        ),
+                        title: Text(
+                          history.title,
+                        ),
+                        subtitle: Text(
+                          history.description,
+                        ),
                       ),
                     ),
                   )
@@ -79,7 +88,7 @@ class _HistoryScreenState extends State<HistoryScreen> {
         _historys.add(
           History(
             title: '${dateMap["progressDay"].toString()}일째',
-            description: dateMap["dday"].toString(),
+            description: dateMap["term"],
           ),
         );
       });

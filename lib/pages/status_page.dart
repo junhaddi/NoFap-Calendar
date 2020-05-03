@@ -14,6 +14,7 @@ class StatusPage extends StatefulWidget {
 
 class _StatusPageState extends State<StatusPage> {
   SharedPreferences _prefs;
+  DateTime _initDate;
   DateTime _srcDate;
   DateTime _dstDate;
   int _progressDay;
@@ -57,7 +58,7 @@ class _StatusPageState extends State<StatusPage> {
                           ),
                         ),
                         Text(
-                          '${_srcDate.year}/${_srcDate.month}/${_srcDate.day}~',
+                          '${_initDate.year}/${_initDate.month}/${_initDate.day}~',
                         ),
                         SizedBox(
                           height: 10.0,
@@ -114,6 +115,8 @@ class _StatusPageState extends State<StatusPage> {
   Future<void> _getDate() async {
     _prefs = await SharedPreferences.getInstance();
     setState(() {
+      _initDate = DateTime.fromMillisecondsSinceEpoch(
+          _prefs.getInt('initDate') ?? null);
       _srcDate =
           DateTime.fromMillisecondsSinceEpoch(_prefs.getInt('srcDate') ?? null);
       _dstDate =
@@ -163,6 +166,7 @@ class _StatusPageState extends State<StatusPage> {
         setState(() {
           if (_isSuccess) {
             // 목표 달성 성공
+            _srcDate = DateTime.now();
             _dstDate = DateTime.now().add(Duration(days: value));
           } else {
             // 목표 달성 실패
@@ -172,14 +176,14 @@ class _StatusPageState extends State<StatusPage> {
                   _prefs.getStringList('dateHistorys') ?? [];
               dateHistorys.add(
                 jsonEncode({
-                  'srcDate': _srcDate.millisecondsSinceEpoch,
-                  'dstDate': _dstDate.millisecondsSinceEpoch,
                   'progressDay': _progressDay,
-                  'dday': _dday,
+                  'term':
+                      '${_initDate.year}/${_initDate.month}/${_initDate.day}~${DateTime.now().year}/${DateTime.now().month}/${DateTime.now().day}',
                 }),
               );
               _prefs.setStringList('dateHistorys', dateHistorys);
             }
+            _initDate = DateTime.now();
             _srcDate = DateTime.now();
             _dstDate = _srcDate.add(Duration(days: value));
             _progressDay = 1;
