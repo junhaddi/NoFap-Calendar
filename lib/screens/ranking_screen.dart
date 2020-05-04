@@ -8,6 +8,8 @@ class RankingScreen extends StatefulWidget {
 
 class _RankingScreenState extends State<RankingScreen> {
   RefreshController _refreshController = RefreshController();
+  String dropdownValue = 'One';
+  bool isFriend = false;
 
   @override
   Widget build(BuildContext context) {
@@ -22,8 +24,41 @@ class _RankingScreenState extends State<RankingScreen> {
         child: CustomScrollView(
           slivers: <Widget>[
             SliverAppBar(
-              title: Text("SliverAppBar"),
+              title: Text("순위"),
               expandedHeight: 200.0,
+              bottom: PreferredSize(
+                preferredSize: const Size.fromHeight(48.0),
+                child: Row(
+                  children: <Widget>[
+                    DropdownButton<String>(
+                      value: dropdownValue,
+                      icon: Icon(Icons.arrow_downward),
+                      iconSize: 24,
+                      elevation: 16,
+                      style: TextStyle(color: Colors.deepPurple),
+                      underline: Container(
+                        height: 2,
+                        color: Colors.deepPurpleAccent,
+                      ),
+                      onChanged: (String newValue) {
+                        setState(() {
+                          dropdownValue = newValue;
+                        });
+                      },
+                      items: <String>['One', 'Two', 'Free', 'Four']
+                          .map<DropdownMenuItem<String>>((String value) {
+                        return DropdownMenuItem<String>(
+                          value: value,
+                          child: Text(value),
+                        );
+                      }).toList(),
+                    ),
+                    Switch(
+                      value: isFriend,
+                    ),
+                  ],
+                ),
+              ),
               pinned: true,
               actions: <Widget>[
                 Container(
@@ -43,6 +78,23 @@ class _RankingScreenState extends State<RankingScreen> {
                   ),
                 ),
               ],
+//              flexibleSpace: FlexibleSpaceBar(
+//                background: Column(
+//                  mainAxisAlignment: MainAxisAlignment.center,
+//                  children: <Widget>[
+//                    Text('anggimoddi'),
+//                  ],
+//                ),
+//                title: Column(
+//                  children: <Widget>[
+//                    Text('ang'),
+//                    Switch(
+//                      value: true,
+//                    )
+//                  ],
+//                ),
+//                centerTitle: true,
+//              ),
             ),
             SliverList(
               delegate: SliverChildBuilderDelegate(

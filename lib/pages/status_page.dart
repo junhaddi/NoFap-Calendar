@@ -30,83 +30,85 @@ class _StatusPageState extends State<StatusPage> {
 
   Widget build(BuildContext context) {
     return Scaffold(
-      body: Center(
-        child: CircularPercentIndicator(
-          radius: 280.0,
-          lineWidth: 24.0,
-          animation: true,
-          percent: _isLoaded
-              ? max(
-                  0.001,
-                  min(
-                      DateTime.now().difference(_srcDate).inMilliseconds /
-                          _dstDate.difference(_srcDate).inMilliseconds,
-                      1.0),
-                )
-              : 0.0,
-          center: Column(
-            mainAxisAlignment: MainAxisAlignment.center,
-            children: <Widget>[
-              _isLoaded
-                  ? Column(
-                      children: <Widget>[
-                        Text(
-                          '$_progressDay일차',
-                          style: TextStyle(
-                            fontWeight: FontWeight.bold,
-                            fontSize: 42.0,
+      body: SafeArea(
+        child: Center(
+          child: CircularPercentIndicator(
+            radius: 280.0,
+            lineWidth: 24.0,
+            animation: true,
+            percent: _isLoaded
+                ? max(
+                    0.001,
+                    min(
+                        DateTime.now().difference(_srcDate).inMilliseconds /
+                            _dstDate.difference(_srcDate).inMilliseconds,
+                        1.0),
+                  )
+                : 0.0,
+            center: Column(
+              mainAxisAlignment: MainAxisAlignment.center,
+              children: <Widget>[
+                _isLoaded
+                    ? Column(
+                        children: <Widget>[
+                          Text(
+                            '$_progressDay일차',
+                            style: TextStyle(
+                              fontWeight: FontWeight.bold,
+                              fontSize: 42.0,
+                            ),
                           ),
-                        ),
-                        Text(
-                          '${_initDate.year}/${_initDate.month}/${_initDate.day}~',
-                        ),
-                        SizedBox(
-                          height: 10.0,
-                        ),
-                        Text(
-                          'D${_dday < 0 ? '+' : '-'}${_dday == 0 ? 'DAY' : _dday.abs()}',
-                          style: TextStyle(
-                            fontSize: 24.0,
+                          Text(
+                            '${_initDate.year}/${_initDate.month}/${_initDate.day}~',
                           ),
+                          SizedBox(
+                            height: 10.0,
+                          ),
+                          Text(
+                            'D${_dday < 0 ? '+' : '-'}${_dday == 0 ? 'DAY' : _dday.abs()}',
+                            style: TextStyle(
+                              fontSize: 24.0,
+                            ),
+                          ),
+                        ],
+                      )
+                    : Text(
+                        '시작하세요',
+                        style: TextStyle(
+                          fontWeight: FontWeight.bold,
+                          fontSize: 42.0,
                         ),
-                      ],
-                    )
-                  : Text(
-                      '시작하세요',
-                      style: TextStyle(
-                        fontWeight: FontWeight.bold,
-                        fontSize: 42.0,
                       ),
-                    ),
-              SizedBox(
-                height: 10.0,
-              ),
-              MaterialButton(
-                onPressed: () {
-                  if (_isLoaded) {
-                    if (_isSuccess) {
-                      _showResetDialog();
-                    } else {
-                      _showReconfirmDialog();
-                    }
-                  } else {
-                    _showResetDialog();
-                  }
-                },
-                color: Colors.blueGrey,
-                child: Icon(
-                  _isLoaded
-                      ? _isSuccess ? Icons.star : Icons.pause
-                      : Icons.play_arrow,
-                  size: 32.0,
+                SizedBox(
+                  height: 10.0,
                 ),
-                padding: EdgeInsets.all(8),
-                shape: CircleBorder(),
-              ),
-            ],
+                MaterialButton(
+                  onPressed: () {
+                    if (_isLoaded) {
+                      if (_isSuccess) {
+                        _showResetDialog();
+                      } else {
+                        _showReconfirmDialog();
+                      }
+                    } else {
+                      _showResetDialog();
+                    }
+                  },
+                  color: Colors.blueGrey,
+                  child: Icon(
+                    _isLoaded
+                        ? _isSuccess ? Icons.star : Icons.pause
+                        : Icons.play_arrow,
+                    size: 32.0,
+                  ),
+                  padding: EdgeInsets.all(8.0),
+                  shape: CircleBorder(),
+                ),
+              ],
+            ),
+            circularStrokeCap: CircularStrokeCap.round,
+            progressColor: Colors.deepPurpleAccent,
           ),
-          circularStrokeCap: CircularStrokeCap.round,
-          progressColor: Colors.deepPurpleAccent,
         ),
       ),
     );

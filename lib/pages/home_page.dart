@@ -13,9 +13,6 @@ class _HomePageState extends State<HomePage> {
       body: SafeArea(
         child: Column(
           children: <Widget>[
-            SizedBox(
-              height: 20.0,
-            ),
             Expanded(
               child: Row(
                 children: <Widget>[
