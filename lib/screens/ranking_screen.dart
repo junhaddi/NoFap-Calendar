@@ -8,7 +8,7 @@ class RankingScreen extends StatefulWidget {
 
 class _RankingScreenState extends State<RankingScreen> {
   RefreshController _refreshController = RefreshController();
-  String dropdownValue = 'One';
+  String dropdownValue = '전체 기간';
   bool isFriend = false;
 
   @override
@@ -25,41 +25,9 @@ class _RankingScreenState extends State<RankingScreen> {
           slivers: <Widget>[
             SliverAppBar(
               title: Text("순위"),
-              expandedHeight: 200.0,
-              bottom: PreferredSize(
-                preferredSize: const Size.fromHeight(48.0),
-                child: Row(
-                  children: <Widget>[
-                    DropdownButton<String>(
-                      value: dropdownValue,
-                      icon: Icon(Icons.arrow_downward),
-                      iconSize: 24,
-                      elevation: 16,
-                      style: TextStyle(color: Colors.deepPurple),
-                      underline: Container(
-                        height: 2,
-                        color: Colors.deepPurpleAccent,
-                      ),
-                      onChanged: (String newValue) {
-                        setState(() {
-                          dropdownValue = newValue;
-                        });
-                      },
-                      items: <String>['One', 'Two', 'Free', 'Four']
-                          .map<DropdownMenuItem<String>>((String value) {
-                        return DropdownMenuItem<String>(
-                          value: value,
-                          child: Text(value),
-                        );
-                      }).toList(),
-                    ),
-                    Switch(
-                      value: isFriend,
-                    ),
-                  ],
-                ),
-              ),
               pinned: true,
+              expandedHeight: 240.0,
+              elevation: 0.0,
               actions: <Widget>[
                 Container(
                   margin: EdgeInsets.only(right: 10.0),
@@ -78,34 +46,110 @@ class _RankingScreenState extends State<RankingScreen> {
                   ),
                 ),
               ],
-//              flexibleSpace: FlexibleSpaceBar(
-//                background: Column(
-//                  mainAxisAlignment: MainAxisAlignment.center,
-//                  children: <Widget>[
-//                    Text('anggimoddi'),
-//                  ],
-//                ),
-//                title: Column(
-//                  children: <Widget>[
-//                    Text('ang'),
-//                    Switch(
-//                      value: true,
-//                    )
-//                  ],
-//                ),
-//                centerTitle: true,
-//              ),
+              flexibleSpace: FlexibleSpaceBar(
+                background: SafeArea(
+                  child: Column(
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    children: <Widget>[
+                      CircleAvatar(
+                        radius: 32.0,
+                        backgroundImage: NetworkImage(
+                            'https://img.insight.co.kr/static/2018/11/16/700/990ejzhe8h36114p05gn.jpg'),
+                      ),
+                      SizedBox(
+                        height: 10.0,
+                      ),
+                      Text('명예의 전당')
+                    ],
+                  ),
+                ),
+              ),
+              bottom: PreferredSize(
+                preferredSize: const Size.fromHeight(64.0),
+                child: Column(
+                  children: <Widget>[
+                    Padding(
+                      padding: EdgeInsets.only(
+                          left: 18.0, right: 18.0, bottom: 10.0),
+                      child: Row(
+                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                        children: <Widget>[
+                          DropdownButtonHideUnderline(
+                            child: DropdownButton<String>(
+                              value: dropdownValue,
+                              icon: Icon(Icons.arrow_drop_down),
+                              onChanged: (String newValue) {
+                                setState(() {
+                                  dropdownValue = newValue;
+                                });
+                              },
+                              items: <String>[
+                                '오늘',
+                                '이번 주',
+                                '전체 기간'
+                              ].map<DropdownMenuItem<String>>((String value) {
+                                return DropdownMenuItem<String>(
+                                  value: value,
+                                  child: Text(value),
+                                );
+                              }).toList(),
+                            ),
+                          ),
+                          Row(
+                            children: <Widget>[
+                              Text('전체'),
+                              Switch(
+                                value: isFriend,
+                                onChanged: (bool newValue) {
+                                  setState(() {
+                                    isFriend = newValue;
+                                  });
+                                },
+                              ),
+                              Text('친구'),
+                            ],
+                          ),
+                        ],
+                      ),
+                    ),
+                    Container(
+                      color: Color.fromRGBO(105, 105, 105, 1.0),
+                      height: 0.3,
+                    ),
+                  ],
+                ),
+              ),
             ),
             SliverList(
               delegate: SliverChildBuilderDelegate(
                 (context, index) {
-                  return ListTile(
-                    title: Text(
-                      "Item $index",
-                      style: TextStyle(
-                        color: Colors.indigoAccent,
+                  return Column(
+                    children: <Widget>[
+                      ListTile(
+                        leading: Container(
+                          width: 64.0,
+                          alignment: Alignment.center,
+                          child: Icon(
+                            Icons.account_circle,
+                            size: 48.0,
+                          ),
+                        ),
+                        title: Text(
+                          "MA강준하멋쟁이",
+                          style: TextStyle(
+                            color: Colors.indigoAccent,
+                          ),
+                        ),
+                        subtitle: Text(
+                          'MA설명이랑께',
+                        ),
+                        trailing: Text('${index + 1}등'),
                       ),
-                    ),
+                      Divider(
+                        thickness: 1.0,
+                        indent: 96.0,
+                      ),
+                    ],
                   );
                 },
                 childCount: 20,
