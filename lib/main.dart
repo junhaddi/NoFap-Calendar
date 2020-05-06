@@ -2,7 +2,7 @@ import 'package:dynamic_theme/dynamic_theme.dart';
 import 'package:flutter/material.dart';
 import 'package:nofapcamp/screens/history_screen.dart';
 import 'package:nofapcamp/screens/index_screen.dart';
-import 'package:nofapcamp/screens/nickname_screen.dart';
+import 'package:nofapcamp/screens/classes_screen.dart';
 import 'package:nofapcamp/screens/ranking_screen.dart';
 import 'package:nofapcamp/screens/viewmore.dart';
 import 'package:nofapcamp/screens/walkthrough_screen.dart';
@@ -55,7 +55,7 @@ class MyApp extends StatelessWidget {
             '/walkthrough': (BuildContext context) =>
                 WalkthroughScreen(prefs: prefs),
             '/index': (BuildContext context) => IndexScreen(),
-            '/nickname': (BuildContext context) => NicknameScreen(),
+            '/nickname': (BuildContext context) => classesScreen(),
             '/wisesaying': (BuildContext context) => WisesayingScreen(),
             '/history': (BuildContext context) => HistoryScreen(),
             '/ranking': (BuildContext context) => RankingScreen(),

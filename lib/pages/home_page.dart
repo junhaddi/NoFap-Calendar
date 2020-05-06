@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:nofapcamp/widgets/inkwell_card.dart';
 import 'package:share/share.dart';
 
 class HomePage extends StatefulWidget {
@@ -18,8 +19,8 @@ class _HomePageState extends State<HomePage> {
                 children: <Widget>[
                   Expanded(
                     child: CardItem(
-                        title: '칭호',
-                        icon: Icons.cake,
+                        title: '계급',
+                        icon: Icons.star,
                         event: () {
                           Navigator.of(context).pushNamed('/nickname');
                         }),
@@ -27,7 +28,7 @@ class _HomePageState extends State<HomePage> {
                   Expanded(
                     child: CardItem(
                         title: '명언',
-                        icon: Icons.textsms,
+                        icon: Icons.sms,
                         event: () {
                           Navigator.of(context).pushNamed('/wisesaying');
                         }),
@@ -56,7 +57,7 @@ class _HomePageState extends State<HomePage> {
             Expanded(
               child: CardItem(
                   title: '더보기',
-                  icon: Icons.favorite,
+                  icon: Icons.more,
                   isSingle: true,
                   event: () {
                     Navigator.of(context).pushNamed('/viewmore');
@@ -68,7 +69,7 @@ class _HomePageState extends State<HomePage> {
                   Expanded(
                     child: CardItem(
                         title: '후원',
-                        icon: Icons.attach_money,
+                        icon: Icons.favorite,
                         event: () {
                           // TODO 인앱 구매
                         }),
@@ -104,7 +105,7 @@ class CardItem extends StatelessWidget {
   final bool isSingle;
   final event;
 
-  const CardItem({
+  CardItem({
     this.title = "hello",
     this.icon = Icons.home,
     this.isSingle = false,
@@ -113,48 +114,41 @@ class CardItem extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return InkWell(
+    return InkWellCard(
       onTap: event,
-      child: Container(
-        margin: EdgeInsets.all(2.0),
-        width: MediaQuery.of(context).size.width,
-        child: Card(
-          elevation: 4.0,
-          child: isSingle
-              ? Stack(
-                  children: <Widget>[
-                    Positioned.fill(
-                      left: 16.0,
-                      child: Align(
-                        alignment: Alignment.centerLeft,
-                        child: Icon(icon, size: 36.0, color: Colors.redAccent),
-                      ),
-                    ),
-                    Positioned.fill(
-                      right: 16.0,
-                      child: Align(
-                        alignment: Alignment.centerRight,
-                        child: Icon(Icons.arrow_forward_ios, size: 36.0),
-                      ),
-                    ),
-                    Center(
-                      child: Text(title, style: TextStyle(fontSize: 24.0)),
-                    ),
-                  ],
-                )
-              : Column(
-                  mainAxisAlignment: MainAxisAlignment.center,
-                  children: <Widget>[
-                    Icon(icon, size: 32.0, color: Colors.redAccent),
-                    SizedBox(height: 12.0),
-                    Text(
-                      title,
-                      style: TextStyle(fontSize: 24.0),
-                    ),
-                  ],
+      child: isSingle
+          ? Stack(
+              children: <Widget>[
+                Positioned.fill(
+                  left: 16.0,
+                  child: Align(
+                    alignment: Alignment.centerLeft,
+                    child: Icon(icon, size: 36.0, color: Colors.redAccent),
+                  ),
                 ),
-        ),
-      ),
+                Positioned.fill(
+                  right: 16.0,
+                  child: Align(
+                    alignment: Alignment.centerRight,
+                    child: Icon(Icons.arrow_forward_ios, size: 36.0),
+                  ),
+                ),
+                Center(
+                  child: Text(title, style: TextStyle(fontSize: 24.0)),
+                ),
+              ],
+            )
+          : Column(
+              mainAxisAlignment: MainAxisAlignment.center,
+              children: <Widget>[
+                Icon(icon, size: 32.0, color: Colors.redAccent),
+                SizedBox(height: 12.0),
+                Text(
+                  title,
+                  style: TextStyle(fontSize: 24.0),
+                ),
+              ],
+            ),
     );
   }
 }

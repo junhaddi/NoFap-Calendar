@@ -75,7 +75,7 @@ class _IndexScreenState extends State<IndexScreen> {
             textAlign: TextAlign.center,
           ),
           BottomNavyBarItem(
-            icon: Icon(Icons.healing),
+            icon: Icon(Icons.collections_bookmark),
             title: Text('금딸효능'),
             activeColor: Colors.indigoAccent,
             textAlign: TextAlign.center,
