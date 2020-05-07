@@ -179,6 +179,7 @@ class _StatusPageState extends State<StatusPage> {
             // 목표 달성 성공
             _srcDate = DateTime.now();
             _dstDate = DateTime.now().add(Duration(days: value));
+            _isSuccess = false;
           } else {
             // 목표 달성 실패
             if (_isLoaded) {
