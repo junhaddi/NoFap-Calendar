@@ -6,7 +6,7 @@ import 'package:nofapcamp/screens/classes_screen.dart';
 import 'package:nofapcamp/screens/ranking_screen.dart';
 import 'package:nofapcamp/screens/viewmore.dart';
 import 'package:nofapcamp/screens/walkthrough_screen.dart';
-import 'package:nofapcamp/screens/wisesaying_screen.dart';
+import 'package:nofapcamp/screens/board_screen.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 void main() {
@@ -55,8 +55,8 @@ class MyApp extends StatelessWidget {
             '/walkthrough': (BuildContext context) =>
                 WalkthroughScreen(prefs: prefs),
             '/index': (BuildContext context) => IndexScreen(),
-            '/nickname': (BuildContext context) => classesScreen(),
-            '/wisesaying': (BuildContext context) => WisesayingScreen(),
+            '/classes': (BuildContext context) => ClassesScreen(),
+            '/board': (BuildContext context) => BoardScreen(),
             '/history': (BuildContext context) => HistoryScreen(),
             '/ranking': (BuildContext context) => RankingScreen(),
             '/viewmore': (BuildContext context) => ViewmoreScreen(),

@@ -22,15 +22,15 @@ class _HomePageState extends State<HomePage> {
                         title: '계급',
                         icon: Icons.star,
                         event: () {
-                          Navigator.of(context).pushNamed('/nickname');
+                          Navigator.of(context).pushNamed('/classes');
                         }),
                   ),
                   Expanded(
                     child: CardItem(
-                        title: '명언',
-                        icon: Icons.sms,
+                        title: '게시판',
+                        icon: Icons.rate_review,
                         event: () {
-                          Navigator.of(context).pushNamed('/wisesaying');
+                          Navigator.of(context).pushNamed('/board');
                         }),
                   ),
                 ],
@@ -39,7 +39,7 @@ class _HomePageState extends State<HomePage> {
             Expanded(
               child: CardItem(
                   title: '도전기록',
-                  icon: Icons.history,
+                  icon: Icons.event,
                   isSingle: true,
                   event: () {
                     Navigator.of(context).pushNamed('/history');

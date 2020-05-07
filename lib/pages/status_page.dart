@@ -35,7 +35,10 @@ class _StatusPageState extends State<StatusPage> {
           child: CircularPercentIndicator(
             radius: 280.0,
             lineWidth: 24.0,
+            circularStrokeCap: CircularStrokeCap.round,
+            progressColor: Colors.deepPurpleAccent,
             animation: true,
+            animateFromLastPercent: true,
             percent: _isLoaded
                 ? max(
                     0.001,
@@ -82,7 +85,15 @@ class _StatusPageState extends State<StatusPage> {
                 SizedBox(
                   height: 10.0,
                 ),
-                MaterialButton(
+                Image(
+                  height: 64.0,
+                  image: AssetImage('assets/classes/classes_20.png'),
+                ),
+              ],
+            ),
+            footer: Column(
+              children: <Widget>[
+                RaisedButton(
                   onPressed: () {
                     if (_isLoaded) {
                       if (_isSuccess) {
@@ -106,8 +117,6 @@ class _StatusPageState extends State<StatusPage> {
                 ),
               ],
             ),
-            circularStrokeCap: CircularStrokeCap.round,
-            progressColor: Colors.deepPurpleAccent,
           ),
         ),
       ),

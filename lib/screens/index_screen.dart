@@ -6,7 +6,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_native_admob/flutter_native_admob.dart';
 import 'package:flutter_native_admob/native_admob_controller.dart';
-import 'package:nofapcamp/pages/efficacy_page.dart';
+import 'package:nofapcamp/pages/subscribe_page.dart';
 import 'package:nofapcamp/pages/home_page.dart';
 import 'package:nofapcamp/pages/setting_page.dart';
 import 'package:nofapcamp/pages/status_page.dart';
@@ -50,7 +50,7 @@ class _IndexScreenState extends State<IndexScreen> {
           children: <Widget>[
             HomePage(),
             StatusPage(),
-            EfficacyPage(),
+            subscribeScreen(),
             SettingPage()
           ],
         ),
@@ -63,20 +63,20 @@ class _IndexScreenState extends State<IndexScreen> {
         },
         items: <BottomNavyBarItem>[
           BottomNavyBarItem(
-            icon: Icon(Icons.widgets),
+            icon: Icon(Icons.dashboard),
             title: Text('홈'),
             activeColor: Colors.redAccent,
             textAlign: TextAlign.center,
           ),
           BottomNavyBarItem(
-            icon: Icon(Icons.today),
+            icon: Icon(Icons.play_circle_filled),
             title: Text('현황'),
             activeColor: Colors.deepPurpleAccent,
             textAlign: TextAlign.center,
           ),
           BottomNavyBarItem(
-            icon: Icon(Icons.collections_bookmark),
-            title: Text('금딸효능'),
+            icon: Icon(Icons.subscriptions),
+            title: Text('구독'),
             activeColor: Colors.indigoAccent,
             textAlign: TextAlign.center,
           ),

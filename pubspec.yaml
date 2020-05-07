@@ -50,6 +50,26 @@ flutter:
   # To add assets to your application, add an assets section, like this:
   assets:
     - assets/ic_launcher.png
+    - assets/classes/classes_1.jpg
+    - assets/classes/classes_2.jpg
+    - assets/classes/classes_3.jpg
+    - assets/classes/classes_4.jpg
+    - assets/classes/classes_5.png
+    - assets/classes/classes_6.png
+    - assets/classes/classes_7.png
+    - assets/classes/classes_8.png
+    - assets/classes/classes_9.png
+    - assets/classes/classes_10.png
+    - assets/classes/classes_11.png
+    - assets/classes/classes_12.png
+    - assets/classes/classes_13.png
+    - assets/classes/classes_14.png
+    - assets/classes/classes_15.png
+    - assets/classes/classes_16.png
+    - assets/classes/classes_17.png
+    - assets/classes/classes_18.png
+    - assets/classes/classes_19.png
+    - assets/classes/classes_20.png
 
   # An image asset can refer to one or more resolution-specific "variants", see
   # https://flutter.dev/assets-and-images/#resolution-aware.

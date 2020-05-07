@@ -25,6 +25,7 @@ class _RankingScreenState extends State<RankingScreen> {
           slivers: <Widget>[
             SliverAppBar(
               title: Text("순위"),
+              centerTitle: true,
               pinned: true,
               expandedHeight: 240.0,
               elevation: 0.0,

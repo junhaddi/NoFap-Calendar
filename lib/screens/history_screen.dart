@@ -59,6 +59,9 @@ class _HistoryScreenState extends State<HistoryScreen> {
               children: _historys.reversed
                   .map(
                     (History history) => Card(
+                      shape: RoundedRectangleBorder(
+                        borderRadius: BorderRadius.circular(50.0),
+                      ),
                       child: ListTile(
                         leading: Container(
                           width: 40.0,

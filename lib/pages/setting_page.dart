@@ -8,6 +8,7 @@ class SettingPage extends StatefulWidget {
 }
 
 class _SettingPageState extends State<SettingPage> {
+  bool _isAllowAlert;
   bool _isDarkMode;
 
   void _changeBrightness() {
@@ -18,6 +19,7 @@ class _SettingPageState extends State<SettingPage> {
   @override
   void initState() {
     super.initState();
+    _isAllowAlert = false;
     _isDarkMode = DynamicTheme.of(context).brightness == Brightness.dark;
   }
 
@@ -29,17 +31,137 @@ class _SettingPageState extends State<SettingPage> {
       ),
       body: ListView(
         children: <Widget>[
-          SwitchListTile(
-            title: Text('다크모드'),
-            value: _isDarkMode,
-            activeColor: Colors.orangeAccent,
-            inactiveTrackColor: Colors.orangeAccent,
-            onChanged: (value) {
-              setState(() {
-                _changeBrightness();
-                _isDarkMode = value;
-              });
-            },
+          Padding(
+            padding: const EdgeInsets.only(left: 20.0, top: 20.0, bottom: 8.0),
+            child: Text(
+              '일반',
+              style: TextStyle(
+                fontSize: 16.0,
+                color: Colors.orangeAccent,
+              ),
+            ),
+          ),
+          Container(
+            child: Ink(
+              child: Column(
+                children: <Widget>[
+                  ListTile(
+                    leading: Container(
+                      width: 40.0,
+                      alignment: Alignment.center,
+                      child: Icon(Icons.account_circle),
+                    ),
+                    title: Text('계정'),
+                    subtitle: Text('rkdwnsgk05@gmail.com'),
+                    trailing: Icon(Icons.arrow_forward_ios),
+                    onTap: () {},
+                  ),
+                  Divider(),
+                  ListTile(
+                    leading: Container(
+                      width: 40.0,
+                      alignment: Alignment.center,
+                      child: Icon(Icons.translate),
+                    ),
+                    title: Text('언어'),
+                    subtitle: Text('한국어'),
+                    trailing: Icon(Icons.arrow_forward_ios),
+                    onTap: () {},
+                  ),
+                ],
+              ),
+            ),
+          ),
+          Padding(
+            padding: const EdgeInsets.only(left: 20.0, top: 20.0, bottom: 8.0),
+            child: Text(
+              '설정',
+              style: TextStyle(
+                fontSize: 16.0,
+                color: Colors.orangeAccent,
+              ),
+            ),
+          ),
+          Container(
+            child: Ink(
+              child: Column(
+                children: <Widget>[
+                  ListTile(
+                    leading: Container(
+                      width: 40.0,
+                      alignment: Alignment.center,
+                      child: Icon(Icons.notifications),
+                    ),
+                    title: Text('알림허용'),
+                    trailing: Switch(
+                      value: _isAllowAlert,
+                      onChanged: (value) {
+                        setState(() {
+                          _isAllowAlert = value;
+                        });
+                      },
+                    ),
+                  ),
+                  Divider(),
+                  ListTile(
+                    leading: Container(
+                      width: 40.0,
+                      alignment: Alignment.center,
+                      child: Icon(Icons.wb_sunny),
+                    ),
+                    title: Text('다크모드'),
+                    trailing: Switch(
+                      value: _isDarkMode,
+                      onChanged: (value) {
+                        setState(() {
+                          _changeBrightness();
+                          _isDarkMode = value;
+                        });
+                      },
+                    ),
+                  ),
+                ],
+              ),
+            ),
+          ),
+          Padding(
+            padding: const EdgeInsets.only(left: 20.0, top: 20.0, bottom: 8.0),
+            child: Text(
+              '기타',
+              style: TextStyle(
+                fontSize: 16.0,
+                color: Colors.orangeAccent,
+              ),
+            ),
+          ),
+          Container(
+            child: Ink(
+              child: Column(
+                children: <Widget>[
+                  ListTile(
+                    leading: Container(
+                      width: 40.0,
+                      alignment: Alignment.center,
+                      child: Icon(Icons.thumb_up),
+                    ),
+                    title: Text('리뷰 남기기'),
+                    trailing: Icon(Icons.arrow_forward_ios),
+                    onTap: () {},
+                  ),
+                  Divider(),
+                  ListTile(
+                    leading: Container(
+                      width: 40.0,
+                      alignment: Alignment.center,
+                      child: Icon(Icons.mail),
+                    ),
+                    title: Text('의견 보내기'),
+                    trailing: Icon(Icons.arrow_forward_ios),
+                    onTap: () {},
+                  ),
+                ],
+              ),
+            ),
           ),
         ],
       ),
