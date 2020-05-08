@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:nofapcamp/custom_icons_icons.dart';
 import 'package:nofapcamp/widgets/inkwell_card.dart';
 import 'package:share/share.dart';
 
@@ -77,7 +78,7 @@ class _HomePageState extends State<HomePage> {
                   Expanded(
                     child: CardItem(
                         title: '공유',
-                        icon: Icons.share,
+                        icon: CustomIcons.share,
                         event: () {
                           final RenderBox box = context.findRenderObject();
                           String text = "스토어링크";

@@ -1,5 +1,6 @@
 import 'package:dynamic_theme/dynamic_theme.dart';
 import 'package:flutter/material.dart';
+import 'package:nofapcamp/custom_icons_icons.dart';
 import 'package:nofapcamp/widgets/custom_app_bar.dart';
 
 class SettingPage extends StatefulWidget {
@@ -32,7 +33,7 @@ class _SettingPageState extends State<SettingPage> {
       body: ListView(
         children: <Widget>[
           Padding(
-            padding: const EdgeInsets.only(left: 20.0, top: 20.0, bottom: 8.0),
+            padding: const EdgeInsets.only(left: 20.0, top: 8.0, bottom: 8.0),
             child: Text(
               '일반',
               style: TextStyle(
@@ -49,11 +50,10 @@ class _SettingPageState extends State<SettingPage> {
                     leading: Container(
                       width: 40.0,
                       alignment: Alignment.center,
-                      child: Icon(Icons.account_circle),
+                      child: Icon(CustomIcons.facebook),
                     ),
                     title: Text('계정'),
                     subtitle: Text('rkdwnsgk05@gmail.com'),
-                    trailing: Icon(Icons.arrow_forward_ios),
                     onTap: () {},
                   ),
                   Divider(),
@@ -65,7 +65,6 @@ class _SettingPageState extends State<SettingPage> {
                     ),
                     title: Text('언어'),
                     subtitle: Text('한국어'),
-                    trailing: Icon(Icons.arrow_forward_ios),
                     onTap: () {},
                   ),
                 ],
@@ -73,7 +72,7 @@ class _SettingPageState extends State<SettingPage> {
             ),
           ),
           Padding(
-            padding: const EdgeInsets.only(left: 20.0, top: 20.0, bottom: 8.0),
+            padding: const EdgeInsets.only(left: 20.0, top: 8.0, bottom: 8.0),
             child: Text(
               '설정',
               style: TextStyle(
@@ -107,7 +106,7 @@ class _SettingPageState extends State<SettingPage> {
                     leading: Container(
                       width: 40.0,
                       alignment: Alignment.center,
-                      child: Icon(Icons.wb_sunny),
+                      child: Icon(CustomIcons.moon),
                     ),
                     title: Text('다크모드'),
                     trailing: Switch(
@@ -125,7 +124,7 @@ class _SettingPageState extends State<SettingPage> {
             ),
           ),
           Padding(
-            padding: const EdgeInsets.only(left: 20.0, top: 20.0, bottom: 8.0),
+            padding: const EdgeInsets.only(left: 20.0, top: 8.0, bottom: 8.0),
             child: Text(
               '기타',
               style: TextStyle(
@@ -145,7 +144,6 @@ class _SettingPageState extends State<SettingPage> {
                       child: Icon(Icons.thumb_up),
                     ),
                     title: Text('리뷰 남기기'),
-                    trailing: Icon(Icons.arrow_forward_ios),
                     onTap: () {},
                   ),
                   Divider(),
@@ -156,7 +154,6 @@ class _SettingPageState extends State<SettingPage> {
                       child: Icon(Icons.mail),
                     ),
                     title: Text('의견 보내기'),
-                    trailing: Icon(Icons.arrow_forward_ios),
                     onTap: () {},
                   ),
                 ],

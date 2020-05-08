@@ -2,10 +2,12 @@ import 'dart:convert';
 import 'dart:math';
 
 import 'package:flutter/material.dart';
+import 'package:nofapcamp/models/classes.dart';
 import 'package:nofapcamp/widgets/custom_dialog.dart';
 import 'package:nofapcamp/widgets/numberpicker.dart';
 import 'package:percent_indicator/circular_percent_indicator.dart';
 import 'package:shared_preferences/shared_preferences.dart';
+import 'package:transparent_image/transparent_image.dart';
 
 class StatusPage extends StatefulWidget {
   @override
@@ -73,6 +75,14 @@ class _StatusPageState extends State<StatusPage> {
                               fontSize: 24.0,
                             ),
                           ),
+                          SizedBox(
+                            height: 10.0,
+                          ),
+                          FadeInImage(
+                            height: 64.0,
+                            placeholder: MemoryImage(kTransparentImage),
+                            image: getClassesImage(_progressDay),
+                          ),
                         ],
                       )
                     : Text(
@@ -82,13 +92,6 @@ class _StatusPageState extends State<StatusPage> {
                           fontSize: 42.0,
                         ),
                       ),
-                SizedBox(
-                  height: 10.0,
-                ),
-                Image(
-                  height: 64.0,
-                  image: AssetImage('assets/classes/classes_20.png'),
-                ),
               ],
             ),
             footer: Column(

@@ -3,6 +3,8 @@ import 'package:flutter_native_admob/flutter_native_admob.dart';
 import 'package:flutter_native_admob/native_admob_controller.dart';
 import 'package:nofapcamp/widgets/custom_app_bar.dart';
 
+import '../custom_icons_icons.dart';
+
 class BoardScreen extends StatelessWidget {
   static const _adUnitID = 'ca-app-pub-8336339515298040/6724604841';
   final _nativeAdController = NativeAdmobController();
@@ -31,7 +33,7 @@ class BoardScreen extends StatelessWidget {
       ),
       floatingActionButton: FloatingActionButton(
         onPressed: () {},
-        child: Icon(Icons.border_color),
+        child: Icon(CustomIcons.pencil),
       ),
     );
   }
