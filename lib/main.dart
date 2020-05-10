@@ -1,12 +1,12 @@
 import 'package:dynamic_theme/dynamic_theme.dart';
 import 'package:flutter/material.dart';
+import 'package:nofapcamp/screens/board_screen.dart';
+import 'package:nofapcamp/screens/classes_screen.dart';
 import 'package:nofapcamp/screens/history_screen.dart';
 import 'package:nofapcamp/screens/index_screen.dart';
-import 'package:nofapcamp/screens/classes_screen.dart';
 import 'package:nofapcamp/screens/ranking_screen.dart';
 import 'package:nofapcamp/screens/viewmore.dart';
 import 'package:nofapcamp/screens/walkthrough_screen.dart';
-import 'package:nofapcamp/screens/board_screen.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 void main() {

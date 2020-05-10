@@ -12,7 +12,6 @@ class InkWellCard extends StatelessWidget {
     return Container(
       margin: EdgeInsets.all(4.0),
       child: Card(
-        elevation: 4.0,
         shape: RoundedRectangleBorder(borderRadius: _baseBorderRadius),
         child: InkWell(
           borderRadius: _baseBorderRadius,

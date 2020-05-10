@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:nofapcamp/custom_icons_icons.dart';
-import 'package:nofapcamp/widgets/inkwell_card.dart';
+import 'package:nofapcamp/widgets/card_item.dart';
 import 'package:share/share.dart';
 
 class HomePage extends StatefulWidget {
@@ -20,72 +20,79 @@ class _HomePageState extends State<HomePage> {
                 children: <Widget>[
                   Expanded(
                     child: CardItem(
-                        title: '계급',
-                        icon: Icons.star,
-                        event: () {
-                          Navigator.of(context).pushNamed('/classes');
-                        }),
+                      title: '계급',
+                      icon: Icons.star,
+                      onTap: () {
+                        Navigator.of(context).pushNamed('/classes');
+                      },
+                    ),
                   ),
                   Expanded(
                     child: CardItem(
-                        title: '게시판',
-                        icon: Icons.rate_review,
-                        event: () {
-                          Navigator.of(context).pushNamed('/board');
-                        }),
+                      title: '게시판',
+                      icon: Icons.rate_review,
+                      onTap: () {
+                        Navigator.of(context).pushNamed('/board');
+                      },
+                    ),
                   ),
                 ],
               ),
             ),
             Expanded(
               child: CardItem(
-                  title: '도전기록',
-                  icon: Icons.event,
-                  isSingle: true,
-                  event: () {
-                    Navigator.of(context).pushNamed('/history');
-                  }),
+                title: '도전기록',
+                icon: Icons.event,
+                isSingle: true,
+                onTap: () {
+                  Navigator.of(context).pushNamed('/history');
+                },
+              ),
             ),
             Expanded(
               child: CardItem(
-                  title: '순위',
-                  icon: Icons.public,
-                  isSingle: true,
-                  event: () {
-                    Navigator.of(context).pushNamed('/ranking');
-                  }),
+                title: '순위',
+                icon: Icons.public,
+                isSingle: true,
+                onTap: () {
+                  Navigator.of(context).pushNamed('/ranking');
+                },
+              ),
             ),
             Expanded(
               child: CardItem(
-                  title: '더보기',
-                  icon: Icons.more,
-                  isSingle: true,
-                  event: () {
-                    Navigator.of(context).pushNamed('/viewmore');
-                  }),
+                title: '더보기',
+                icon: Icons.more_horiz,
+                isSingle: true,
+                onTap: () {
+                  Navigator.of(context).pushNamed('/viewmore');
+                },
+              ),
             ),
             Expanded(
               child: Row(
                 children: <Widget>[
                   Expanded(
                     child: CardItem(
-                        title: '후원',
-                        icon: Icons.favorite,
-                        event: () {
-                          // TODO 인앱 구매
-                        }),
+                      title: '후원',
+                      icon: Icons.favorite,
+                      onTap: () {
+                        // TODO 인앱 구매
+                      },
+                    ),
                   ),
                   Expanded(
                     child: CardItem(
-                        title: '공유',
-                        icon: CustomIcons.share,
-                        event: () {
-                          final RenderBox box = context.findRenderObject();
-                          String text = "스토어링크";
-                          Share.share(text,
-                              sharePositionOrigin:
-                                  box.localToGlobal(Offset.zero) & box.size);
-                        }),
+                      title: '공유',
+                      icon: CustomIcons.share,
+                      onTap: () {
+                        final RenderBox box = context.findRenderObject();
+                        String text = '플레이스토어, 앱스토어 링크';
+                        Share.share(text,
+                            sharePositionOrigin:
+                                box.localToGlobal(Offset.zero) & box.size);
+                      },
+                    ),
                   ),
                 ],
               ),
@@ -96,60 +103,6 @@ class _HomePageState extends State<HomePage> {
           ],
         ),
       ),
-    );
-  }
-}
-
-class CardItem extends StatelessWidget {
-  final String title;
-  final IconData icon;
-  final bool isSingle;
-  final event;
-
-  CardItem({
-    this.title = "hello",
-    this.icon = Icons.home,
-    this.isSingle = false,
-    this.event,
-  });
-
-  @override
-  Widget build(BuildContext context) {
-    return InkWellCard(
-      onTap: event,
-      child: isSingle
-          ? Stack(
-              children: <Widget>[
-                Positioned.fill(
-                  left: 16.0,
-                  child: Align(
-                    alignment: Alignment.centerLeft,
-                    child: Icon(icon, size: 36.0, color: Colors.redAccent),
-                  ),
-                ),
-                Positioned.fill(
-                  right: 16.0,
-                  child: Align(
-                    alignment: Alignment.centerRight,
-                    child: Icon(Icons.arrow_forward_ios, size: 36.0),
-                  ),
-                ),
-                Center(
-                  child: Text(title, style: TextStyle(fontSize: 24.0)),
-                ),
-              ],
-            )
-          : Column(
-              mainAxisAlignment: MainAxisAlignment.center,
-              children: <Widget>[
-                Icon(icon, size: 32.0, color: Colors.redAccent),
-                SizedBox(height: 12.0),
-                Text(
-                  title,
-                  style: TextStyle(fontSize: 24.0),
-                ),
-              ],
-            ),
     );
   }
 }

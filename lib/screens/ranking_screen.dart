@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:nofapcamp/models/dropdown_item.dart';
 import 'package:pull_to_refresh/pull_to_refresh.dart';
 
 class RankingScreen extends StatefulWidget {
@@ -8,15 +9,45 @@ class RankingScreen extends StatefulWidget {
 
 class _RankingScreenState extends State<RankingScreen> {
   RefreshController _refreshController = RefreshController();
-  String dropdownValue = '전체 기간';
-  bool isFriend = false;
+  TextEditingController _textEditingController = TextEditingController();
+  static List<DropdownItem> _dropdownItems = [
+    DropdownItem(
+      '전체',
+      null,
+    ),
+    DropdownItem(
+      '병사',
+      AssetImage('assets/images/classes/classes_1.jpg'),
+    ),
+    DropdownItem(
+      '부사관',
+      AssetImage('assets/images/classes/classes_5.png'),
+    ),
+    DropdownItem(
+      '준사관',
+      AssetImage('assets/images/classes/classes_9.png'),
+    ),
+    DropdownItem(
+      '위관장교',
+      AssetImage('assets/images/classes/classes_10.png'),
+    ),
+    DropdownItem(
+      '영관장교',
+      AssetImage('assets/images/classes/classes_13.png'),
+    ),
+    DropdownItem(
+      '장군',
+      AssetImage('assets/images/classes/classes_16.png'),
+    ),
+  ];
+  DropdownItem _dropdownValue = _dropdownItems[0];
+  bool _isSwitchFriend = false;
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       body: SmartRefresher(
         header: MaterialClassicHeader(
-          backgroundColor: Colors.white,
           color: Colors.black,
         ),
         controller: _refreshController,
@@ -24,74 +55,109 @@ class _RankingScreenState extends State<RankingScreen> {
         child: CustomScrollView(
           slivers: <Widget>[
             SliverAppBar(
-              title: Text("순위"),
+              expandedHeight: 240.0,
+              automaticallyImplyLeading: false,
               centerTitle: true,
               pinned: true,
-              expandedHeight: 240.0,
               elevation: 0.0,
-              actions: <Widget>[
-                Container(
-                  margin: EdgeInsets.only(right: 10.0),
-                  child: GestureDetector(
-                    onTap: () {
-                      // TODO 페이스북 로그인/로그아웃 창 띄우기
-                    },
-                    child: CircleAvatar(
-                      radius: 20.0,
-                      child: ClipOval(
-                        child: Image.network(
-                          'https://pbs.twimg.com/profile_images/885160602603110400/NDy2DF5c_400x400.jpg',
-                        ),
-                      ),
-                    ),
-                  ),
-                ),
-              ],
+              title: Text('순위'),
+              leading: IconButton(
+                icon: Icon(Icons.arrow_back),
+                onPressed: () {
+                  Navigator.of(context).pop();
+                },
+              ),
               flexibleSpace: FlexibleSpaceBar(
                 background: SafeArea(
-                  child: Column(
-                    mainAxisAlignment: MainAxisAlignment.center,
-                    children: <Widget>[
-                      CircleAvatar(
-                        radius: 32.0,
-                        backgroundImage: NetworkImage(
-                            'https://img.insight.co.kr/static/2018/11/16/700/990ejzhe8h36114p05gn.jpg'),
-                      ),
-                      SizedBox(
-                        height: 10.0,
-                      ),
-                      Text('명예의 전당')
-                    ],
-                  ),
+                  child: _isSwitchFriend
+                      ? Column(
+                          // 페이스북
+                          mainAxisAlignment: MainAxisAlignment.center,
+                          children: <Widget>[
+                            CircleAvatar(
+                              radius: 32.0,
+                              backgroundImage: NetworkImage(
+                                  'https://www.bizmoa.co.kr/data/file/sub1_02/thumb-1795154778_vcyhiXz6_517857878d888ea41d4a4e261f83a01ae306ebb4_600x563.png'),
+                            ),
+                            SizedBox(
+                              height: 10.0,
+                            ),
+                            Text(
+                              '페이스북이름',
+                              style: TextStyle(fontSize: 18.0),
+                            ),
+                          ],
+                        )
+                      : Column(
+                          // 공개
+                          mainAxisAlignment: MainAxisAlignment.center,
+                          children: <Widget>[
+                            CircleAvatar(
+                              radius: 32.0,
+                              backgroundImage: NetworkImage(
+                                  'https://img1.daumcdn.net/thumb/R720x0.q80/?scode=mtistory2&fname=http%3A%2F%2Fcfile25.uf.tistory.com%2Fimage%2F27102F3D56FFBCD711A797'),
+                            ),
+                            SizedBox(
+                              height: 10.0,
+                            ),
+                            TextField(
+                              controller: _textEditingController,
+                            )
+                          ],
+                        ),
                 ),
               ),
               bottom: PreferredSize(
-                preferredSize: const Size.fromHeight(64.0),
+                preferredSize: const Size.fromHeight(60.0),
                 child: Column(
                   children: <Widget>[
                     Padding(
                       padding: EdgeInsets.only(
-                          left: 18.0, right: 18.0, bottom: 10.0),
+                        left: 18.0,
+                        right: 18.0,
+                        bottom: 10.0,
+                      ),
                       child: Row(
                         mainAxisAlignment: MainAxisAlignment.spaceBetween,
                         children: <Widget>[
                           DropdownButtonHideUnderline(
-                            child: DropdownButton<String>(
-                              value: dropdownValue,
+                            child: DropdownButton<DropdownItem>(
+                              value: _dropdownValue,
                               icon: Icon(Icons.arrow_drop_down),
-                              onChanged: (String newValue) {
+                              onChanged: (DropdownItem value) {
                                 setState(() {
-                                  dropdownValue = newValue;
+                                  _dropdownValue = value;
                                 });
                               },
-                              items: <String>[
-                                '오늘',
-                                '이번 주',
-                                '전체 기간'
-                              ].map<DropdownMenuItem<String>>((String value) {
-                                return DropdownMenuItem<String>(
-                                  value: value,
-                                  child: Text(value),
+                              items: _dropdownItems.map((DropdownItem item) {
+                                return DropdownMenuItem<DropdownItem>(
+                                  value: item,
+                                  child: item.image == null
+                                      ? Row(
+                                          children: <Widget>[
+                                            Icon(Icons.done_all),
+                                            SizedBox(
+                                              width: 10.0,
+                                            ),
+                                            Text(
+                                              item.name,
+                                            ),
+                                          ],
+                                        )
+                                      : Row(
+                                          children: <Widget>[
+                                            Image(
+                                              width: 20.0,
+                                              image: item.image,
+                                            ),
+                                            SizedBox(
+                                              width: 10.0,
+                                            ),
+                                            Text(
+                                              item.name,
+                                            ),
+                                          ],
+                                        ),
                                 );
                               }).toList(),
                             ),
@@ -100,10 +166,10 @@ class _RankingScreenState extends State<RankingScreen> {
                             children: <Widget>[
                               Text('전체'),
                               Switch(
-                                value: isFriend,
+                                value: _isSwitchFriend,
                                 onChanged: (bool newValue) {
                                   setState(() {
-                                    isFriend = newValue;
+                                    _isSwitchFriend = newValue;
                                   });
                                 },
                               ),
@@ -136,20 +202,23 @@ class _RankingScreenState extends State<RankingScreen> {
                           ),
                         ),
                         title: Text(
-                          "MA강준하멋쟁이",
-                          style: TextStyle(
-                            color: Colors.indigoAccent,
-                          ),
+                          '#${index + 1} 강준하',
                         ),
                         subtitle: Text(
-                          'MA설명이랑께',
+                          '4일째 (상위 69.69%)',
                         ),
-                        trailing: Text('${index + 1}등'),
+                        trailing: Container(
+                          width: 40.0,
+                          alignment: Alignment.center,
+                          child: Image(
+                            width: 40.0,
+                            image: AssetImage(
+                              'assets/images/classes/classes_9.png',
+                            ),
+                          ),
+                        ),
                       ),
-                      Divider(
-                        thickness: 1.0,
-                        indent: 96.0,
-                      ),
+                      Divider(),
                     ],
                   );
                 },
@@ -163,7 +232,7 @@ class _RankingScreenState extends State<RankingScreen> {
   }
 
   void _onRefresh() async {
-    await Future.delayed(Duration(milliseconds: 1000));
+    await Future.delayed(Duration(milliseconds: 300));
     _refreshController.refreshCompleted();
   }
 }

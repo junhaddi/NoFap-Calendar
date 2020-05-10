@@ -28,17 +28,24 @@ class _StatusPageState extends State<StatusPage> {
   void initState() {
     super.initState();
     _getDate();
+    // TODO 서버에 기록 송신
   }
 
   Widget build(BuildContext context) {
+    if (_isLoaded) {
+      _updateDate();
+    }
     return Scaffold(
       body: SafeArea(
         child: Center(
           child: CircularPercentIndicator(
             radius: 280.0,
-            lineWidth: 24.0,
-            circularStrokeCap: CircularStrokeCap.round,
+            lineWidth: 20.0,
+            arcType: ArcType.FULL,
+            arcBackgroundColor: Color(0xFFB8C7CB),
             progressColor: Colors.deepPurpleAccent,
+            backgroundColor: Colors.transparent,
+            circularStrokeCap: CircularStrokeCap.round,
             animation: true,
             animateFromLastPercent: true,
             percent: _isLoaded
@@ -59,8 +66,8 @@ class _StatusPageState extends State<StatusPage> {
                           Text(
                             '$_progressDay일차',
                             style: TextStyle(
-                              fontWeight: FontWeight.bold,
                               fontSize: 42.0,
+                              fontWeight: FontWeight.bold,
                             ),
                           ),
                           Text(
@@ -79,7 +86,7 @@ class _StatusPageState extends State<StatusPage> {
                             height: 10.0,
                           ),
                           FadeInImage(
-                            height: 64.0,
+                            height: 40.0,
                             placeholder: MemoryImage(kTransparentImage),
                             image: getClassesImage(_progressDay),
                           ),
@@ -88,37 +95,34 @@ class _StatusPageState extends State<StatusPage> {
                     : Text(
                         '시작하세요',
                         style: TextStyle(
-                          fontWeight: FontWeight.bold,
                           fontSize: 42.0,
+                          fontWeight: FontWeight.bold,
                         ),
                       ),
               ],
             ),
-            footer: Column(
-              children: <Widget>[
-                RaisedButton(
-                  onPressed: () {
-                    if (_isLoaded) {
-                      if (_isSuccess) {
-                        _showResetDialog();
-                      } else {
-                        _showReconfirmDialog();
-                      }
-                    } else {
-                      _showResetDialog();
-                    }
-                  },
-                  color: Colors.blueGrey,
-                  child: Icon(
-                    _isLoaded
-                        ? _isSuccess ? Icons.star : Icons.pause
-                        : Icons.play_arrow,
-                    size: 32.0,
-                  ),
-                  padding: EdgeInsets.all(8.0),
-                  shape: CircleBorder(),
-                ),
-              ],
+            footer: RaisedButton(
+              shape: CircleBorder(),
+              color: Colors.deepPurple,
+              padding: EdgeInsets.all(4.0),
+              child: Icon(
+                _isLoaded
+                    ? _isSuccess ? Icons.check : Icons.priority_high
+                    : Icons.play_arrow,
+                size: 48.0,
+                color: Theme.of(context).scaffoldBackgroundColor,
+              ),
+              onPressed: () {
+                if (_isLoaded) {
+                  if (_isSuccess) {
+                    _showResetDialog();
+                  } else {
+                    _showReconfirmDialog();
+                  }
+                } else {
+                  _showResetDialog();
+                }
+              },
             ),
           ),
         ),
@@ -149,13 +153,37 @@ class _StatusPageState extends State<StatusPage> {
     });
   }
 
-  void _showReconfirmDialog() async {
+  void _updateDate() {
+    setState(() {
+      _progressDay = DateTime(
+                  DateTime.now().year, DateTime.now().month, DateTime.now().day)
+              .difference(DateTime(_srcDate.year, _srcDate.month, _srcDate.day))
+              .inDays +
+          1;
+      _dday = DateTime(_dstDate.year, _dstDate.month, _dstDate.day)
+          .difference(DateTime(
+              DateTime.now().year, DateTime.now().month, DateTime.now().day))
+          .inDays;
+      _isSuccess = DateTime.now().difference(_dstDate).inMilliseconds >= 0;
+    });
+  }
+
+  Future<void> _showReconfirmDialog() async {
     showDialog(
       context: context,
       builder: (BuildContext context) {
         return CustomDialog(
           title: '금딸실패',
-          content: '사실이라면 정말 실망입니다.',
+          subtitle: '정말이에요?',
+          child: Image(
+            height: 200.0,
+            image: [
+              AssetImage('assets/images/reconfirm/reconfirm_1.gif'),
+              AssetImage('assets/images/reconfirm/reconfirm_2.gif'),
+              AssetImage('assets/images/reconfirm/reconfirm_3.gif'),
+            ][Random().nextInt(3)],
+            fit: BoxFit.cover,
+          ),
           event: () {
             Navigator.of(context).pop();
             _showResetDialog();
@@ -165,17 +193,26 @@ class _StatusPageState extends State<StatusPage> {
     );
   }
 
-  void _showResetDialog() async {
+  Future<void> _showResetDialog() async {
     showDialog<int>(
-        context: context,
-        builder: (BuildContext context) {
-          return NumberPickerDialog.integer(
-            minValue: 1,
-            maxValue: 100,
-            title: Text('목표일수'),
-            initialIntegerValue: 1,
-          );
-        }).then((int value) {
+      context: context,
+      builder: (BuildContext context) {
+        return NumberPickerDialog.integer(
+          initialIntegerValue: 1,
+          minValue: 1,
+          maxValue: 100,
+          infiniteLoop: true,
+          title: Text(
+            '목표일수',
+            textAlign: TextAlign.center,
+            style: TextStyle(
+              fontSize: 32.0,
+              fontWeight: FontWeight.bold,
+            ),
+          ),
+        );
+      },
+    ).then((int value) {
       if (value != null) {
         setState(() {
           if (_isSuccess) {

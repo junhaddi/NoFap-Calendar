@@ -12,12 +12,17 @@ class ViewmoreScreen extends StatelessWidget {
     return Scaffold(
       appBar: CustomAppBar(
         title: '더보기',
+        leading: IconButton(
+          icon: Icon(Icons.arrow_back),
+          onPressed: () {
+            Navigator.of(context).pop();
+          },
+        ),
       ),
       body: ListView.builder(
         itemBuilder: (context, index) {
           return Card(
             margin: EdgeInsets.all(8.0),
-            elevation: 4.0,
             child: Container(
               height: 300.0,
               child: NativeAdmob(

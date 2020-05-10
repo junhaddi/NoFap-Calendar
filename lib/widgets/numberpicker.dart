@@ -611,8 +611,6 @@ class NumberPickerDialog extends StatefulWidget {
   final int decimalPlaces;
   final Widget title;
   final EdgeInsets titlePadding;
-  final Widget confirmWidget;
-  final Widget cancelWidget;
   final int step;
   final bool infiniteLoop;
   final bool zeroPad;
@@ -631,11 +629,7 @@ class NumberPickerDialog extends StatefulWidget {
     this.zeroPad = false,
     this.highlightSelectedValue = true,
     this.decoration,
-    Widget confirmWidget,
-    Widget cancelWidget,
-  })  : confirmWidget = confirmWidget ?? new Text("확인"),
-        cancelWidget = cancelWidget ?? new Text("취소"),
-        decimalPlaces = 0,
+  })  : decimalPlaces = 0,
         initialDoubleValue = -1.0;
 
   ///constructor for decimal values
@@ -648,11 +642,7 @@ class NumberPickerDialog extends StatefulWidget {
     this.titlePadding,
     this.highlightSelectedValue = true,
     this.decoration,
-    Widget confirmWidget,
-    Widget cancelWidget,
-  })  : confirmWidget = confirmWidget ?? new Text("확인"),
-        cancelWidget = cancelWidget ?? new Text("취소"),
-        initialIntegerValue = -1,
+  })  : initialIntegerValue = -1,
         step = 1,
         infiniteLoop = false,
         zeroPad = false;
@@ -706,20 +696,55 @@ class _NumberPickerDialogControllerState extends State<NumberPickerDialog> {
   @override
   Widget build(BuildContext context) {
     return new AlertDialog(
+      shape: RoundedRectangleBorder(
+        borderRadius: BorderRadius.circular(20.0),
+      ),
       title: widget.title,
       titlePadding: widget.titlePadding,
-      content: _buildNumberPicker(),
-      actions: [
-        new FlatButton(
-          onPressed: () => Navigator.of(context).pop(),
-          child: widget.cancelWidget,
-        ),
-        new FlatButton(
-            onPressed: () => Navigator.of(context).pop(widget.decimalPlaces > 0
-                ? selectedDoubleValue
-                : selectedIntValue),
-            child: widget.confirmWidget),
-      ],
+      contentPadding: EdgeInsets.zero,
+      content: Column(
+        mainAxisSize: MainAxisSize.min,
+        children: <Widget>[
+          SizedBox(
+            height: 20.0,
+          ),
+          _buildNumberPicker(),
+          SizedBox(
+            height: 20.0,
+          ),
+          ButtonBar(
+            buttonMinWidth: 80.0,
+            buttonHeight: 40.0,
+            alignment: MainAxisAlignment.spaceEvenly,
+            children: <Widget>[
+              RaisedButton(
+                child: Text('아니'),
+                shape: RoundedRectangleBorder(
+                  borderRadius: BorderRadius.circular(20.0),
+                ),
+                onPressed: () {
+                  Navigator.of(context).pop();
+                },
+              ),
+              RaisedButton(
+                color: Colors.green,
+                child: Text('응'),
+                shape: RoundedRectangleBorder(
+                  borderRadius: BorderRadius.circular(20.0),
+                ),
+                onPressed: () => Navigator.of(context).pop(
+                  widget.decimalPlaces > 0
+                      ? selectedDoubleValue
+                      : selectedIntValue,
+                ),
+              ),
+            ],
+          ),
+          SizedBox(
+            height: 10.0,
+          ),
+        ],
+      ),
     );
   }
 }

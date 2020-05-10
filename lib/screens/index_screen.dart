@@ -6,11 +6,12 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_native_admob/flutter_native_admob.dart';
 import 'package:flutter_native_admob/native_admob_controller.dart';
-import 'package:nofapcamp/pages/subscribe_page.dart';
 import 'package:nofapcamp/pages/home_page.dart';
 import 'package:nofapcamp/pages/setting_page.dart';
 import 'package:nofapcamp/pages/status_page.dart';
+import 'package:nofapcamp/pages/subscribe_page.dart';
 import 'package:nofapcamp/widgets/bottom_navy_bar.dart';
+import 'package:nofapcamp/widgets/custom_dialog.dart';
 
 final FirebaseMessaging _firebaseMessaging = FirebaseMessaging();
 
@@ -41,7 +42,7 @@ class _IndexScreenState extends State<IndexScreen> {
   Widget build(BuildContext context) {
     return Scaffold(
       body: WillPopScope(
-        onWillPop: onWillPop,
+        onWillPop: _onWillPop,
         child: PageView(
           controller: _pageController,
           onPageChanged: (index) {
@@ -50,7 +51,7 @@ class _IndexScreenState extends State<IndexScreen> {
           children: <Widget>[
             HomePage(),
             StatusPage(),
-            subscribeScreen(),
+            SubscribeScreen(),
             SettingPage()
           ],
         ),
@@ -118,44 +119,7 @@ class _IndexScreenState extends State<IndexScreen> {
     );
   }
 
-  void _showExitDialog(BuildContext context) {
-    showDialog(
-      context: context,
-      builder: (BuildContext context) {
-        return AlertDialog(
-          shape: RoundedRectangleBorder(
-            borderRadius: BorderRadius.circular(8.0),
-          ),
-          content: Column(
-            children: <Widget>[
-              NativeAdmob(
-                adUnitID: 'ca-app-pub-8336339515298040/6724604841',
-                controller: NativeAdmobController(),
-                type: NativeAdmobType.full,
-              ),
-              Text('금딸캠프를 종료할까요?'),
-            ],
-          ),
-          actions: <Widget>[
-            RaisedButton(
-              child: Text('취소'),
-              onPressed: () {
-                Navigator.of(context).pop();
-              },
-            ),
-            RaisedButton(
-              child: Text('종료'),
-              onPressed: () {
-                SystemChannels.platform.invokeMethod('SystemNavigator.pop');
-              },
-            ),
-          ],
-        );
-      },
-    );
-  }
-
-  Future<bool> onWillPop() async {
+  Future<bool> _onWillPop() async {
     DateTime currentTime = DateTime.now();
     if (_currentBackPressTime == null ||
         currentTime.difference(_currentBackPressTime) > Duration(seconds: 2)) {
@@ -164,5 +128,28 @@ class _IndexScreenState extends State<IndexScreen> {
       return false;
     }
     return true;
+  }
+
+  void _showExitDialog(BuildContext context) {
+    showDialog(
+      context: context,
+      builder: (BuildContext context) {
+        return CustomDialog(
+          subtitle: '금딸캠프를 종료 할까요?',
+          child: SizedBox(
+            height: 200.0,
+            child: NativeAdmob(
+              adUnitID: 'ca-app-pub-8336339515298040/6724604841',
+              controller: NativeAdmobController(),
+              type: NativeAdmobType.full,
+            ),
+          ),
+          event: () {
+            Navigator.of(context).pop();
+            SystemChannels.platform.invokeMethod('SystemNavigator.pop');
+          },
+        );
+      },
+    );
   }
 }

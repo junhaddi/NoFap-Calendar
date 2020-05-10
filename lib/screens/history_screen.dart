@@ -2,17 +2,10 @@ import 'dart:convert';
 
 import 'package:flutter/material.dart';
 import 'package:nofapcamp/models/classes.dart';
+import 'package:nofapcamp/models/history.dart';
 import 'package:nofapcamp/widgets/custom_app_bar.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:table_calendar/table_calendar.dart';
-
-class History {
-  final AssetImage image;
-  final String title;
-  final String description;
-
-  History({this.image, this.title, this.description});
-}
 
 class HistoryScreen extends StatefulWidget {
   @override
@@ -21,14 +14,14 @@ class HistoryScreen extends StatefulWidget {
 
 class _HistoryScreenState extends State<HistoryScreen> {
   SharedPreferences _prefs;
-  CalendarController _calendarController = CalendarController();
+  CalendarController _calendarController;
   List<History> _historys = [];
 
   @override
   void initState() {
     super.initState();
-    _getDate();
     _calendarController = CalendarController();
+    _getHistoryDate();
   }
 
   @override
@@ -42,6 +35,12 @@ class _HistoryScreenState extends State<HistoryScreen> {
     return Scaffold(
       appBar: CustomAppBar(
         title: '도전기록',
+        leading: IconButton(
+          icon: Icon(Icons.arrow_back),
+          onPressed: () {
+            Navigator.of(context).pop();
+          },
+        ),
       ),
       body: Column(
         children: <Widget>[
@@ -49,52 +48,71 @@ class _HistoryScreenState extends State<HistoryScreen> {
             calendarController: _calendarController,
           ),
           Expanded(
-            child: ListView(
-              children: _historys.reversed
-                  .map(
-                    (History history) => Card(
-                      shape: RoundedRectangleBorder(
-                        borderRadius: BorderRadius.circular(50.0),
+            child: _historys.isEmpty
+                ? Column(
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    children: <Widget>[
+                      Icon(
+                        Icons.event,
+                        color: Colors.grey,
                       ),
-                      child: ListTile(
-                        title: Text(
-                          history.title,
-                        ),
-                        subtitle: Text(
-                          history.description,
-                        ),
-                        trailing: Container(
-                          width: 40.0,
-                          alignment: Alignment.center,
-                          child: Image(
-                            image: history.image,
-                          ),
-                        ),
+                      SizedBox(
+                        height: 10.0,
                       ),
-                    ),
+                      Text(
+                        '도전기록이 없습니다',
+                        style: TextStyle(color: Colors.grey),
+                      ),
+                    ],
                   )
-                  .toList(),
-            ),
+                : ListView(
+                    // TODO 카드 클릭시 캘린더 이동
+                    children: _historys.reversed
+                        .map(
+                          (History history) => Card(
+                            shape: RoundedRectangleBorder(
+                              borderRadius: BorderRadius.circular(50.0),
+                            ),
+                            child: ListTile(
+                              title: Text(
+                                history.title,
+                              ),
+                              subtitle: Text(
+                                history.description,
+                              ),
+                              trailing: Container(
+                                width: 40.0,
+                                alignment: Alignment.center,
+                                child: Image(
+                                  image: history.image,
+                                ),
+                              ),
+                            ),
+                          ),
+                        )
+                        .toList(),
+                  ),
           ),
         ],
       ),
     );
   }
 
-  Future<void> _getDate() async {
+  Future<void> _getHistoryDate() async {
     _prefs = await SharedPreferences.getInstance();
-    List<String> dateHistorys = _prefs.getStringList('dateHistorys') ?? [];
+    List<String> dateHistoryList = _prefs.getStringList('dateHistorys') ?? [];
     setState(() {
-      dateHistorys.forEach((element) {
+      for (int i = 0; i < dateHistoryList.length; i++) {
+        String element = dateHistoryList[i];
         Map dateMap = jsonDecode(element);
         _historys.add(
           History(
-            image: getClassesImage(dateMap["progressDay"]),
-            title: '${dateMap["progressDay"].toString()}일째',
-            description: dateMap["term"],
+            title: '[${i + 1}차] ${dateMap['progressDay'].toString()}일째',
+            description: dateMap['term'],
+            image: getClassesImage(dateMap['progressDay']),
           ),
         );
-      });
+      }
     });
   }
 }
