@@ -100,4 +100,4 @@ flutter:
 
 flutter_native_splash:
   image: assets/ic_launcher.png
-  color: "42a5f5"
+  color: "ffffff"

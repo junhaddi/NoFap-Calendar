@@ -4,5 +4,5 @@ class DropdownItem {
   final String name;
   final AssetImage image;
 
-  DropdownItem(this.name, this.image);
+  DropdownItem({this.name, this.image});
 }

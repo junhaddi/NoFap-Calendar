@@ -12,32 +12,32 @@ class _RankingScreenState extends State<RankingScreen> {
   TextEditingController _textEditingController = TextEditingController();
   static List<DropdownItem> _dropdownItems = [
     DropdownItem(
-      '전체',
-      null,
+      name: '전체',
+      image: null,
     ),
     DropdownItem(
-      '병사',
-      AssetImage('assets/images/classes/classes_1.jpg'),
+      name: '병사',
+      image: AssetImage('assets/images/classes/classes_1.jpg'),
     ),
     DropdownItem(
-      '부사관',
-      AssetImage('assets/images/classes/classes_5.png'),
+      name: '부사관',
+      image: AssetImage('assets/images/classes/classes_5.png'),
     ),
     DropdownItem(
-      '준사관',
-      AssetImage('assets/images/classes/classes_9.png'),
+      name: '준사관',
+      image: AssetImage('assets/images/classes/classes_9.png'),
     ),
     DropdownItem(
-      '위관장교',
-      AssetImage('assets/images/classes/classes_10.png'),
+      name: '위관장교',
+      image: AssetImage('assets/images/classes/classes_10.png'),
     ),
     DropdownItem(
-      '영관장교',
-      AssetImage('assets/images/classes/classes_13.png'),
+      name: '영관장교',
+      image: AssetImage('assets/images/classes/classes_13.png'),
     ),
     DropdownItem(
-      '장군',
-      AssetImage('assets/images/classes/classes_16.png'),
+      name: '장군',
+      image: AssetImage('assets/images/classes/classes_16.png'),
     ),
   ];
   DropdownItem _dropdownValue = _dropdownItems[0];
@@ -89,20 +89,12 @@ class _RankingScreenState extends State<RankingScreen> {
                           ],
                         )
                       : Column(
-                          // 공개
                           mainAxisAlignment: MainAxisAlignment.center,
                           children: <Widget>[
-                            CircleAvatar(
-                              radius: 32.0,
-                              backgroundImage: NetworkImage(
-                                  'https://img1.daumcdn.net/thumb/R720x0.q80/?scode=mtistory2&fname=http%3A%2F%2Fcfile25.uf.tistory.com%2Fimage%2F27102F3D56FFBCD711A797'),
+                            Text(
+                              '개발자가 여기를 꾸미려다가 실패한듯 하다',
+                              style: TextStyle(fontStyle: FontStyle.italic),
                             ),
-                            SizedBox(
-                              height: 10.0,
-                            ),
-                            TextField(
-                              controller: _textEditingController,
-                            )
                           ],
                         ),
                 ),
@@ -193,13 +185,9 @@ class _RankingScreenState extends State<RankingScreen> {
                   return Column(
                     children: <Widget>[
                       ListTile(
-                        leading: Container(
-                          width: 64.0,
-                          alignment: Alignment.center,
-                          child: Icon(
-                            Icons.account_circle,
-                            size: 48.0,
-                          ),
+                        leading: Icon(
+                          Icons.account_circle,
+                          size: 48.0,
                         ),
                         title: Text(
                           '#${index + 1} 강준하',
@@ -207,14 +195,10 @@ class _RankingScreenState extends State<RankingScreen> {
                         subtitle: Text(
                           '4일째 (상위 69.69%)',
                         ),
-                        trailing: Container(
+                        trailing: Image(
                           width: 40.0,
-                          alignment: Alignment.center,
-                          child: Image(
-                            width: 40.0,
-                            image: AssetImage(
-                              'assets/images/classes/classes_9.png',
-                            ),
+                          image: AssetImage(
+                            'assets/images/classes/classes_9.png',
                           ),
                         ),
                       ),

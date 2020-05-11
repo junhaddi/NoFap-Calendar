@@ -103,7 +103,7 @@ class _StatusPageState extends State<StatusPage> {
             ),
             footer: RaisedButton(
               shape: CircleBorder(),
-              color: Colors.deepPurple,
+              color: Colors.deepPurpleAccent,
               padding: EdgeInsets.all(4.0),
               child: Icon(
                 _isLoaded
@@ -114,13 +114,14 @@ class _StatusPageState extends State<StatusPage> {
               ),
               onPressed: () {
                 if (_isLoaded) {
+                  _updateDate();
                   if (_isSuccess) {
-                    _showResetDialog();
+                    _showResetDialog(true);
                   } else {
                     _showReconfirmDialog();
                   }
                 } else {
-                  _showResetDialog();
+                  _showLoadDialog();
                 }
               },
             ),
@@ -141,7 +142,8 @@ class _StatusPageState extends State<StatusPage> {
           DateTime.fromMillisecondsSinceEpoch(_prefs.getInt('dstDate') ?? null);
       _progressDay = DateTime(
                   DateTime.now().year, DateTime.now().month, DateTime.now().day)
-              .difference(DateTime(_srcDate.year, _srcDate.month, _srcDate.day))
+              .difference(
+                  DateTime(_initDate.year, _initDate.month, _initDate.day))
               .inDays +
           1;
       _dday = DateTime(_dstDate.year, _dstDate.month, _dstDate.day)
@@ -157,7 +159,8 @@ class _StatusPageState extends State<StatusPage> {
     setState(() {
       _progressDay = DateTime(
                   DateTime.now().year, DateTime.now().month, DateTime.now().day)
-              .difference(DateTime(_srcDate.year, _srcDate.month, _srcDate.day))
+              .difference(
+                  DateTime(_initDate.year, _initDate.month, _initDate.day))
               .inDays +
           1;
       _dday = DateTime(_dstDate.year, _dstDate.month, _dstDate.day)
@@ -165,6 +168,34 @@ class _StatusPageState extends State<StatusPage> {
               DateTime.now().year, DateTime.now().month, DateTime.now().day))
           .inDays;
       _isSuccess = DateTime.now().difference(_dstDate).inMilliseconds >= 0;
+    });
+  }
+
+  Future<void> _showLoadDialog() async {
+    showDialog<int>(
+      context: context,
+      builder: (BuildContext context) {
+        return NumberPickerDialog.integer(
+          initialIntegerValue: 0,
+          minValue: 0,
+          maxValue: 400,
+          title: Text(
+            '금딸을 며칠이나\n하고있나요?',
+            textAlign: TextAlign.center,
+            style: TextStyle(
+              fontSize: 28.0,
+              fontWeight: FontWeight.bold,
+            ),
+          ),
+        );
+      },
+    ).then((int value) {
+      if (value != null) {
+        setState(() {
+          _initDate = DateTime.now().subtract(Duration(days: value - 1));
+          _showResetDialog(true);
+        });
+      }
     });
   }
 
@@ -186,14 +217,14 @@ class _StatusPageState extends State<StatusPage> {
           ),
           event: () {
             Navigator.of(context).pop();
-            _showResetDialog();
+            _showResetDialog(false);
           },
         );
       },
     );
   }
 
-  Future<void> _showResetDialog() async {
+  Future<void> _showResetDialog(bool isSuccess) async {
     showDialog<int>(
       context: context,
       builder: (BuildContext context) {
@@ -215,11 +246,10 @@ class _StatusPageState extends State<StatusPage> {
     ).then((int value) {
       if (value != null) {
         setState(() {
-          if (_isSuccess) {
+          if (isSuccess) {
             // 목표 달성 성공
             _srcDate = DateTime.now();
             _dstDate = DateTime.now().add(Duration(days: value));
-            _isSuccess = false;
           } else {
             // 목표 달성 실패
             if (_isLoaded) {
@@ -238,12 +268,7 @@ class _StatusPageState extends State<StatusPage> {
             _initDate = DateTime.now();
             _srcDate = DateTime.now();
             _dstDate = _srcDate.add(Duration(days: value));
-            _progressDay = 1;
           }
-          _dday = DateTime(_dstDate.year, _dstDate.month, _dstDate.day)
-              .difference(DateTime(DateTime.now().year, DateTime.now().month,
-                  DateTime.now().day))
-              .inDays;
           _isLoaded = true;
 
           // 현황 저장

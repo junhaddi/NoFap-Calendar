@@ -136,7 +136,7 @@ class _IndexScreenState extends State<IndexScreen> {
       builder: (BuildContext context) {
         return CustomDialog(
           subtitle: '금딸캠프를 종료 할까요?',
-          child: SizedBox(
+          child: Container(
             height: 200.0,
             child: NativeAdmob(
               adUnitID: 'ca-app-pub-8336339515298040/6724604841',

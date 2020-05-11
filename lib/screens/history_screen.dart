@@ -80,12 +80,9 @@ class _HistoryScreenState extends State<HistoryScreen> {
                               subtitle: Text(
                                 history.description,
                               ),
-                              trailing: Container(
+                              trailing: Image(
                                 width: 40.0,
-                                alignment: Alignment.center,
-                                child: Image(
-                                  image: history.image,
-                                ),
+                                image: history.image,
                               ),
                             ),
                           ),

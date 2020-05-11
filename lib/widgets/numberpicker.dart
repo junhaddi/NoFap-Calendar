@@ -718,17 +718,8 @@ class _NumberPickerDialogControllerState extends State<NumberPickerDialog> {
             alignment: MainAxisAlignment.spaceEvenly,
             children: <Widget>[
               RaisedButton(
-                child: Text('아니'),
-                shape: RoundedRectangleBorder(
-                  borderRadius: BorderRadius.circular(20.0),
-                ),
-                onPressed: () {
-                  Navigator.of(context).pop();
-                },
-              ),
-              RaisedButton(
                 color: Colors.green,
-                child: Text('응'),
+                child: Text('시작'),
                 shape: RoundedRectangleBorder(
                   borderRadius: BorderRadius.circular(20.0),
                 ),
