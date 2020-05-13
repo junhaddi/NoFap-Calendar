@@ -134,38 +134,38 @@ class _StatusPageState extends State<StatusPage> {
   Future<void> _getDate() async {
     _prefs = await SharedPreferences.getInstance();
     setState(() {
+      DateTime now = DateTime(
+          DateTime.now().year, DateTime.now().month, DateTime.now().day);
       _initDate = DateTime.fromMillisecondsSinceEpoch(
-          _prefs.getInt('initDate') ?? null);
-      _srcDate =
-          DateTime.fromMillisecondsSinceEpoch(_prefs.getInt('srcDate') ?? null);
-      _dstDate =
-          DateTime.fromMillisecondsSinceEpoch(_prefs.getInt('dstDate') ?? null);
-      _progressDay = DateTime(
-                  DateTime.now().year, DateTime.now().month, DateTime.now().day)
+          _prefs.getInt('initDate') ?? now.millisecondsSinceEpoch);
+      _srcDate = DateTime.fromMillisecondsSinceEpoch(
+          _prefs.getInt('srcDate') ?? now.millisecondsSinceEpoch);
+      _dstDate = DateTime.fromMillisecondsSinceEpoch(
+          _prefs.getInt('dstDate') ?? now.millisecondsSinceEpoch);
+      _progressDay = now
               .difference(
                   DateTime(_initDate.year, _initDate.month, _initDate.day))
               .inDays +
           1;
       _dday = DateTime(_dstDate.year, _dstDate.month, _dstDate.day)
-          .difference(DateTime(
-              DateTime.now().year, DateTime.now().month, DateTime.now().day))
+          .difference(now)
           .inDays;
-      _isLoaded = _initDate != null && _srcDate != null && _dstDate != null;
+      _isLoaded = _initDate != now && _srcDate != now && _dstDate != now;
       _isSuccess = DateTime.now().difference(_dstDate).inMilliseconds >= 0;
     });
   }
 
   void _updateDate() {
     setState(() {
-      _progressDay = DateTime(
-                  DateTime.now().year, DateTime.now().month, DateTime.now().day)
+      DateTime now = DateTime(
+          DateTime.now().year, DateTime.now().month, DateTime.now().day);
+      _progressDay = now
               .difference(
                   DateTime(_initDate.year, _initDate.month, _initDate.day))
               .inDays +
           1;
       _dday = DateTime(_dstDate.year, _dstDate.month, _dstDate.day)
-          .difference(DateTime(
-              DateTime.now().year, DateTime.now().month, DateTime.now().day))
+          .difference(now)
           .inDays;
       _isSuccess = DateTime.now().difference(_dstDate).inMilliseconds >= 0;
     });
@@ -259,8 +259,12 @@ class _StatusPageState extends State<StatusPage> {
               dateHistorys.add(
                 jsonEncode({
                   'progressDay': _progressDay,
-                  'term':
-                      '${_initDate.year}/${_initDate.month}/${_initDate.day}~${DateTime.now().year}/${DateTime.now().month}/${DateTime.now().day}',
+                  'srcDate':
+                      DateTime(_initDate.year, _initDate.month, _initDate.day)
+                          .millisecondsSinceEpoch,
+                  'dstDate': DateTime(DateTime.now().year, DateTime.now().month,
+                          DateTime.now().day)
+                      .millisecondsSinceEpoch,
                 }),
               );
               _prefs.setStringList('dateHistorys', dateHistorys);
