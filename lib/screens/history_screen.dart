@@ -185,10 +185,14 @@ class _HistoryScreenState extends State<HistoryScreen> {
                     ],
                   )
                 : ListView(
-                    // TODO 카드 클릭시 캘린더 이동
                     children: _historys.reversed
                         .map(
                           (History history) => InkWellCard(
+                            baseBorderRadius: BorderRadius.circular(4.0),
+                            baseMarginValue: EdgeInsets.only(
+                              left: 4.0,
+                              right: 4.0,
+                            ),
                             onTap: () {
                               setState(() {
                                 _calendarController

@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:nofapcamp/models/classes.dart';
 import 'package:nofapcamp/models/dropdown_item.dart';
 import 'package:pull_to_refresh/pull_to_refresh.dart';
 
@@ -9,7 +10,6 @@ class RankingScreen extends StatefulWidget {
 
 class _RankingScreenState extends State<RankingScreen> {
   RefreshController _refreshController = RefreshController();
-  TextEditingController _textEditingController = TextEditingController();
   static List<DropdownItem> _dropdownItems = [
     DropdownItem(
       name: '전체',
@@ -41,7 +41,7 @@ class _RankingScreenState extends State<RankingScreen> {
     ),
   ];
   DropdownItem _dropdownValue = _dropdownItems[0];
-  bool _isSwitchFriend = false;
+  bool _isGridView = false;
 
   @override
   Widget build(BuildContext context) {
@@ -69,34 +69,25 @@ class _RankingScreenState extends State<RankingScreen> {
               ),
               flexibleSpace: FlexibleSpaceBar(
                 background: SafeArea(
-                  child: _isSwitchFriend
-                      ? Column(
-                          // 페이스북
-                          mainAxisAlignment: MainAxisAlignment.center,
-                          children: <Widget>[
-                            CircleAvatar(
-                              radius: 32.0,
-                              backgroundImage: NetworkImage(
-                                  'https://www.bizmoa.co.kr/data/file/sub1_02/thumb-1795154778_vcyhiXz6_517857878d888ea41d4a4e261f83a01ae306ebb4_600x563.png'),
-                            ),
-                            SizedBox(
-                              height: 10.0,
-                            ),
-                            Text(
-                              '페이스북이름',
-                              style: TextStyle(fontSize: 18.0),
-                            ),
-                          ],
-                        )
-                      : Column(
-                          mainAxisAlignment: MainAxisAlignment.center,
-                          children: <Widget>[
-                            Text(
-                              '개발자가 여기를 꾸미려다가 실패한듯 하다',
-                              style: TextStyle(fontStyle: FontStyle.italic),
-                            ),
-                          ],
+                  child: Column(
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    children: <Widget>[
+                      CircleAvatar(
+                        radius: 30.0,
+                        backgroundImage: NetworkImage(
+                            'https://www.bizmoa.co.kr/data/file/sub1_02/thumb-1795154778_vcyhiXz6_517857878d888ea41d4a4e261f83a01ae306ebb4_600x563.png'),
+                      ),
+                      SizedBox(
+                        height: 20.0,
+                      ),
+                      Text(
+                        '상위 69.69%',
+                        style: TextStyle(
+                          fontSize: 24.0,
                         ),
+                      ),
+                    ],
+                  ),
                 ),
               ),
               bottom: PreferredSize(
@@ -154,19 +145,17 @@ class _RankingScreenState extends State<RankingScreen> {
                               }).toList(),
                             ),
                           ),
-                          Row(
-                            children: <Widget>[
-                              Text('전체'),
-                              Switch(
-                                value: _isSwitchFriend,
-                                onChanged: (bool newValue) {
-                                  setState(() {
-                                    _isSwitchFriend = newValue;
-                                  });
-                                },
-                              ),
-                              Text('친구'),
-                            ],
+                          GestureDetector(
+                            onTap: () {
+                              setState(() {
+                                _isGridView = !_isGridView;
+                              });
+                            },
+                            child: Icon(
+                              _isGridView
+                                  ? Icons.grid_on
+                                  : Icons.format_list_numbered,
+                            ),
                           ),
                         ],
                       ),
@@ -179,43 +168,75 @@ class _RankingScreenState extends State<RankingScreen> {
                 ),
               ),
             ),
-            SliverList(
-              delegate: SliverChildBuilderDelegate(
-                (context, index) {
-                  return Column(
-                    children: <Widget>[
-                      ListTile(
-                        leading: Icon(
-                          Icons.account_circle,
-                          size: 48.0,
-                        ),
-                        title: Text(
-                          '#${index + 1} 강준하',
-                        ),
-                        subtitle: Text(
-                          '4일째 (상위 69.69%)',
-                        ),
-                        trailing: Image(
-                          width: 40.0,
-                          image: AssetImage(
-                            'assets/images/classes/classes_9.png',
+            _isGridView
+                ? SliverPadding(
+                    padding: EdgeInsets.all(8.0),
+                    sliver: SliverGrid.count(
+                      crossAxisSpacing: 10.0,
+                      mainAxisSpacing: 10.0,
+                      crossAxisCount: 4,
+                      childAspectRatio: 0.8,
+                      children: <Widget>[
+                        Container(
+                          padding: EdgeInsets.all(4.0),
+                          child: Column(
+                            children: <Widget>[
+                              Image(
+                                height: 40.0,
+                                image: getClassesImage(100),
+                              ),
+                              SizedBox(
+                                height: 10.0,
+                              ),
+                              Text(
+                                '강준하',
+                              ),
+                              SizedBox(
+                                height: 4.0,
+                              ),
+                              Text('69일째'),
+                            ],
                           ),
                         ),
-                      ),
-                      Divider(),
-                    ],
-                  );
-                },
-                childCount: 20,
-              ),
-            ),
+                      ],
+                    ),
+                  )
+                : SliverList(
+                    delegate: SliverChildBuilderDelegate(
+                      (context, index) {
+                        return Column(
+                          children: <Widget>[
+                            ListTile(
+                              leading: CircleAvatar(
+                                radius: 24.0,
+                                backgroundImage: NetworkImage(
+                                    'https://www.bizmoa.co.kr/data/file/sub1_02/thumb-1795154778_vcyhiXz6_517857878d888ea41d4a4e261f83a01ae306ebb4_600x563.png'),
+                              ),
+                              title: Text(
+                                '#${index + 1} 강준하',
+                              ),
+                              subtitle: Text(
+                                '4일째',
+                              ),
+                              trailing: Image(
+                                width: 40.0,
+                                image: getClassesImage(10),
+                              ),
+                            ),
+                            Divider(),
+                          ],
+                        );
+                      },
+                      childCount: 20,
+                    ),
+                  ),
           ],
         ),
       ),
     );
   }
 
-  void _onRefresh() async {
+  Future<void> _onRefresh() async {
     await Future.delayed(Duration(milliseconds: 300));
     _refreshController.refreshCompleted();
   }

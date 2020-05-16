@@ -18,6 +18,8 @@ class CardItem extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return InkWellCard(
+      baseBorderRadius: BorderRadius.circular(50.0),
+      baseMarginValue: EdgeInsets.all(4.0),
       onTap: onTap,
       child: isSingle
           ? Stack(

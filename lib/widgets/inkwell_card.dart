@@ -1,20 +1,26 @@
 import 'package:flutter/material.dart';
 
 class InkWellCard extends StatelessWidget {
+  final BorderRadius baseBorderRadius;
+  final EdgeInsets baseMarginValue;
   final VoidCallback onTap;
   final Widget child;
-  final BorderRadius _baseBorderRadius = BorderRadius.circular(50.0);
 
-  InkWellCard({@required this.onTap, @required this.child});
+  InkWellCard({
+    @required this.baseBorderRadius,
+    @required this.baseMarginValue,
+    @required this.onTap,
+    @required this.child,
+  });
 
   @override
   Widget build(BuildContext context) {
     return Container(
-      margin: EdgeInsets.all(4.0),
+      margin: baseMarginValue,
       child: Card(
-        shape: RoundedRectangleBorder(borderRadius: _baseBorderRadius),
+        shape: RoundedRectangleBorder(borderRadius: baseBorderRadius),
         child: InkWell(
-          borderRadius: _baseBorderRadius,
+          borderRadius: baseBorderRadius,
           onTap: onTap,
           child: child,
         ),

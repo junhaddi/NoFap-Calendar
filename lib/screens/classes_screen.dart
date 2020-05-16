@@ -22,9 +22,6 @@ class ClassesScreen extends StatelessWidget {
         children: _classesList
             .map(
               (Classes classes) => Card(
-                shape: RoundedRectangleBorder(
-                  borderRadius: BorderRadius.circular(50.0),
-                ),
                 child: ListTile(
                   title: Text(
                     '${classes.name} (${classes.srcDay}~${classes.dstDay == -1 ? '' : classes.dstDay})',
