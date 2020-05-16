@@ -8,12 +8,20 @@
   "client": [
     {
       "client_info": {
-        "mobilesdk_app_id": "1:66488383705:android:966d3b0200f1073326e6c8",
+        "mobilesdk_app_id": "1:66488383705:android:58c645d3987727c926e6c8",
         "android_client_info": {
-          "package_name": "com.example.nofapcamp"
+          "package_name": "com.junhaddi.nofapcamp"
         }
       },
       "oauth_client": [
+        {
+          "client_id": "66488383705-qop91l2gdj4dna0ja5n5mv1pl5u0lh86.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.junhaddi.nofapcamp",
+            "certificate_hash": "0e0878eeeae82b5ef02832c8549ab7f8c5c50b79"
+          }
+        },
         {
           "client_id": "66488383705-3fgrp9o9qm2c870pc2si5b3rjntstqjq.apps.googleusercontent.com",
           "client_type": 3
