@@ -28,7 +28,6 @@ class _StatusPageState extends State<StatusPage> {
   void initState() {
     super.initState();
     _getDate();
-    // TODO 서버에 기록 송신
   }
 
   Widget build(BuildContext context) {

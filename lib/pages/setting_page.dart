@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:nofapcamp/models/divider_list_tile.dart';
 import 'package:nofapcamp/widgets/custom_app_bar.dart';
 import 'package:nofapcamp/widgets/divider_list_group.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
 import '../custom_icons_icons.dart';
 
@@ -12,11 +13,14 @@ class SettingPage extends StatefulWidget {
 }
 
 class _SettingPageState extends State<SettingPage> {
+  SharedPreferences _prefs;
+  String _nickName = '';
   bool _isDarkMode;
 
   @override
   void initState() {
     super.initState();
+    _getNickName();
     _isDarkMode = DynamicTheme.of(context).brightness == Brightness.dark;
   }
 
@@ -32,9 +36,9 @@ class _SettingPageState extends State<SettingPage> {
             title: '계정',
             child: [
               DividerListTile(
-                title: '페이스북',
-                subtitle: 'rkdwnsgk05@gmail.com',
-                icon: CustomIcons.facebook,
+                title: '$_nickName님',
+                subtitle: '이름 변경하기',
+                icon: Icons.account_circle,
                 onTap: () {},
               ),
             ],
@@ -75,6 +79,11 @@ class _SettingPageState extends State<SettingPage> {
         ],
       ),
     );
+  }
+
+  Future<void> _getNickName() async {
+    _prefs = await SharedPreferences.getInstance();
+    _nickName = _prefs.getString('nickName') ?? '';
   }
 
   void _changeBrightness() {

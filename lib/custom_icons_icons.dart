@@ -20,10 +20,6 @@
 ///         Author:    P.J. Onori
 ///         License:   SIL (http://scripts.sil.org/OFL)
 ///         Homepage:  http://somerandomdude.com/work/iconic/
-/// * Font Awesome, Copyright (C) 2016 by Dave Gandy
-///         Author:    Dave Gandy
-///         License:   SIL ()
-///         Homepage:  http://fortawesome.github.com/Font-Awesome/
 ///
 import 'package:flutter/widgets.dart';
 
@@ -35,5 +31,4 @@ class CustomIcons {
 
   static const IconData share = IconData(0xe800, fontFamily: _kFontFam, fontPackage: _kFontPkg);
   static const IconData moon = IconData(0xe801, fontFamily: _kFontFam, fontPackage: _kFontPkg);
-  static const IconData facebook = IconData(0xf308, fontFamily: _kFontFam, fontPackage: _kFontPkg);
 }
