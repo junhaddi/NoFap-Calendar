@@ -30,21 +30,21 @@ class MyApp extends StatelessWidget {
       data: (brightness) {
         return brightness == Brightness.light
             ? ThemeData(
-          // 기본모드 테마
-          primarySwatch: Colors.grey,
-          primaryColor: Colors.white,
-          brightness: Brightness.light,
-          accentColor: Colors.black,
-          fontFamily: 'NanumBarunGothic',
-        )
+                // 기본모드 테마
+                primarySwatch: Colors.grey,
+                primaryColor: Colors.white,
+                brightness: Brightness.light,
+                accentColor: Colors.black,
+                fontFamily: 'NanumBarunGothic',
+              )
             : ThemeData(
-          // 다크모드 테마
-          primarySwatch: Colors.grey,
-          primaryColor: Colors.black,
-          brightness: Brightness.dark,
-          accentColor: Colors.white,
-          fontFamily: 'NanumBarunGothic',
-        );
+                // 다크모드 테마
+                primarySwatch: Colors.grey,
+                primaryColor: Colors.black,
+                brightness: Brightness.dark,
+                accentColor: Colors.white,
+                fontFamily: 'NanumBarunGothic',
+              );
       },
       themedWidgetBuilder: (context, theme) {
         return MaterialApp(
@@ -69,12 +69,11 @@ class MyApp extends StatelessWidget {
 
   // 앱 실행 시 스크린 라우팅
   Widget _handleCurrentScreen() {
-//    bool isWalkthroughSeen = (prefs.getBool('walkthroughSeen') ?? false);
-//    if (isWalkthroughSeen) {
-//      return IndexScreen();
-//    } else {
-//      return WalkthroughScreen(prefs: prefs);
-//    }
-    return WalkthroughScreen(prefs: prefs);
+    bool isWalkthroughSeen = (prefs.getBool('walkthroughSeen') ?? false);
+    if (isWalkthroughSeen) {
+      return IndexScreen();
+    } else {
+      return WalkthroughScreen(prefs: prefs);
+    }
   }
 }

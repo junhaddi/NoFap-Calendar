@@ -191,7 +191,7 @@ class _StatusPageState extends State<StatusPage> {
     ).then((int value) {
       if (value != null) {
         setState(() {
-          _initDate = DateTime.now().subtract(Duration(days: value - 1));
+          _initDate = DateTime.now().subtract(Duration(days: value));
           _showResetDialog(true);
         });
       }
@@ -278,6 +278,7 @@ class _StatusPageState extends State<StatusPage> {
           _prefs.setInt('initDate', _initDate.millisecondsSinceEpoch);
           _prefs.setInt('srcDate', _srcDate.millisecondsSinceEpoch);
           _prefs.setInt('dstDate', _dstDate.millisecondsSinceEpoch);
+          _prefs.setInt('progressDay', _progressDay);
         });
       }
     });

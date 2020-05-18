@@ -145,7 +145,6 @@ class _IndexScreenState extends State<IndexScreen> {
             ),
           ),
           event: () {
-            Navigator.of(context).pop();
             SystemChannels.platform.invokeMethod('SystemNavigator.pop');
           },
         );

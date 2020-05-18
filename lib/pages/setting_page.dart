@@ -12,10 +12,14 @@ class SettingPage extends StatefulWidget {
   _SettingPageState createState() => _SettingPageState();
 }
 
-class _SettingPageState extends State<SettingPage> {
+class _SettingPageState extends State<SettingPage>
+    with AutomaticKeepAliveClientMixin {
   SharedPreferences _prefs;
   String _nickName = '';
   bool _isDarkMode;
+
+  @override
+  bool get wantKeepAlive => true;
 
   @override
   void initState() {
@@ -37,9 +41,11 @@ class _SettingPageState extends State<SettingPage> {
             child: [
               DividerListTile(
                 title: '$_nickName님',
-                subtitle: '이름 변경하기',
+                subtitle: '#1234',
                 icon: Icons.account_circle,
-                onTap: () {},
+                onTap: () {
+                  // TODO 닉네임 변경 다이얼로그
+                },
               ),
             ],
           ),
@@ -67,12 +73,16 @@ class _SettingPageState extends State<SettingPage> {
               DividerListTile(
                 title: '리뷰 남기기',
                 icon: Icons.thumb_up,
-                onTap: () {},
+                onTap: () {
+                  // TODO Android, iOS 기기에 따라 스토어 링크 이동
+                },
               ),
               DividerListTile(
                 title: '의견 보내기',
                 icon: Icons.mail,
-                onTap: () {},
+                onTap: () {
+                  // TODO rkdwnsgk05@gmail.com 메일 작성 페이지 이동
+                },
               ),
             ],
           ),

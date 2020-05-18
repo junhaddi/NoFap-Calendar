@@ -2,6 +2,8 @@ import 'package:flutter/material.dart';
 import 'package:nofapcamp/models/classes.dart';
 import 'package:nofapcamp/models/dropdown_item.dart';
 import 'package:pull_to_refresh/pull_to_refresh.dart';
+import 'package:shared_preferences/shared_preferences.dart';
+import 'package:transparent_image/transparent_image.dart';
 
 class RankingScreen extends StatefulWidget {
   @override
@@ -9,6 +11,8 @@ class RankingScreen extends StatefulWidget {
 }
 
 class _RankingScreenState extends State<RankingScreen> {
+  SharedPreferences _prefs;
+  int _progressDay;
   RefreshController _refreshController = RefreshController();
   static List<DropdownItem> _dropdownItems = [
     DropdownItem(
@@ -44,6 +48,13 @@ class _RankingScreenState extends State<RankingScreen> {
   bool _isGridView = false;
 
   @override
+  void initState() {
+    super.initState();
+    _getDate();
+    // TODO 서버로부터 유저 정보 가져오기
+  }
+
+  @override
   Widget build(BuildContext context) {
     return Scaffold(
       body: SmartRefresher(
@@ -72,20 +83,32 @@ class _RankingScreenState extends State<RankingScreen> {
                   child: Column(
                     mainAxisAlignment: MainAxisAlignment.center,
                     children: <Widget>[
-                      CircleAvatar(
-                        radius: 30.0,
-                        backgroundImage: NetworkImage(
-                            'https://www.bizmoa.co.kr/data/file/sub1_02/thumb-1795154778_vcyhiXz6_517857878d888ea41d4a4e261f83a01ae306ebb4_600x563.png'),
-                      ),
-                      SizedBox(
-                        height: 20.0,
-                      ),
-                      Text(
-                        '상위 69.69%',
-                        style: TextStyle(
-                          fontSize: 24.0,
-                        ),
-                      ),
+                      _progressDay == null
+                          ? Text(
+                              '시작하세요',
+                              style: TextStyle(
+                                fontSize: 42.0,
+                                fontWeight: FontWeight.bold,
+                              ),
+                            )
+                          : Column(
+                              children: <Widget>[
+                                FadeInImage(
+                                  height: 60.0,
+                                  placeholder: MemoryImage(kTransparentImage),
+                                  image: getClassesImage(_progressDay),
+                                ),
+                                SizedBox(
+                                  height: 20.0,
+                                ),
+                                Text(
+                                  '상위 69.69%',
+                                  style: TextStyle(
+                                    fontSize: 24.0,
+                                  ),
+                                ),
+                              ],
+                            ),
                     ],
                   ),
                 ),
@@ -207,20 +230,22 @@ class _RankingScreenState extends State<RankingScreen> {
                         return Column(
                           children: <Widget>[
                             ListTile(
-                              leading: CircleAvatar(
-                                radius: 24.0,
-                                backgroundImage: NetworkImage(
-                                    'https://www.bizmoa.co.kr/data/file/sub1_02/thumb-1795154778_vcyhiXz6_517857878d888ea41d4a4e261f83a01ae306ebb4_600x563.png'),
+                              leading: Container(
+                                width: 40.0,
+                                alignment: Alignment.center,
+                                child: Image(image: getClassesImage(10)),
                               ),
                               title: Text(
-                                '#${index + 1} 강준하',
+                                '강준하(#1234)',
                               ),
                               subtitle: Text(
                                 '4일째',
                               ),
-                              trailing: Image(
-                                width: 40.0,
-                                image: getClassesImage(10),
+                              trailing: Text(
+                                '${index + 1}위',
+                                style: TextStyle(
+                                  color: Colors.grey,
+                                ),
                               ),
                             ),
                             Divider(),
@@ -234,6 +259,13 @@ class _RankingScreenState extends State<RankingScreen> {
         ),
       ),
     );
+  }
+
+  Future<void> _getDate() async {
+    _prefs = await SharedPreferences.getInstance();
+    setState(() {
+      _progressDay = _prefs.getInt('progressDay') ?? null;
+    });
   }
 
   Future<void> _onRefresh() async {

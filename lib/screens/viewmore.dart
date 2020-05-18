@@ -7,6 +7,8 @@ class ViewmoreScreen extends StatelessWidget {
   static const _adUnitID = 'ca-app-pub-8336339515298040/6724604841';
   final _nativeAdController = NativeAdmobController();
 
+  // TODO 커뮤니티 목록 구현
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
